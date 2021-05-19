@@ -1,6 +1,6 @@
 import Carousel from 'react-material-ui-carousel'
 import { makeStyles } from '@material-ui/core'
-import { bannerData } from '../../utils/data';
+import { bannerData } from '../../constant/data';
 // npm install react-material-ui-carousel --save
 
 

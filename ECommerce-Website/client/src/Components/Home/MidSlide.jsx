@@ -1,5 +1,5 @@
 import { Box, makeStyles } from '@material-ui/core';
-import { dealData } from '../../utils/data';
+import { dealData } from '../../constant/data';
 import Slide from './Slide';
 
 const useStyle = makeStyles({

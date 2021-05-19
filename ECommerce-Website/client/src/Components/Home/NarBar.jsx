@@ -1,5 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import { navData } from '../../utils/data';
+import { navData } from '../../constant/data';
 
 const useStyle = makeStyles({
     component: {

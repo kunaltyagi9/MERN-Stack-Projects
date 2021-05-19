@@ -2,6 +2,7 @@ import { Box, Typography, makeStyles, Button, Divider } from '@material-ui/core'
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import Countdown from 'react-countdown';
+import { Link } from 'react-router-dom';
 
 
 const responsive = {
@@ -94,12 +95,14 @@ const MultiSlide = ({ data, timer, title }) => {
             >
                 {
                     data.map(temp => (
-                        <Box textAlign="center" style={{ padding: '25px 15px' }}>
-                            <img src={temp.url} className={classes.image} />
-                            <Typography className={classes.text} style={{ fontWeight: 600 }}>{temp.title.shortTitle}</Typography>
-                            <Typography className={classes.text} style={{ color: 'green' }}>{temp.discount}</Typography>
-                            <Typography className={classes.text} style={{ color: '#212121', opacity: '.6' }}>{temp.tagline}</Typography>
-                        </Box>
+                        <Link to='details'>
+                            <Box textAlign="center" style={{ padding: '25px 15px' }}>
+                                <img src={temp.url} className={classes.image} />
+                                <Typography className={classes.text} style={{ fontWeight: 600 }}>{temp.title.shortTitle}</Typography>
+                                <Typography className={classes.text} style={{ color: 'green' }}>{temp.discount}</Typography>
+                                <Typography className={classes.text} style={{ color: '#212121', opacity: '.6' }}>{temp.tagline}</Typography>
+                            </Box>
+                        </Link>
                     ))
                 }
             </Carousel>
