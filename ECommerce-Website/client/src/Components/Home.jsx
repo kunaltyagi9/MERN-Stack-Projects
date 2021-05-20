@@ -4,7 +4,7 @@ import Banner from './Home/Banner';
 import MidSlide from './Home/MidSlide';
 import MidSection from './Home/MidSection';
 import Slide from './Home/Slide';
-import { furnitureData } from '../utils/data';
+import { furnitureData } from '../constant/data';
 
 const useStyle = makeStyles({
     component: {

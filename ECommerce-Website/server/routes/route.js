@@ -9,6 +9,6 @@ router.post('/signup', userSignUp);
 router.post('/login', userLogIn);
 
 router.get('/', getProducts);
-router.get('/:id', getProductById);
+router.get('/product/:id', getProductById);
 
 export default router;

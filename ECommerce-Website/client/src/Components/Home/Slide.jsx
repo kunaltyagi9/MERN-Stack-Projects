@@ -54,6 +54,9 @@ const useStyle = makeStyles({
         backgroundColor: '#2874f0',
         borderRadius: 2,
         fontSize: 13
+    },
+    wrapper: {
+        padding: '25px 15px'
     }
 })
 
@@ -95,10 +98,10 @@ const MultiSlide = ({ data, timer, title }) => {
             >
                 {
                     data.map(temp => (
-                        <Link to='details'>
-                            <Box textAlign="center" style={{ padding: '25px 15px' }}>
+                        <Link to={`product/${temp.id}`} style={{textDecoration: 'none'}}>
+                            <Box textAlign="center" className={classes.wrapper}>
                                 <img src={temp.url} className={classes.image} />
-                                <Typography className={classes.text} style={{ fontWeight: 600 }}>{temp.title.shortTitle}</Typography>
+                                <Typography className={classes.text} style={{ fontWeight: 600, color: '#212121' }}>{temp.title.shortTitle}</Typography>
                                 <Typography className={classes.text} style={{ color: 'green' }}>{temp.discount}</Typography>
                                 <Typography className={classes.text} style={{ color: '#212121', opacity: '.6' }}>{temp.tagline}</Typography>
                             </Box>

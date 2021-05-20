@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+
 import Connection from './database/db.js';
 import DefaultData from './default.js';
 import Routes from './routes/route.js';

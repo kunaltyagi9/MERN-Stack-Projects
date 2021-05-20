@@ -17,3 +17,11 @@ export const authenticateSignup = async (user) => {
         console.log('error while calling Signup API: ', error);
     }
 }
+
+export const getProductById = async (id) => {
+    try {
+        return await axios.get(`${url}/product/${id}`);
+    } catch (error) {
+        console.log('Error while getting product by id response', error);
+    }
+}
