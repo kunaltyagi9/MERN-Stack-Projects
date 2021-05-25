@@ -93,7 +93,7 @@ const accountInitialValues = {
     }
 }
 
-const DialogComponent = ({ open, setOpen, setAccount }) => {
+const LoginDialog = ({ open, setOpen, setAccount }) => {
     const classes = useStyle();
     const [ login, setLogin ] = useState(loginInitialValues);
     const [ signup, setSignup ] = useState(signupInitialValues);
@@ -175,4 +175,4 @@ const DialogComponent = ({ open, setOpen, setAccount }) => {
     )
 }
 
-export default DialogComponent;
+export default LoginDialog;

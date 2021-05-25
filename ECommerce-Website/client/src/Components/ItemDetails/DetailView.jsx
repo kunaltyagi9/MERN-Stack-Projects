@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Box, Typography, makeStyles } from '@material-ui/core';
+import { Box, Typography, makeStyles, CircularProgress, Button } from '@material-ui/core';
 import ProductDetail from './ProductDetail';
+import ActionItem from './ActionItem';
 import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { getProductById } from '../../service/api';
@@ -15,9 +16,6 @@ const useStyles = makeStyles({
         margin: '0 80px',
         display: 'flex'
     },
-    leftContainer: {
-        minWidth: '40%'
-    }, 
     rightContainer: {
         marginTop: 50,
         '& > *': {
@@ -33,44 +31,63 @@ const useStyles = makeStyles({
     greyTextColor: {
         color: '#878787'
     }
-})
+});
+
+const data = { 
+    id: '',
+    url: '', 
+    detailUrl: '',
+    title: {
+        shortTitle: '',
+        longTitle: '',
+    }, 
+    price: {
+        mrp: 0,
+        cost: 0,
+        discount: ''
+    },
+    description: '',
+    discount: '', 
+    tagline: '' 
+};
 
 const DetailView = () => {
     const classes = useStyles();
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png'
-    const [product, setProduct] = useState();
+    const [ product, setProduct ] = useState(data);
+    const [ loading, setLoading ] = useState(false);
     const { id } = useParams();
 
     useEffect(() => {
-        console.log('Hi');
         getProductValues();
     }, []);
 
     const getProductValues = async () => {
-        console.log('Hei')
+        setLoading(true);
         const response = await getProductById(id);
-        console.log(response);
-        setProduct(response);
+        console.log(response.data);
+        setProduct(response.data);
+        setLoading(false);
     }
 
     return (
         <Box className={classes.component}>
+            {loading && <CircularProgress />}
             <Box></Box>
             <Box className={classes.container}> 
-                <Box className={classes.leftContainer}></Box>
-                
+                <ActionItem product={product} />
                 <Box className={classes.rightContainer}>
-                    <Typography>Devogue XXL Tear Drop Bean Bag Cover (Without Beans)  (Black, Brown)</Typography>
+                    <Typography>{product.title.longTitle}</Typography>
                     <Typography className={clsx(classes.greyTextColor, classes.smallText)} style={{marginTop: 5}}>
                         8 Ratings & 1 Reviews
                         <span><img src={fassured} style={{width: 77, marginLeft: 20}} /></span>
                     </Typography>
                     <Typography>
-                        <span className={classes.price}>₹799</span>&nbsp;&nbsp;&nbsp; 
-                        <span className={classes.greyTextColor}><strike>₹3,999</strike></span>&nbsp;&nbsp;&nbsp;
-                        <span style={{color: '#388E3C'}}>80% off</span>
+                        <span className={classes.price}>₹{product.price.cost}</span>&nbsp;&nbsp;&nbsp; 
+                        <span className={classes.greyTextColor}><strike>₹{product.price.mrp}</strike></span>&nbsp;&nbsp;&nbsp;
+                        <span style={{color: '#388E3C'}}>{product.price.discount} off</span>
                     </Typography>
-                    <ProductDetail />
+                    <ProductDetail product={product} />
                 </Box>
             </Box>
         </Box>

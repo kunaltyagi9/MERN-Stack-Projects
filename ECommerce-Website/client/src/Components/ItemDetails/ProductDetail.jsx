@@ -23,7 +23,7 @@ const useStyle = makeStyles({
     }
 });
 
-const ProductDetail = () => {
+const ProductDetail = ({ product }) => {
     const classes = useStyle();
     const adURL = 'https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50';
     return (
@@ -60,12 +60,7 @@ const ProductDetail = () => {
                     </TableRow>
                     <TableRow className={classes.smallText}>
                         <TableCell className={classes.greyTextColor}>Description</TableCell>
-                        <TableCell>Lounge around in the comfort of Bean Bags Cover.
-                        The Classic style is the evergreen bean bag cover style with an indulging comfort.
-                        With a soft leatherette fabric and premium stitching,
-                        it's a classic must have for any home or office space.
-                        This is a ready to use, pre-assembled, filled bean bag filled with Beans Cover.
-                                </TableCell>
+                        <TableCell>{product.description}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

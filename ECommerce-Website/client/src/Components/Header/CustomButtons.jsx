@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles, Box, Typography, Badge, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ShoppingCart } from '@material-ui/icons';
-import Dialog from './Dialog';
-
+import LoginDialog from '../Login/LoginDialog';
+import { LoginContext } from '../../context/ContextProvider';
 const useStyle = makeStyles({
     container: {
         display: 'flex',
@@ -35,7 +35,7 @@ const useStyle = makeStyles({
 const CustomButtons = () => {
     const classes = useStyle();
     const [ open, setOpen ] = useState(false);
-    const [ account, setAccount ] = useState('');
+    const { account, setAccount } = useContext(LoginContext);
 
     const openDialog = () => {
         setOpen(true);
@@ -58,7 +58,7 @@ const CustomButtons = () => {
                 </Badge>
                 <Typography style={{ marginLeft: 10 }}>Cart</Typography>
             </Link>
-            <Dialog open={open} setOpen={setOpen} setAccount={setAccount} />
+            <LoginDialog open={open} setOpen={setOpen} setAccount={setAccount} />
         </Box>
     )
 }

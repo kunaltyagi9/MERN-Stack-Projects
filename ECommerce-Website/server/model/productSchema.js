@@ -2,12 +2,14 @@ import mongoose from 'mongoose';
 import autoIncrement from 'mongoose-auto-increment';
 
 const productSchema = new mongoose.Schema({
-    name: String,
+    id: String,
+    url: String,
+    detailUrl: String,
+    title: Object,
+    price: Object,
     description: String,
-    price: Number,
-    countInStock: Number,
-    imageURL: String,
-    type: String
+    discount: String,
+    tagline: String
 });
 
 autoIncrement.initialize(mongoose.connection);

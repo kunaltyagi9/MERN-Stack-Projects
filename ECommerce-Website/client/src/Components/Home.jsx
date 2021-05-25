@@ -5,6 +5,9 @@ import MidSlide from './Home/MidSlide';
 import MidSection from './Home/MidSection';
 import Slide from './Home/Slide';
 import { furnitureData } from '../constant/data';
+import React,  { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'; // hooks
+import { getProducts as listProducts } from '../redux/actions/productActions';
 
 const useStyle = makeStyles({
     component: {
@@ -15,6 +18,15 @@ const useStyle = makeStyles({
 
 const Home = () => {
     const classes = useStyle();
+
+    const dispatch = useDispatch();
+    
+
+    useEffect(() => {
+        dispatch(listProducts())
+        console.log(listProducts());
+    }, [dispatch])
+
     return (
         <>
             <NavBar />
