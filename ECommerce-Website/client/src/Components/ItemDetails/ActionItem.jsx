@@ -6,7 +6,9 @@ import { useHistory } from 'react-router-dom';
 import { LoginContext } from '../../context/ContextProvider';
 import { payUsingPaytm } from '../../service/api';
 import { post } from '../../utils/paytm';
-import { initialState, reducer } from '../../reducers/reducer';
+// import { initialState, reducer } from '../../reducers/reducer';
+import { addToCart } from '../../redux/actions/cartActions';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyle = makeStyles({
     leftContainer: {
@@ -38,7 +40,12 @@ const ActionItem = ({ product }) => {
     const classes = useStyle();
     const history = useHistory();
     const { account } = useContext(LoginContext);
-    const [ state, dispatch ] = useReducer(reducer, initialState);
+    const { id, price, detailUrl, title } = product;
+        
+    // const [ state, dispatch ] = useReducer(reducer, initialState);
+
+    const [quantity, setQuantity] = useState(1);
+    const dispatch = useDispatch();
 
     const buyNow = async () => {
         let response = await payUsingPaytm({ amount: 500, email: 'codeforinterview01@gmail.com'});
@@ -49,20 +56,15 @@ const ActionItem = ({ product }) => {
         post(information);
     }
 
-    const addToCart = () => {
-        const { id, price, detailUrl, title } = product;
-        const { addToCart } = state;
-        console.log(state);
-        dispatch({ type: 'addToCart', 
-            value: { addToCart: { id, price, detailUrl, title, quantity: 2 }}});
-        console.log(state);
+    const addItemToCart = () => {
+        dispatch(addToCart(id, quantity));
         history.push('/cart');
     }
 
     return (
         <Box className={classes.leftContainer}>
             <img src={product.detailUrl} className={classes.productImage} /><br />
-            <Button onClick={() => addToCart()} className={clsx(classes.button, classes.addToCart)} style={{marginRight: 10}} variant="contained"><Cart />Add to Cart</Button>
+            <Button onClick={() => addItemToCart()} className={clsx(classes.button, classes.addToCart)} style={{marginRight: 10}} variant="contained"><Cart />Add to Cart</Button>
             <Button onClick={() => buyNow()} className={clsx(classes.button, classes.buyNow)} variant="contained"><Flash /> Buy Now</Button>
         </Box>
     )

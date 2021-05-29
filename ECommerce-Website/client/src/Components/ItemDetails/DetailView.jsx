@@ -5,6 +5,9 @@ import ActionItem from './ActionItem';
 import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { getProductById } from '../../service/api';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getProductDetails } from '../../redux/actions/productActions';
 
 const useStyles = makeStyles({
     component: {
@@ -51,45 +54,58 @@ const data = {
     tagline: '' 
 };
 
-const DetailView = () => {
+const DetailView = ({ history, match }) => {
     const classes = useStyles();
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png'
-    const [ product, setProduct ] = useState(data);
-    const [ loading, setLoading ] = useState(false);
-    const { id } = useParams();
+    // const [ product, setProduct ] = useState(data);
+    // const [ loading, setLoading ] = useState(false);
+    // const { id } = useParams();
 
+    // const [ quantity, setQuantity ] = useState(1);
+
+    const productDetails = useSelector(state => state.getProductDetails);
+    const { loading, product } = productDetails;
+
+    const dispatch = useDispatch();
+    
     useEffect(() => {
-        getProductValues();
-    }, []);
+        if(product && match.params.id !== product.id)   
+            dispatch(getProductDetails(match.params.id));
+    }, [dispatch, product, match, loading]);
 
-    const getProductValues = async () => {
-        setLoading(true);
-        const response = await getProductById(id);
-        console.log(response.data);
-        setProduct(response.data);
-        setLoading(false);
-    }
+    // useEffect(() => {
+    //     getProductValues();
+    // }, []);
+
+    // const getProductValues = async () => {
+    //     setLoading(true);
+    //     const response = await getProductById(id);
+    //     console.log(response.data);
+    //     setProduct(response.data);
+    //     setLoading(false);
+    // }
 
     return (
         <Box className={classes.component}>
-            {loading && <CircularProgress />}
             <Box></Box>
-            <Box className={classes.container}> 
-                <ActionItem product={product} />
-                <Box className={classes.rightContainer}>
-                    <Typography>{product.title.longTitle}</Typography>
-                    <Typography className={clsx(classes.greyTextColor, classes.smallText)} style={{marginTop: 5}}>
-                        8 Ratings & 1 Reviews
-                        <span><img src={fassured} style={{width: 77, marginLeft: 20}} /></span>
-                    </Typography>
-                    <Typography>
-                        <span className={classes.price}>₹{product.price.cost}</span>&nbsp;&nbsp;&nbsp; 
-                        <span className={classes.greyTextColor}><strike>₹{product.price.mrp}</strike></span>&nbsp;&nbsp;&nbsp;
-                        <span style={{color: '#388E3C'}}>{product.price.discount} off</span>
-                    </Typography>
-                    <ProductDetail product={product} />
+            { product && Object.keys(product).length &&
+                <Box className={classes.container}> 
+                    <ActionItem product={product} />
+                    <Box className={classes.rightContainer}>
+                        <Typography>{product.title.longTitle}</Typography>
+                        <Typography className={clsx(classes.greyTextColor, classes.smallText)} style={{marginTop: 5}}>
+                            8 Ratings & 1 Reviews
+                            <span><img src={fassured} style={{width: 77, marginLeft: 20}} /></span>
+                        </Typography>
+                        <Typography>
+                            <span className={classes.price}>₹{product.price.cost}</span>&nbsp;&nbsp;&nbsp; 
+                            <span className={classes.greyTextColor}><strike>₹{product.price.mrp}</strike></span>&nbsp;&nbsp;&nbsp;
+                            <span style={{color: '#388E3C'}}>{product.price.discount} off</span>
+                        </Typography>
+                        <ProductDetail product={product} />
+                    </Box>
                 </Box>
-            </Box>
+            }   
         </Box>
     )
 }

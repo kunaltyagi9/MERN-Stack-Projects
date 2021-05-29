@@ -21,9 +21,17 @@ export const products = [
     { 
         id: 'product3',
         url: 'https://rukminim1.flixcart.com/flap/200/200/image/74bc985c62f19245.jpeg?q=70', 
+        detailUrl: 'https://rukminim1.flixcart.com/flap/200/200/image/74bc985c62f19245.jpeg?q=70', 
         title: {
-            shortTitle: 'Skybags & Safari'
+            shortTitle: 'Skybags & Safari',
+            longTitle: 'Molife Sense Skybags & Safari  (Black Strap, Freesize)'
         }, 
+        price: {
+            mrp: 12049,
+            cost: 8499,
+            discount: '39%'
+        },
+        description: 'The Molife Sense 500, a brilliant smartwatch with a beautiful large display. Say hello to the infinity 1.7-inch display with 2.5D curved edges. Thanks to seamless Bluetooth 5.0 connectivity, you wont have to keep waiting. Bring a change to your outfit every day with changeable straps. A splash of color every day keeps the boredom away.',
         discount: 'Upto 70% Off', 
         tagline: 'Deal of the Day' 
     },

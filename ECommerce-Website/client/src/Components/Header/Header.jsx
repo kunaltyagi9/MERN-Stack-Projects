@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, makeStyles, Box, Typography, withStyles} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import CustomButtons from './CustomButtons';
+import Search from './Search';
 
 const useStyle = makeStyles({
     header: {
@@ -50,6 +51,7 @@ const Header = () => {
                         <img src={subURL} className={classes.subURL} />
                     </Box>
                 </Link>
+                <Search />
                 <CustomButtons />
             </ToolBar>
         </AppBar>

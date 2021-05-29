@@ -1,7 +1,9 @@
 import { Box, makeStyles } from '@material-ui/core';
 // import { dealData } from '../../constant/data';
 import Slide from './Slide';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'; // hooks
+import { getProducts as listProducts } from '../../redux/actions/productActions';
 
 const useStyle = makeStyles({
     component: {
@@ -25,6 +27,12 @@ const MidSlide = () => {
 
     const getProducts = useSelector(state => state.getProducts);
     const { products, error } = getProducts;
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(listProducts())
+    }, [dispatch])
 
     return (
         <Box className={classes.component}>
