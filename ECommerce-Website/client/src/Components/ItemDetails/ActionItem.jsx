@@ -42,8 +42,6 @@ const ActionItem = ({ product }) => {
     const { account } = useContext(LoginContext);
     const { id, price, detailUrl, title } = product;
         
-    // const [ state, dispatch ] = useReducer(reducer, initialState);
-
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
 

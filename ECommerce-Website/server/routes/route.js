@@ -16,6 +16,6 @@ router.get('/product/:id', getProductById);
 router.post('/cart/add', addItemInCart);
 
 router.post('/payment', addPaymentGateway);
-router.post('/api/callback', paymentResponse);
+router.post('/callback', paymentResponse);
 
 export default router;

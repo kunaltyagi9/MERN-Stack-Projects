@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles, fade, InputBase } from '@material-ui/core';
 
@@ -27,6 +28,13 @@ const useStyle = makeStyles(theme => ({
 
 const Search = () => {
     const classes = useStyle();
+    const [ text, setText ] = useState();
+
+    const getText = (text) => {
+        setText(text);
+        console.log(text);
+    }
+
     return (
         <div className={classes.search}>
             <InputBase
@@ -36,6 +44,7 @@ const Search = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => getText(e.target.value)}
             />
             <div className={classes.searchIcon}>
               <SearchIcon />

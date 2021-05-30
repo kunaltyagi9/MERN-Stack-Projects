@@ -17,6 +17,7 @@
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "formidable": "^1.2.2",
+    "https": "^1.0.0",
     "mongoose": "^5.12.9",
     "mongoose-auto-increment": "^5.0.1",
     "nodemon": "^2.0.7",
