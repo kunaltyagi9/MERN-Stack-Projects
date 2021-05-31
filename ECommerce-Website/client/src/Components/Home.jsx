@@ -4,8 +4,9 @@ import Banner from './Home/Banner';
 import MidSlide from './Home/MidSlide';
 import MidSection from './Home/MidSection';
 import Slide from './Home/Slide';
-import { furnitureData } from '../constant/data';
 import React,  { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'; // hooks
+import { getProducts as listProducts } from '../redux/actions/productActions';
 
 const useStyle = makeStyles({
     component: {
@@ -17,34 +18,43 @@ const useStyle = makeStyles({
 const Home = () => {
     const classes = useStyle();
 
+    const getProducts = useSelector(state => state.getProducts);
+    const { products, error } = getProducts;
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(listProducts())
+    }, [dispatch])
+
     return (
         <>
             <NavBar />
             <Box className={classes.component}>
                 <Banner />
-                <MidSlide />
+                <MidSlide products={products} />
                 <MidSection />
                 <Slide
-                    data={furnitureData} 
-                    title='Furniture Bestsellers'
-                    timer={false} 
-                    multi={true} 
-                />
-                <Slide
-                    data={furnitureData} 
-                    title='Suggested For You'
-                    timer={false} 
-                    multi={true} 
-                />
-                <Slide
-                    data={furnitureData} 
+                    data={products} 
                     title='Discounts for You'
                     timer={false} 
                     multi={true} 
                 />
                 <Slide
-                    data={furnitureData} 
-                    title='Furniture Bestsellers'
+                    data={products} 
+                    title='Suggested Items'
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    data={products} 
+                    title='Top Selection'
+                    timer={false} 
+                    multi={true} 
+                />
+                <Slide
+                    data={products} 
+                    title='Recommended Items'
                     timer={false} 
                     multi={true} 
                 />

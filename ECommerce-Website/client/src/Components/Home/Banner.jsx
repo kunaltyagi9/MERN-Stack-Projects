@@ -1,7 +1,6 @@
 import Carousel from 'react-material-ui-carousel'
 import { makeStyles } from '@material-ui/core'
 import { bannerData } from '../../constant/data';
-// npm install react-material-ui-carousel --save
 
 
 const useStyle = makeStyles({
@@ -30,7 +29,6 @@ const Banner = () => {
                     backgroundColor: '#FFFFFF',
                     borderRadius: 0,
                     margin: 0,
-                    // height: 100,
                     width: 50,
                 }
             }}

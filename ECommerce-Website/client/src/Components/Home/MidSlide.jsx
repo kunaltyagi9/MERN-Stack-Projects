@@ -1,9 +1,5 @@
 import { Box, makeStyles } from '@material-ui/core';
-// import { dealData } from '../../constant/data';
 import Slide from './Slide';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux'; // hooks
-import { getProducts as listProducts } from '../../redux/actions/productActions';
 
 const useStyle = makeStyles({
     component: {
@@ -21,18 +17,9 @@ const useStyle = makeStyles({
     }
 })
 
-const MidSlide = () => {
+const MidSlide = ({ products }) => {
     const classes = useStyle();
     const adURL = 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def60050.jpg?q=70';
-
-    const getProducts = useSelector(state => state.getProducts);
-    const { products, error } = getProducts;
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(listProducts())
-    }, [dispatch])
 
     return (
         <Box className={classes.component}>
