@@ -38,6 +38,10 @@ const useStyle = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             display: 'block'
         },
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit'
     }
 }));
 
@@ -58,10 +62,6 @@ const DetailView = ({ match }) => {
         fetchData();
     }, []);
 
-    const editBlog = async () => {
-        return await updatePost();
-    }
-
     const deleteBlog = async () => {
         await deletePost(post._id);
         history.push('/')
@@ -69,12 +69,12 @@ const DetailView = ({ match }) => {
 
     return (
         <Box className={classes.container}>
-            <img src={url} alt="post" className={classes.image} />
+            <img src={post.picture || url} alt="post" className={classes.image} />
             <Box className={classes.icons}>
                 {   
                     login === post.username && 
                     <>  
-                        <Link><Edit onClick={() => editBlog()} className={classes.icon} color="primary"/></Link>
+                        <Link to={`/update/${post._id}`}><Edit className={classes.icon} color="primary"/></Link>
                         <Link><Delete onClick={() => deleteBlog()} className={classes.icon} color="error" /></Link>
                     </>
                 }
@@ -82,8 +82,10 @@ const DetailView = ({ match }) => {
             <Typography className={classes.heading}>{post.title}</Typography>
 
             <Box className={classes.author}>
-                <Typography>Author: <span style={{fontWeight: 600}}>{post.username}</span></Typography>
-                <Typography style={{marginLeft: 'auto'}}>1 hour ago</Typography>
+                <Link to={`/?username=${post.username}`} className={classes.link}>
+                    <Typography>Author: <span style={{fontWeight: 600}}>{post.username}</span></Typography>
+                </Link>
+                <Typography style={{marginLeft: 'auto'}}>{new Date(post.createdDate).toDateString()}</Typography>
             </Box>
 
             <Typography className={classes.detail}>{post.description}</Typography>

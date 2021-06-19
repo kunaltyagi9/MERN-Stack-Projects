@@ -3,7 +3,7 @@ import { Box, makeStyles, TextareaAutosize, Button, FormControl, InputBase } fro
 import { AddCircle as Add } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
-import { createPost, uploadFile } from '../../service/api';
+import { updatePost, uploadFile, getPost } from '../../service/api';
 
 const useStyle = makeStyles(theme => ({
     container: {
@@ -47,7 +47,7 @@ const initialPost = {
     createdDate: new Date()
 }
 
-const CreatePost = () => {
+const Update = ({ match }) => {
     const classes = useStyle();
     const history = useHistory();
 
@@ -55,8 +55,16 @@ const CreatePost = () => {
     const [file, setFile] = useState('');
     const [imageURL, setImageURL] = useState('');
 
-    const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
+    const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
     
+    useEffect(() => {
+        const fetchData = async () => {
+            let data = await getPost(match.params.id);
+            setPost(data);
+        }
+        fetchData();
+    }, []);
+
     useEffect(() => {
         const getImage = async () => { 
             if(file) {
@@ -72,8 +80,8 @@ const CreatePost = () => {
         getImage();
     }, [file])
 
-    const savePost = async () => {
-        await createPost(post);
+    const updatePost = async () => {
+        await updatePost(post);
         history.push('/');
     }
 
@@ -83,7 +91,7 @@ const CreatePost = () => {
 
     return (
         <Box className={classes.container}>
-            <img src={url} alt="post" className={classes.image} />
+            <img src={post.picture || url} alt="post" className={classes.image} />
 
             <FormControl className={classes.title}>
                 <label htmlFor="fileInput">
@@ -95,8 +103,8 @@ const CreatePost = () => {
                     style={{ display: "none" }}
                     onChange={(e) => setFile(e.target.files[0])}
                 />
-                <InputBase onChange={(e) => handleChange(e)} name='title' placeholder="Title" className={classes.textfield} />
-                <Button onClick={() => savePost()} variant="contained" color="primary">Publish</Button>
+                <InputBase onChange={(e) => handleChange(e)} value={post.title} name='title' placeholder="Title" className={classes.textfield} />
+                <Button onClick={() => updatePost()} variant="contained" color="primary">Update</Button>
             </FormControl>
 
             <TextareaAutosize
@@ -105,9 +113,10 @@ const CreatePost = () => {
                 className={classes.textarea}
                 name='description'
                 onChange={(e) => handleChange(e)} 
+                value={post.description}
             />
         </Box>
     )
 }
 
-export default CreatePost;
+export default Update;

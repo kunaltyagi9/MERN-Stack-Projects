@@ -1,15 +1,20 @@
 import express, { Router } from 'express';
 
 import { createPost, updatePost, deletePost, getPost, getAllPosts } from '../controller/post-controller.js';
+import { uploadImage, getImage } from '../controller/image-controller.js';
+import upload from '../utils/upload.js';
 
-const route = express.Router();
+const router = express.Router();
 
 
-route.post('/create', createPost);
-route.put('/update/:id', updatePost);
-route.delete('/delete/:id', deletePost);
+router.post('/create', createPost);
+router.put('/update/:id', updatePost);
+router.delete('/delete/:id', deletePost);
 
-route.get('/post/:id', getPost);
-route.get('/posts', getAllPosts);
+router.get('/post/:id', getPost);
+router.get('/posts', getAllPosts);
 
-export default route;
+router.post('/file/upload', upload.single('file'), uploadImage);
+router.get('/file/:filename', getImage);
+
+export default router;

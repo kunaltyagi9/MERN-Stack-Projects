@@ -1,6 +1,8 @@
 
-import { Button, Table, TableHead, TableRow, TableCell, TableBody, makeStyles } from '@material-ui/core';
+import { Button, Table, TableHead, TableRow, TableCell, TableBody, makeStyles, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+
+import { categories } from '../../constants/data';
 
 const useStyle = makeStyles({
     table: {
@@ -12,6 +14,10 @@ const useStyle = makeStyles({
         background: '#6495ED',
         color: '#fff',
         textDecoration: 'none'
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit'
     }
 })
 
@@ -25,26 +31,24 @@ const Categories = () => {
             
             <Table className={classes.table}>
                 <TableHead>
-                    <TableRow>
-                        <TableCell>Categories</TableCell>
-                    </TableRow>
+                    <TableCell>
+                        <Link to={"/"} className={classes.link}>
+                            All Categories
+                        </Link>
+                    </TableCell>
                 </TableHead>
                 <TableBody>
-                    <TableRow>
-                        <TableCell>Life</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Music</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Style</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Sport</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Tech</TableCell>
-                    </TableRow>
+                    {
+                        categories.map(category => (
+                            <TableRow>
+                                <TableCell>
+                                    <Link to={`/?category=${category}`} className={classes.link}>
+                                        {category}
+                                    </Link>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
                 </TableBody>
             </Table>
         </>
