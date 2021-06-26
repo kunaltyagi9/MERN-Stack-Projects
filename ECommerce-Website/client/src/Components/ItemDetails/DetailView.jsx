@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Typography, makeStyles, CircularProgress, Button } from '@material-ui/core';
+import { Box, Typography, makeStyles, CircularProgress, Button, Grid } from '@material-ui/core';
 import ProductDetail from './ProductDetail';
 import ActionItem from './ActionItem';
 import { useParams } from 'react-router-dom';
@@ -9,15 +9,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getProductDetails } from '../../redux/actions/productActions';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     component: {
         marginTop: 55,
         background: '#F2F2F2'
     },
     container: {
         background: '#FFFFFF',
-        margin: '0 80px',
-        display: 'flex'
+        // margin: '0 80px',
+        display: 'flex',
+        [theme.breakpoints.down('md')]: {
+            margin: 0
+        }
     },
     rightContainer: {
         marginTop: 50,
@@ -34,7 +37,7 @@ const useStyles = makeStyles({
     greyTextColor: {
         color: '#878787'
     }
-});
+}));
 
 const data = { 
     id: '',
@@ -89,9 +92,11 @@ const DetailView = ({ history, match }) => {
         <Box className={classes.component}>
             <Box></Box>
             { product && Object.keys(product).length &&
-                <Box className={classes.container}> 
-                    <ActionItem product={product} />
-                    <Box className={classes.rightContainer}>
+                <Grid container className={classes.container}> 
+                    <Grid item lg={4} md={4} sm={8} xs={12}>
+                        <ActionItem product={product} />
+                    </Grid>
+                    <Grid item lg={8} md={8} sm={8} xs={12} className={classes.rightContainer}>
                         <Typography>{product.title.longTitle}</Typography>
                         <Typography className={clsx(classes.greyTextColor, classes.smallText)} style={{marginTop: 5}}>
                             8 Ratings & 1 Reviews
@@ -103,8 +108,8 @@ const DetailView = ({ history, match }) => {
                             <span style={{color: '#388E3C'}}>{product.price.discount} off</span>
                         </Typography>
                         <ProductDetail product={product} />
-                    </Box>
-                </Box>
+                    </Grid>
+                </Grid>
             }   
         </Box>
     )

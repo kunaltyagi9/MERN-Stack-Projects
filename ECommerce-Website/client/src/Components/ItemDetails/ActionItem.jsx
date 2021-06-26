@@ -10,11 +10,14 @@ import { post } from '../../utils/paytm';
 import { addToCart } from '../../redux/actions/cartActions';
 import { useSelector, useDispatch } from 'react-redux';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     leftContainer: {
         minWidth: '40%',
         // textAlign: 'center',
-        padding: '40px 0 0 80px'
+        padding: '40px 0 0 80px',
+        [theme.breakpoints.down('md')]: {
+            padding: '20px 40px'
+        }
     },
     productImage: {
         padding: '15px 20px',
@@ -34,7 +37,7 @@ const useStyle = makeStyles({
         background: '#fb641b',
         color: '#FFF'
     }
-});
+}));
 
 const ActionItem = ({ product }) => {
     const classes = useStyle();

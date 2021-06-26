@@ -1,21 +1,27 @@
 import { Box, makeStyles } from '@material-ui/core';
 import Slide from './Slide';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     component: {
         display: 'flex'
     },
     leftComponent: {
-        width: '83%'
+        width: '83%',
+        [theme.breakpoints.down('md')]: {
+            width: '100%'
+        }
     },
     rightComponent: {
         marginTop: 12,
         background: '#FFFFFF',
         width: '17%',
         marginLeft: 10,
-        padding: 5
+        padding: 5,
+        [theme.breakpoints.down('md')]: {
+            display: 'none'
+        }
     }
-})
+}));
 
 const MidSlide = ({ products }) => {
     const classes = useStyle();

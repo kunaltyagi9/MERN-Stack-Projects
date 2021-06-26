@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 const useStyle = makeStyles({
     component: {
-        width: '30%'
+        // width: '30%'
     },
     header: {
         padding: '15px 24px',

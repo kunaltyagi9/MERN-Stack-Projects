@@ -20,7 +20,7 @@ const responsive = {
     }
 };
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     component: {
         marginTop: 12,
         background: '#FFFFFF'
@@ -57,8 +57,13 @@ const useStyle = makeStyles({
     },
     wrapper: {
         padding: '25px 15px'
+    },
+    timer: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
     }
-})
+}));
 
 const MultiSlide = ({ data, timer, title }) => {
     const classes = useStyle();
@@ -73,10 +78,10 @@ const MultiSlide = ({ data, timer, title }) => {
             <Box className={classes.deal}>
                 <Typography className={classes.dealText}>{title}</Typography>
                 {
-                    timer && <>
+                    timer && <Box className={classes.timer}>
                                 <img src={timerURL} style={{ width: 24 }} alt='time clock' />
                                 <Countdown date={Date.now() + 5.04e+7} renderer={renderer} />
-                        </>
+                        </Box>
                 }
                 <Button variant="contained" color="primary" className={classes.button}>View All</Button>
             </Box>
@@ -92,7 +97,7 @@ const MultiSlide = ({ data, timer, title }) => {
                 keyBoardControl={true}
                 showDots={false}
                 containerClass="carousel-container"
-                removeArrowOnDeviceType={["tablet", "mobile"]}
+                // removeArrowOnDeviceType={["tablet", "mobile"]}
                 dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-40-px"
             >

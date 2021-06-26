@@ -21,19 +21,17 @@ export const addPaymentGateway = async (request, response) => {
 export const paymentResponse = (request, response) => {
 
     const form = new formidable.IncomingForm();
-    console.log('Hieee', request.body);
-    // console.log('inside', fields);
         let paytmCheckSum = request.body.CHECKSUMHASH;
         delete request.body.CHECKSUMHASH;
 
-        var isVerifySignature = paytmchecksum.verifySignature(request.body, 'V&2v3reS91F39I!8', paytmCheckSum);
+        var isVerifySignature = paytmchecksum.verifySignature(request.body, 'bKMfNxPPf_QdZppa', paytmCheckSum);
         console.log(isVerifySignature);
         if (isVerifySignature) {
             var paytmParams = {};
             paytmParams["MID"] = request.body.MID;
             paytmParams["ORDERID"] = request.body.ORDERID;
 
-            paytmchecksum.generateSignature(paytmParams, 'V&2v3reS91F39I!8').then(function (checksum) {
+            paytmchecksum.generateSignature(paytmParams, 'bKMfNxPPf_QdZppa').then(function (checksum) {
 
                 paytmParams["CHECKSUMHASH"] = checksum;
 
@@ -59,19 +57,9 @@ export const paymentResponse = (request, response) => {
 
                     post_res.on('end', function () {
                         let result = JSON.parse(res)
-                        if (result.STATUS === 'TXN_SUCCESS') {
-                            //store in db
-                            // db.collection('payments').doc('mPDd5z0pNiInbSIIotfj').update({ paymentHistory: firebase.firestore.FieldValue.arrayUnion(result) })
-                            //     .then(() => console.log("Update success"))
-                            //     .catch(() => console.log("Unable to update"))
-                        }
-
                         response.redirect(`http://localhost:3000/`)
-
-
                     });
                 });
-
                 post_req.write(post_data);
                 post_req.end();
             });
