@@ -20,10 +20,8 @@ export const createPost = async (post) => {
 }
 
 export const getAllPosts = async (param) => {
-    let response;
     try {
-        response = await axios.get(`${url}/posts${param}`);
-        
+        let response = await axios.get(`${url}/posts${param}`);
         return response.data;
     } catch (error) {
         console.log('Error while calling getPosts API ', error)
@@ -39,9 +37,9 @@ export const getPost = async (id) => {
     }
 }
 
-export const updatePost = async () => {
+export const updatePost = async (id, post) => {
     try {
-        return await axios.put(`${url}/update`);
+        return await axios.put(`${url}/update/${id}`, post);
         
     } catch(error) {
         console.log('Error while calling updatePost API ', error)

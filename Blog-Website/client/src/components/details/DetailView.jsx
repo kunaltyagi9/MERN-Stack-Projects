@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Box, makeStyles, Typography, Grid } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 import { Link, useHistory } from 'react-router-dom'
 import { getPost, deletePost, updatePost } from '../../service/api';
+
+import { LoginContext } from '../../context/ContextProvider';
 
 const useStyle = makeStyles(theme => ({
     container: {
@@ -52,17 +54,18 @@ const DetailView = ({ match }) => {
     const history = useHistory();
     
     const [post, setPost] = useState({});
-    const login = 'codeforinterview';
-
+    const { account, setAccount } = useContext(LoginContext);
+    
     useEffect(() => {
         const fetchData = async () => {
             let data = await getPost(match.params.id);
             setPost(data);
         }
         fetchData();
+        console.log(account, post.username);
     }, []);
 
-    const deleteBlog = async () => {
+    const deleteBlog = async () => {    
         await deletePost(post._id);
         history.push('/')
     }
@@ -72,7 +75,7 @@ const DetailView = ({ match }) => {
             <img src={post.picture || url} alt="post" className={classes.image} />
             <Box className={classes.icons}>
                 {   
-                    login === post.username && 
+                    account === post.username && 
                     <>  
                         <Link to={`/update/${post._id}`}><Edit className={classes.icon} color="primary"/></Link>
                         <Link><Delete onClick={() => deleteBlog()} className={classes.icon} color="error" /></Link>

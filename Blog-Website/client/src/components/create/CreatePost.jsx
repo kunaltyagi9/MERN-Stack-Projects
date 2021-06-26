@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box, makeStyles, TextareaAutosize, Button, FormControl, InputBase } from '@material-ui/core';
-import { AddCircle as Add } from '@material-ui/icons';
-import { useHistory } from 'react-router-dom';
+import { AddCircle as Add, CallEnd } from '@material-ui/icons';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { createPost, uploadFile } from '../../service/api';
+import { LoginContext } from '../../context/ContextProvider';
 
 const useStyle = makeStyles(theme => ({
     container: {
@@ -42,18 +43,20 @@ const initialPost = {
     title: '',
     description: '',
     picture: '',
-    username: 'codeforinterview',
-    categories: 'Tech',
+    username: '',
+    categories: '',
     createdDate: new Date()
 }
 
 const CreatePost = () => {
     const classes = useStyle();
     const history = useHistory();
+    const location = useLocation();
 
     const [post, setPost] = useState(initialPost);
     const [file, setFile] = useState('');
     const [imageURL, setImageURL] = useState('');
+    const { account, setAccount } = useContext(LoginContext);
 
     const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
     
@@ -70,6 +73,8 @@ const CreatePost = () => {
             }
         }
         getImage();
+        post.categories = location.search?.split('=')[1] || 'All'
+        post.username = account;
     }, [file])
 
     const savePost = async () => {

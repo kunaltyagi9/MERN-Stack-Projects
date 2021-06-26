@@ -6,7 +6,6 @@ const storage = new GridFsStorage({
     // url: 'mongodb://localhost:27017/image-upload',
     options: { useUnifiedTopology: true, useNewUrlParser: true },
     file: (request, file) => {
-        console.log("hie")
         const match = ["image/png", "image/jpg"];
 
         if(match.indexOf(file.memeType) === -1) 

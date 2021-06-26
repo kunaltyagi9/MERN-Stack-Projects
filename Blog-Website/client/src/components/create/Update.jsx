@@ -80,9 +80,9 @@ const Update = ({ match }) => {
         getImage();
     }, [file])
 
-    const updatePost = async () => {
-        await updatePost(post);
-        history.push('/');
+    const updateBlogPost = async () => {
+        await updatePost(match.params.id, post);
+        history.push(`/details/${match.params.id}`);
     }
 
     const handleChange = (e) => {
@@ -104,7 +104,7 @@ const Update = ({ match }) => {
                     onChange={(e) => setFile(e.target.files[0])}
                 />
                 <InputBase onChange={(e) => handleChange(e)} value={post.title} name='title' placeholder="Title" className={classes.textfield} />
-                <Button onClick={() => updatePost()} variant="contained" color="primary">Update</Button>
+                <Button onClick={() => updateBlogPost()} variant="contained" color="primary">Update</Button>
             </FormControl>
 
             <TextareaAutosize

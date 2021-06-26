@@ -15,8 +15,7 @@ export const createPost = async (request, response) => {
 
 export const updatePost = async (request, response) => {
     try {
-        const post = await Post.findById(request.params.id); // from where did this id will come from?
-        console.log(post);
+        const post = await Post.findById(request.params.id);
         
         await Post.findByIdAndUpdate( request.params.id, { $set: request.body })
 
@@ -40,7 +39,7 @@ export const deletePost = async (request, response) => {
 
 export const getPost = async (request, response) => {
     try {
-        const post = await Post.findById(request.params.id); // from where did this id will come from?
+        const post = await Post.findById(request.params.id);
 
         response.status(200).json(post);
     } catch (error) {
@@ -56,7 +55,7 @@ export const getAllPosts = async (request, response) => {
         if(username) 
             posts = await Post.find({ username: username });
         else if (category) 
-            posts = await Post.find({ category: category });
+            posts = await Post.find({ categories: category });
         else 
             posts = await Post.find({});
 

@@ -1,6 +1,6 @@
 
 import { Button, Table, TableHead, TableRow, TableCell, TableBody, makeStyles, Grid } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { categories } from '../../constants/data';
 
@@ -21,11 +21,13 @@ const useStyle = makeStyles({
     }
 })
 
-const Categories = () => {
+const Categories = ({ match }) => {
     const classes = useStyle();
+    const location = useLocation();
+    let params = new URLSearchParams(location.search);
     return (
         <>
-            <Link to='/create' style={{ textDecoration: 'none' }}>
+            <Link to={`/create/${location.search}`} style={{ textDecoration: 'none' }}>
                 <Button variant="contained" className={classes.write}>Create Blog</Button>
             </Link>
             
