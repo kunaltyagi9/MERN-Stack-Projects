@@ -9,15 +9,12 @@ const AccountProvider = ({children}) => {
     const [showloginButton, setShowloginButton] = useState(true);
     const [showlogoutButton, setShowlogoutButton] = useState(false);
 
+    const [activeUsers, setActiveUsers] = useState([]);
+
     const socket = useRef();
 
     useEffect(() => {
         socket.current = io('ws://localhost:9000');
-        // setAccount({
-        //     name: 'Kunal Tyagi',
-        //     userId: '123456789',
-        //     picture: ''
-        // })
     }, [])
     
     return (
@@ -28,7 +25,9 @@ const AccountProvider = ({children}) => {
             setShowloginButton,
             showlogoutButton,
             setShowlogoutButton,
-            socket
+            socket,
+            activeUsers,
+            setActiveUsers
         }}>
             {children}
         </AccountContext.Provider>

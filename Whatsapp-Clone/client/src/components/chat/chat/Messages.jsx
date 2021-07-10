@@ -42,14 +42,12 @@ const Messages = ({ person, conversation }) => {
     const [toggle, setToggle] = useState(false);
 
     const scrollRef = useRef();
-    // const socket = useRef();
 
     const { account, socket } = useContext(AccountContext);
 
     useEffect(() => {
         
         socket.current.on('getMessage', data => {
-            console.log(data);
             setIncomingMessage({
                 sender: data.senderId,
                 text: data.text,
@@ -60,7 +58,6 @@ const Messages = ({ person, conversation }) => {
     
     useEffect(() => {
         const getMessageDetails = async () => {
-            console.log(conversation)
             let data = await getMessages(conversation._id);
             setMessages(data);
         }
@@ -75,12 +72,10 @@ const Messages = ({ person, conversation }) => {
         incomingMessage && conversation?.members?.includes(incomingMessage.sender) && 
             setMessages((prev) => [...prev, incomingMessage]);
         
-        console.log(incomingMessage);
     }, [incomingMessage, conversation]);
 
     const receiverId = conversation?.members?.find(member => member !== account.googleId);
-    console.log(receiverId);
-
+    
     const sendText = async (e) => {
         let code = e.keyCode || e.which;
         if(!value) return;

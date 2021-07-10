@@ -5,13 +5,17 @@ import Messenger from './components/Messenger';
 import UserProvider from './context/UserProvider';
 import AccountProvider from './context/AccountProvider';
 
+import TemplateProvider from './templates/TemplateProvider';
+
 function App() {
   return (
-    <UserProvider>
-      <AccountProvider>
-        <Messenger/>
-      </AccountProvider>
-    </UserProvider>
+    <TemplateProvider>
+      <UserProvider>
+        <AccountProvider>
+          <Messenger/>
+        </AccountProvider>
+      </UserProvider>
+    </TemplateProvider>
   );
 }
 

@@ -8,10 +8,21 @@ import { UserContext } from '../../../context/UserProvider';
 
 import { clientId } from '../../../constants/data';
 
+//components
+import InfoDrawer from '../../drawer/Drawer';
+
 const useStyle = makeStyles({
     menuItem: {
-        fontSize: 12,
-        padding: '0px 40px 0px 20px'
+        fontSize: 14,
+        padding: '15px 60px 5px 24px',
+        color: '#4A4A4A'
+    },
+    logout: {
+        border:'none!important', 
+        boxShadow: 'none!important',
+        '& > *': {
+            padding: '0px!important'
+        }
     }
 })
 
@@ -19,6 +30,7 @@ const HeaderMenu = () => {
     const classes = useStyle();
     
     const [open, setOpen] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
     
     const { setAccount, setShowloginButton, showlogoutButton, setShowlogoutButton } = useContext(AccountContext);
     const { setPerson } = useContext(UserContext);
@@ -41,6 +53,11 @@ const HeaderMenu = () => {
         setPerson({});
     };
 
+    const toggleDrawer = () => {
+        setOpenDrawer(true);
+    }
+
+
 
     return (
         <>
@@ -60,17 +77,20 @@ const HeaderMenu = () => {
                     horizontal: 'right',
                 }}
             >
+                <MenuItem className={classes.menuItem} onClick={() => { handleClose(); toggleDrawer()}}>Profile</MenuItem>
                 <MenuItem className={classes.menuItem} onClick={() => { handleClose(); }}>
                 { showlogoutButton ?
                     <GoogleLogout
                         clientId={clientId}
                         buttonText="Logout"
                         onLogoutSuccess={onSignoutSuccess}
+                        className={classes.logout}
                     >
                     </GoogleLogout> : null
                 }
                 </MenuItem>
             </Menu>
+            <InfoDrawer open={openDrawer} setOpen={setOpenDrawer} profile={true} />
         </>
     )
 }

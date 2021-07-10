@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 import { Box, InputBase, makeStyles } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
 
@@ -32,13 +32,14 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: 65,
         fontSize: 14,
-        height: 20,
+        height: 15,
         width: '100%'
     }
 }));
 
-const Search = () => {
+const Search = ({ setText }) => {
     const classes = useStyles();
+
     return (
         <Box className={classes.component}>
         <Box className={classes.search}>
@@ -52,6 +53,7 @@ const Search = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => setText(e.target.value)}
             />
           </Box>
         </Box>

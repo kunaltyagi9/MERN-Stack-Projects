@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { Chat as MessageIcon } from '@material-ui/icons';
 
@@ -6,6 +6,7 @@ import { AccountContext } from '../../../context/AccountProvider';
 
 //components
 import HeaderMenu from './HeaderMenu';
+import InfoDrawer from '../../drawer/Drawer';
 
 const useStyles = makeStyles({
     header: {
@@ -37,15 +38,26 @@ const useStyles = makeStyles({
 
 const Header = () => {
     const classes = useStyles();
+    
+    const [openDrawer, setOpenDrawer] = useState(false);
+
     const { account } = useContext(AccountContext);
+    
+    const toggleDrawer = () => {
+        setOpenDrawer(true);
+    }
+
     return (
-        <Box className={classes.header}>
-            <img src={account.imageUrl} className={classes.avatar} />
-            <Box className={classes.chatIcons}>
-                <MessageIcon />
-                <HeaderMenu/>
+        <>
+            <Box className={classes.header}>
+                <img src={account.imageUrl} className={classes.avatar} onClick={() => toggleDrawer()} />
+                <Box className={classes.chatIcons}>
+                    <MessageIcon />
+                    <HeaderMenu/>
+                </Box>
             </Box>
-        </Box>
+            <InfoDrawer open={openDrawer} setOpen={setOpenDrawer} profile={true} />
+        </>
     )
 }
 

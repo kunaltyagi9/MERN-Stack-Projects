@@ -12,17 +12,19 @@ const useStyle = makeStyles({
         display: 'flex'
     },
     dialog: {
-        padding: 60,
+        padding: '56px 0 56px 56px',
     },
     qr: {
-        padding: '40px 40px 0 0',
-        height: 285,
-        width: 285
+        margin: '50px 0 0 50px',
+        height: 264,
+        width: 264
     },
     title: {
-        fontSize: 28,
-        marginBottom: 10,
+        fontSize: 26,
+        marginBottom: 25,
         color: '#525252',
+        fontFamily: 'Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif',
+        fontWeight: 300   
     },
     list: {
         '&  > *': {
@@ -100,30 +102,30 @@ const LoginDialog = ({ classes }) => {
                         <ListItem>3. Point your phone to this screen to capture the code</ListItem>
                     </List>
                 </Box>
-                <Box>
+                <Box style={{position:'relative'}}>
                     <img src={url} alt="QR" className={classname.qr} />
+                    <div style={{position: 'absolute', left: '50%', top: '50%', transform: 'translateX(0%) translateY(-25%)'}}>
+                        { showloginButton ?
+                            <GoogleLogin
+                                clientId={clientId}
+                                buttonText=""
+                                onSuccess={onLoginSuccess}
+                                onFailure={onLoginFailure}
+                                cookiePolicy={'single_host_origin'}
+                                isSignedIn={true}
+                            /> : null}
+
+                        { showlogoutButton ?
+                            <GoogleLogout
+                                clientId={clientId}
+                                buttonText=""
+                                onLogoutSuccess={onSignoutSuccess}
+                            >
+                            </GoogleLogout> : null
+                        }
+                    </div>
                 </Box>
             </Box>
-            <div>
-            { showloginButton ?
-                <GoogleLogin
-                    clientId={clientId}
-                    buttonText=""
-                    onSuccess={onLoginSuccess}
-                    onFailure={onLoginFailure}
-                    cookiePolicy={'single_host_origin'}
-                    isSignedIn={true}
-                /> : null}
-
-            { showlogoutButton ?
-                <GoogleLogout
-                    clientId={clientId}
-                    buttonText=""
-                    onLogoutSuccess={onSignoutSuccess}
-                >
-                </GoogleLogout> : null
-            }
-        </div>
         </Dialog>
     )
 }
