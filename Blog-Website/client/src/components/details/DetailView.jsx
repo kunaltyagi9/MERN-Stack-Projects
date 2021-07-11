@@ -6,6 +6,9 @@ import { getPost, deletePost, updatePost } from '../../service/api';
 
 import { LoginContext } from '../../context/ContextProvider';
 
+//components
+import Comments from './comments/Comments';
+
 const useStyle = makeStyles(theme => ({
     container: {
         margin: '50px 100px',
@@ -92,6 +95,7 @@ const DetailView = ({ match }) => {
             </Box>
 
             <Typography className={classes.detail}>{post.description}</Typography>
+            <Comments post={post} />
         </Box>
     )
 }

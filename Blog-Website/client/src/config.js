@@ -1,12 +1,12 @@
 const oktaAuthConfig = {
     issuer: 'https://dev-01876379.okta.com/oauth2/default',
-    clientId: '0oa11mbp7itvGjLRY5d7',
+    clientId: '0oa152pkag26QMBWd5d7',
     redirectUri: window.location.origin + '/login/callback',
 };
   
 const oktaSignInConfig = {
     baseUrl: 'https://dev-01876379.okta.com',
-    clientId: '0oa11mbp7itvGjLRY5d7',
+    clientId: '0oa152pkag26QMBWd5d7',
     redirectUri: window.location.origin + '/login/callback',
     logo: 'blog.png',
     authParams: {
