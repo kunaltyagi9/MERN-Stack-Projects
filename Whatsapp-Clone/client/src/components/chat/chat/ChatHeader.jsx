@@ -29,6 +29,11 @@ const useStyles = makeStyles({
             fontSize: 22,
             color: '#919191'
         }
+    },
+    status: {
+        fontSize: 12,
+        color: 'rgb(0, 0, 0, 0.6)',
+        marginLeft: 10
     }
 });
 
@@ -44,7 +49,9 @@ const ChatHeader = ({ person }) => {
             <img src={url} alt="display picture"  className={classes.displayPicture} />     
             <Box>
                 <Typography className={classes.name}>{person.name}</Typography>   
-                {/* <Typography className={classes.name}>{person.name}</Typography>     */}
+                <Typography className={classes.status}>
+                    {activeUsers?.find(user => user.userId === person.googleId) ? 'Online' : 'Offline'}
+                </Typography>    
             </Box>   
             <Box className={classes.rightContainer}>
                 <Search />

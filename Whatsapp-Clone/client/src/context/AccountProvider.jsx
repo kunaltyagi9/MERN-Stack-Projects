@@ -11,12 +11,13 @@ const AccountProvider = ({children}) => {
 
     const [activeUsers, setActiveUsers] = useState([]);
 
+    console.log(activeUsers);
     const socket = useRef();
 
     useEffect(() => {
         socket.current = io('ws://localhost:9000');
     }, [])
-    
+
     return (
         <AccountContext.Provider value={{ 
             account, 

@@ -12,7 +12,7 @@ route.post('/add', addUser);
 route.get('/users', getUser);
 
 route.post('/conversation/add', newConversation);
-route.get('/conversation/:id', getConversation);
+route.post('/conversation/get', getConversation);
 
 route.post('/message/add', newMessage);
 route.get('/message/get/:id', getMessage);

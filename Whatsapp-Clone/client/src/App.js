@@ -1,18 +1,22 @@
-
+import { lazy, Suspense } from 'react';
 
 //components
-import Messenger from './components/Messenger';
 import UserProvider from './context/UserProvider';
 import AccountProvider from './context/AccountProvider';
 
 import TemplateProvider from './templates/TemplateProvider';
+import Loader from './components/loader/Loader';
+
+const Messenger = lazy(() => import('./components/Messenger'));
 
 function App() {
   return (
     <TemplateProvider>
       <UserProvider>
         <AccountProvider>
-          <Messenger/>
+          <Suspense fallback={<Loader />}>
+            <Messenger/>
+          </Suspense>
         </AccountProvider>
       </UserProvider>
     </TemplateProvider>
