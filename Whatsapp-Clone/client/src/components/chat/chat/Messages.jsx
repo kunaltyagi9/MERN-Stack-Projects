@@ -39,11 +39,10 @@ const Messages = ({ person, conversation }) => {
     const [messages, setMessages] = useState([]);
     const [incomingMessage, setIncomingMessage] = useState(null);
     const [value, setValue] = useState();
-    const [toggle, setToggle] = useState(false);
 
     const scrollRef = useRef();
 
-    const { account, socket } = useContext(AccountContext);
+    const { account, socket, newMessageFlag, setNewMessageFlag } = useContext(AccountContext);
 
     useEffect(() => {
         
@@ -62,7 +61,7 @@ const Messages = ({ person, conversation }) => {
             setMessages(data);
         }
         getMessageDetails();
-    }, [conversation?._id, person._id, toggle]);
+    }, [conversation?._id, person._id, newMessageFlag]);
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ transition: "smooth" })
@@ -96,7 +95,7 @@ const Messages = ({ person, conversation }) => {
             await newMessages(message);
 
             setValue('');
-            setToggle(prev => !prev);
+            setNewMessageFlag(prev => !prev);
         } 
     }
 

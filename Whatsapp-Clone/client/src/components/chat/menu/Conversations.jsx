@@ -36,7 +36,6 @@ const Conversations = ({ text }) => {
     useEffect(() => {
         socket.current.emit('addUser', account.googleId);
         socket.current.on("getUsers", users => {
-            console.log(users); 
             setActiveUsers(users);
         })
     }, [account])

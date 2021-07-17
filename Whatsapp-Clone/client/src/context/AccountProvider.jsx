@@ -10,8 +10,9 @@ const AccountProvider = ({children}) => {
     const [showlogoutButton, setShowlogoutButton] = useState(false);
 
     const [activeUsers, setActiveUsers] = useState([]);
+    
+    const [newMessageFlag, setNewMessageFlag] = useState(false);
 
-    console.log(activeUsers);
     const socket = useRef();
 
     useEffect(() => {
@@ -28,7 +29,9 @@ const AccountProvider = ({children}) => {
             setShowlogoutButton,
             socket,
             activeUsers,
-            setActiveUsers
+            setActiveUsers,
+            newMessageFlag,
+            setNewMessageFlag
         }}>
             {children}
         </AccountContext.Provider>

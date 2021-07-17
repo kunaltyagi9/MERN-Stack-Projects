@@ -6,7 +6,7 @@ import { UserContext } from '../../context/UserProvider';
 //components
 import Menu from './menu/Menu';
 import ChatBox from './chat/ChatBox';
-import EmptyChat from './EmptyChat';
+import EmptyChat from './chat/EmptyChat';
 
 const useStyles = makeStyles({
     component: {

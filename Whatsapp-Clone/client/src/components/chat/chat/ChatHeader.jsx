@@ -44,6 +44,8 @@ const ChatHeader = ({ person }) => {
     
     const { activeUsers } = useContext(AccountContext);
 
+    console.log(activeUsers);
+
     return (
         <Box className={classes.header}>
             <img src={url} alt="display picture"  className={classes.displayPicture} />     
