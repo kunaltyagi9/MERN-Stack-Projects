@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     footer: {
         height: '55px',
         background: '#ededed',
-        position: 'absolute',
+        // position: 'absolute',
         width: '100%',
         bottom: 0,
         display: 'flex',
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     search: {
         borderRadius: 18,
         backgroundColor: '#FFFFFF',
-        width: '59%'
+        width: 'calc(94% - 100px)'
     },
     inputRoot: {
         width: '100%'

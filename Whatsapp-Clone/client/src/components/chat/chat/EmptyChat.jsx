@@ -1,7 +1,7 @@
 
 import { Box, makeStyles, Typography, Divider } from '@material-ui/core';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme => ({
     component: {
         background: '#f8f9fa',
         padding: '50px 0',
@@ -9,7 +9,10 @@ const useStyle = makeStyles({
         height: '100%'
     },
     container: {
-        padding: '0 200px'
+        padding: '0 200px',
+        [theme.breakpoints.down('sm')]: {
+            padding: -0
+        }
     },
     image: {
         width: 320
@@ -28,7 +31,7 @@ const useStyle = makeStyles({
     divider: {
         margin: '30px 0'
     }
-})
+}));
 
 const EmptyChat = () => {
     const classes = useStyle();

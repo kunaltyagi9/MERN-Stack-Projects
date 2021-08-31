@@ -70,9 +70,12 @@ const Conversation = ({ user }) => {
             <Box style={{width: '100%'}}>
                 <Box className={classes.container}>
                     <Typography>{user.name}</Typography>
-                    <Typography className={classes.timestamp}>
-                        {getTime(new Date(message.timestamp).getHours())}:{getTime(new Date(message.timestamp).getMinutes())}
-                    </Typography>        
+                    { 
+                        message.text && 
+                        <Typography className={classes.timestamp}>
+                            {getTime(new Date(message.timestamp).getHours())}:{getTime(new Date(message.timestamp).getMinutes())}
+                        </Typography>        
+                    }
                 </Box>
                 <Box>
                     <Typography className={classes.text}>{message.text}</Typography>
