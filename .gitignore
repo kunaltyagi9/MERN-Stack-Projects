@@ -7,3 +7,7 @@
 /Whatsapp-Clone/server/node_modules
 /Whatsapp-Clone/socket/node_modules
 /Whatsapp-Clone/server/.env
+/Inshorts-Clone/server/node_modules
+/Inshorts-Clone/server/package-lock.json
+/Inshorts-Clone/client/node_modules
+/Inshorts-Clone/client/package-lock.json
