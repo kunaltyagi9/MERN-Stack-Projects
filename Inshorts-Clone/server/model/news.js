@@ -25,6 +25,10 @@ const newsSchema = new mongoose.Schema({
     link: {
         type: String,
         required: true
+    },
+    publisher: {
+        type: String,
+        required: true
     }
 });
 

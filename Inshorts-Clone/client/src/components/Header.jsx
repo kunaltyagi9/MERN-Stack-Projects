@@ -4,13 +4,14 @@ import { Menu } from '@material-ui/icons'
 
 const useStyles = makeStyles({
     header: {
-        background: '#fff'
+        background: '#fff',
+        height: 70
     },
     menu: {
         color: '#000'
     },
     image: {
-        height: 50,
+        height: 55,
         margin: 'auto',
         paddingRight: 70
     }

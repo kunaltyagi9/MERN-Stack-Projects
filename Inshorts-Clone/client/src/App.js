@@ -7,13 +7,19 @@ import Header from './components/Header';
 import InfoHeader from './components/InfoHeader';
 import Articles from './components/Articles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   container: {
-    marginTop: 100,
-    width: '60%',
-    margin: '0 auto'
+    marginTop: 110,
+    width: '59%',
+    margin: '0 auto',
+    [theme.breakpoints.down('md')]: {
+      width: '75%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '85%'
+    }
   }
-})
+}))
 
 function App() {
   const classes = useStyles();
