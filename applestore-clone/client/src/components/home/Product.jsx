@@ -19,7 +19,9 @@ const useStyles = makeStyles({
     },
     subHeading: {
         padding: '5px 0 5px 0',
-        fontSize: [21, "!important"]
+        fontSize: [21, "!important"],
+        maxWidth: 450,
+        textAlign: 'center'
     },
     link: {
         fontSize: [21, "!important"],
