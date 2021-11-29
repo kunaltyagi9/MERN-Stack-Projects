@@ -2,10 +2,25 @@
 import { Box, Typography, ButtonGroup, Button } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
+// import { keyframes } from '@mui/system';
 
-let imageURL;
+// const fade = keyframes`
+//     from {top:0px; opacity: 0;}
+//     to {top:100px; opacity: 1;}
+    
+// `
 
 const useStyles = makeStyles({
+    "@keyframes fadeIn": {
+        "0%": {
+          opacity: 0,
+        //   transform: "translateY(5rem)"
+        },
+        "100%": {
+          opacity: 1,
+        //   transform: "translateY(0)"
+        }
+    },
     container: {
         height: '100vh',
         position: 'relative'
@@ -14,6 +29,12 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        position: 'relative',
+        animation: `$fadeIn 2s ease-out forwards`,
+        animationIterationCount: '2',
+        /* chrome and safari */
+        WebkitAnimation: `$fadeIn 3s`,
+        WebkitAnimationIterationCount: 1,
         '& :first-child': {
             fontSize: 40,
             color: '#181b21',
@@ -54,7 +75,6 @@ const useStyles = makeStyles({
 })
 
 const Product = ({ product }) => {
-    imageURL = product.imageURL;
     const classes = useStyles();
 
     return (
@@ -67,7 +87,7 @@ const Product = ({ product }) => {
                 <Button variant="contained">CUSTOM ORDER</Button>
                 <Button variant="contained">EXISTING INVENTORY</Button>
             </Box>
-            { product.downArrow && <KeyboardArrowDown className={classes.arrow} /> }
+            {/* { product.downArrow && <KeyboardArrowDown className={classes.arrow} /> } */}
         </Box>
     )
 }
