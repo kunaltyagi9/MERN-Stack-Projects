@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Typography, Box, TextField, Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -70,9 +71,21 @@ const useStyles = makeStyles({
     }
 });
 
+const defaultValues = {
+    email: '',
+    password: ''
+};
+
 const Login = () => {
     const classes = useStyles();
     const navigate = useNavigate();
+
+    const [userCredentials, setUserCreadentials] = useState(defaultValues);
+
+    const onValueChange = (e) => {
+        setUserCreadentials({ ...userCredentials, [e.target.name]: e.target.value });
+        console.log(userCredentials);
+    }
 
     return (
         <>
@@ -80,9 +93,11 @@ const Login = () => {
             <Box className={classes.container}>
                 <Typography className={classes.signin}>Sign In</Typography>
                 <Typography className={classes.heading}>Email Address</Typography>
-                <TextField InputProps={{ className: classes.input }} size="small" variant="filled" />
+                <TextField onChange={(e) => onValueChange(e)} name='email' 
+                    InputProps={{ className: classes.input }} size="small" variant="filled" />
                 <Typography className={classes.heading}>Password</Typography>
-                <TextField InputProps={{ className: classes.input }} size="small" variant="filled" />
+                <TextField onChange={(e) => onValueChange(e)} name='password'
+                    InputProps={{ className: classes.input }} size="small" variant="filled" />
 
                 <Button className={classes.button} variant="contained">Sign in</Button>
                 <Box component="span" className={classes.linebreak}>OR</Box>
