@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, List, ListItem, createTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Menu } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 //components
 import DrawerMenu from './DrawerMenu';
@@ -85,7 +86,7 @@ const Header = () => {
             </List>
             <List className={classes.rightList}>
                 <ListItem>Shop</ListItem>
-                <ListItem>Account</ListItem>
+                <ListItem><Link to="/login">Account</Link></ListItem>
             </List>
             <Menu onClick={toggleDrawer} className={classes.menu} />
             <DrawerMenu open={open} toggleDrawer={toggleDrawer} />
