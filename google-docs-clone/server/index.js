@@ -4,13 +4,13 @@ import Connection from './database/db.js';
 
 import { getDocument, updateDocument } from './controller/document-controller.js'
 
-const PORT = 9000;
+const PORT = process.env.PORT || 9000;
 
 Connection();
 
 const io = new Server(PORT, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: '',
         methods: ['GET', 'POST']
     }
 });
