@@ -1,33 +1,32 @@
 
-import { AppBar, Toolbar, makeStyles, Box } from '@material-ui/core';
-import { Menu } from '@material-ui/icons'
+import { AppBar, Toolbar, styled, Box } from '@mui/material';
+import { Menu } from '@mui/icons-material';
 
-const useStyles = makeStyles({
-    header: {
-        background: '#fff',
-        height: 70
-    },
-    menu: {
-        color: '#000'
-    },
-    image: {
+const StyledApp = styled(AppBar)`
+        background: #fff;
+        height: 70px;
+`;
+    
+const MenuIcon = styled(Menu)`
+        color: #000;
+`;
+    
+const Image = styled('img')({
         height: 55,
         margin: 'auto',
         paddingRight: 70
-    }
 })
 
 const Header = () => {
-    const classes = useStyles();
     const url = 'https://assets.inshorts.com/website_assets/images/logo_inshorts.png';
 
     return (
-        <AppBar className={classes.header}>
+        <StyledApp>
             <Toolbar>
-                <Menu className={classes.menu} />
-                <img src={url} alt="logo" className={classes.image} />
+                <MenuIcon />
+                <Image src={url} alt="logo" />
             </Toolbar>
-        </AppBar>
+        </StyledApp>
     )
 }
 
