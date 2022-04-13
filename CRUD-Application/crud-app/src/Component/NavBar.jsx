@@ -1,28 +1,29 @@
-import { AppBar, Toolbar, makeStyles } from '@material-ui/core';
+
+import { AppBar, Toolbar, styled } from '@mui/material';
+
 import { NavLink } from 'react-router-dom';
 
-const useStyle = makeStyles({
-    header: {
-        background: '#111111'
-    },
-    tabs: {
-        color: '#FFFFFF',
-        marginRight: 20,
-        textDecoration: 'none',
-        fontSize: 20
-    }
-})
+
+const Header = styled(AppBar)`
+    background: #111111;
+`;
+    
+const Tabs = styled(NavLink)`
+    color: #FFFFFF;
+    margin-right: 20px;
+    text-decoration: none;
+    font-size: 20px;
+`;
 
 const NavBar = () => {
-    const classes = useStyle();
     return (
-        <AppBar position="static" className={classes.header}>
+        <Header position="static">
             <Toolbar>
-                <NavLink className={classes.tabs} to="./" exact>Code for Interview</NavLink>
-                <NavLink className={classes.tabs} to="all" exact>All Users</NavLink>
-                <NavLink className={classes.tabs} to="add" exact>Add User</NavLink>
+                <Tabs to="./" exact>Code for Interview</Tabs>
+                <Tabs to="all" exact>All Users</Tabs>
+                <Tabs to="add" exact>Add User</Tabs>
             </Toolbar>
-        </AppBar>
+        </Header>
     )
 }
 

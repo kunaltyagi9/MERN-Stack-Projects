@@ -17,3 +17,7 @@
 /tesla-clone/client/package-lock.json
 /tesla-clone/server/node_modules
 /tesla-clone/server/package-lock.json
+/CRUD-application/crud-app/node_modules
+/CRUD-application/crud-app/package-lock.json
+/CRUD-application/crud-service/node_modules
+/CRUD-application/crud-service/package-lock.json

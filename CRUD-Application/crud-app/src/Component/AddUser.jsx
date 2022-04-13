@@ -1,5 +1,5 @@
 import react, { useState } from 'react';
-import { FormGroup, FormControl, InputLabel, Input, Button, makeStyles, Typography } from '@material-ui/core';
+import { FormGroup, FormControl, InputLabel, Input, Button, styled, Typography } from '@mui/material';
 import { addUser } from '../Service/api';
 import { useHistory } from 'react-router-dom';
 
@@ -10,24 +10,20 @@ const initialValue = {
     phone: ''
 }
 
-const useStyles = makeStyles({
-    container: {
-        width: '50%',
-        margin: '5% 0 0 25%',
-        '& > *': {
-            marginTop: 20
-        }
-    }
-})
+const Container = styled(FormGroup)`
+    width: 50%;
+    margin: 5% 0 0 25%;
+    & > div {
+        margin-top: 20px;
+`;
 
 const AddUser = () => {
     const [user, setUser] = useState(initialValue);
     const { name, username, email, phone } = user;
-    const classes = useStyles();
+    
     let history = useHistory();
 
     const onValueChange = (e) => {
-        console.log(e.target.value);
         setUser({...user, [e.target.name]: e.target.value})
     }
 
@@ -37,7 +33,7 @@ const AddUser = () => {
     }
 
     return (
-        <FormGroup className={classes.container}>
+        <Container>
             <Typography variant="h4">Add User</Typography>
             <FormControl>
                 <InputLabel htmlFor="my-input">Name</InputLabel>
@@ -58,7 +54,7 @@ const AddUser = () => {
             <FormControl>
                 <Button variant="contained" color="primary" onClick={() => addUserDetails()}>Add User</Button>
             </FormControl>
-        </FormGroup>
+        </Container>
     )
 }
 

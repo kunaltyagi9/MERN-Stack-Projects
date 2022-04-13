@@ -25,7 +25,7 @@ app.use('/users', Routes);
 // const URL = 'mongodb+srv://user:Manrun89@cluster0.zgrax.mongodb.net/CRUDAPP?retryWrites=true&w=majority';
 // const URL = 'mongodb://user:Manrun89@cluster-first-shard-00-00.zgrax.mongodb.net:27017,cluster-first-shard-00-01.zgrax.mongodb.net:27017,cluster-first-shard-00-02.zgrax.mongodb.net:27017/CRUDAPP?ssl=true&replicaSet=atlas-dair4b-shard-0&authSource=admin&retryWrites=true&w=majority'
 // const URL = 'mongodb://user:codeforinterview@crudapp-shard-00-00.zgrax.mongodb.net:27017,crudapp-shard-00-01.zgrax.mongodb.net:27017,crudapp-shard-00-02.zgrax.mongodb.net:27017/CRUDAPP?ssl=true&replicaSet=atlas-as0xva-shard-0&authSource=admin&retryWrites=true&w=majority'
-const URL = 'mongodb://user:codeforinterview@crud-shard-00-00.zgrax.mongodb.net:27017,crud-shard-00-01.zgrax.mongodb.net:27017,crud-shard-00-02.zgrax.mongodb.net:27017/CRUDAPP?ssl=true&replicaSet=atlas-qnhkkq-shard-0&authSource=admin&retryWrites=true&w=majority'
+const URL = 'mongodb://user:codeforinterview@crud-app-shard-00-00.fyf2n.mongodb.net:27017,crud-app-shard-00-01.fyf2n.mongodb.net:27017,crud-app-shard-00-02.fyf2n.mongodb.net:27017/CRUD-APPLICATION?ssl=true&replicaSet=atlas-rz0rvg-shard-0&authSource=admin&retryWrites=true&w=majority'
 // const dotenv = require('dotenv'); //3 - but we need to tell express where to pick this port 
 // It allows you to seperate your crediantials when we work in a collaborative environment
 const PORT = process.env.PORT || '8080'; //2 - get the port from env file, if not available pick 8080
