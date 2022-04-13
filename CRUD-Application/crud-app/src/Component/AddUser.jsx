@@ -1,7 +1,7 @@
 import react, { useState } from 'react';
 import { FormGroup, FormControl, InputLabel, Input, Button, styled, Typography } from '@mui/material';
 import { addUser } from '../Service/api';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const initialValue = {
     name: '',
@@ -21,7 +21,7 @@ const AddUser = () => {
     const [user, setUser] = useState(initialValue);
     const { name, username, email, phone } = user;
     
-    let history = useHistory();
+    let navigate = useNavigate();
 
     const onValueChange = (e) => {
         setUser({...user, [e.target.name]: e.target.value})
@@ -29,7 +29,7 @@ const AddUser = () => {
 
     const addUserDetails = async() => {
         await addUser(user);
-        history.push('./all');
+        navigate('/all');
     }
 
     return (

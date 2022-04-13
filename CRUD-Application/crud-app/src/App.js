@@ -4,19 +4,19 @@ import EditUser from './Component/EditUser';
 import NavBar from './Component/NavBar';
 import NotFound from './Component/NotFound'; 
 import CodeForInterview from './Component/CodeForInterview';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
       <NavBar />
-      <Switch>
-        <Route exact path="/" component={CodeForInterview} />
-        <Route exact path="/all" component={AllUsers} />
-        <Route exact path="/add" component={AddUser} />
-        <Route exact path="/edit/:id" component={EditUser} />
-        <Route component={NotFound} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<CodeForInterview /> } />
+        <Route path="all" element={<AllUsers /> } />
+        <Route path="/add" element={<AddUser />} />
+        <Route path="/edit/:id" element={<EditUser />} />
+        <Route path='/*' element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
 }

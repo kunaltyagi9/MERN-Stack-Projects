@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+
 import { FormGroup, FormControl, InputLabel, Input, Button, styled, Typography } from '@mui/material';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getUsers, editUser } from '../Service/api';
 
 const initialValue = {
@@ -22,7 +23,7 @@ const EditUser = () => {
     const { name, username, email, phone } = user;
     const { id } = useParams();
     
-    let history = useHistory();
+    let navigate = useNavigate();
 
     useEffect(() => {
         loadUserDetails();
@@ -35,7 +36,7 @@ const EditUser = () => {
 
     const editUserDetails = async() => {
         const response = await editUser(id, user);
-        history.push('/all');
+        navigate('/all');
     }
 
     const onValueChange = (e) => {
