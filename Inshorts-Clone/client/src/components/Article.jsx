@@ -19,14 +19,17 @@ const Image = styled('img')({
     objectFit: 'cover'
 });
 
-const RightContainer = styled(Grid)`
-    margin: 5px 0px 0 -25px;
-    display: flex;
-    flex-direction: column;
+const RightContainer = styled(Grid)(({ theme }) => ({
+    margin: '5px 0px 0 -25px',
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.between('sm', 'lg')]: {
+        padding: '0 5px'
+    },
     [theme.breakpoints.down('sm')]: {
         margin: '5px 0'
     }
-`;
+}));
 
 const Title = styled(Typography)`
     font-weight: 300;
