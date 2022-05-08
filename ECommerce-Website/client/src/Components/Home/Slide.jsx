@@ -1,4 +1,7 @@
-import { Box, Typography, makeStyles, Button, Divider } from '@material-ui/core';
+
+
+import { styled, Button, Divider, Box, TypographyBox, Typography } from '@mui/material';
+
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import Countdown from 'react-countdown';
@@ -20,71 +23,72 @@ const responsive = {
     }
 };
 
-const useStyle = makeStyles(theme => ({
-    component: {
-        marginTop: 12,
-        background: '#FFFFFF'
-    }, 
-    timer: {
-        color: '#7f7f7f',
-        marginLeft: 10,
-        display: 'flex',
-        alignItems: 'center'
-    },
-    image: {
-        width: 'auto',
-        height: 150
-    },
-    text: {
-        fontSize: 14,
-        marginTop: 5
-    },
-    deal: {
-        display: 'flex',
-        padding: '15px 20px'
-    },
-    dealText: {
-        fontSize: 22,
-        fontWeight: 600,
-        lineHeight: '32px',
-        marginRight: 25
-    },
-    button: {
-        marginLeft: 'auto',
-        backgroundColor: '#2874f0',
-        borderRadius: 2,
-        fontSize: 13
-    },
-    wrapper: {
-        padding: '25px 15px'
-    },
-    timer: {
-        [theme.breakpoints.down('sm')]: {
-            display: 'none'
-        }
+const Component = styled(Box)`
+    margin-top: 12px;
+    background: #FFFFFF;
+`;
+
+const Deal = styled(Box)`
+    display: flex;    
+    padding: 15px 20px;
+`
+
+const DealText = styled(Typography)`
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-right: 25px;
+`
+
+const Timer = styled(Box)`
+    color: #7f7f7f;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+`;
+
+const ViewAllButton = styled(Button)`
+    margin-left: auto;
+    background-color: #2874f0;
+    border-radius: 2px;
+    font-size: 13px;
+`;
+
+const Image = styled('img')({
+    width: 'auto',
+    height: 150
+})
+
+const Text = styled(Typography)`
+    font-size: 14px;
+    margin-top: 5px
+`
+
+const RenderTimer = styled(Box)(({ theme }) => ({
+    [theme.breakpoints.down('sm')]: {
+        display: 'none'
     }
 }));
-
+      
 const MultiSlide = ({ data, timer, title }) => {
-    const classes = useStyle();
     const timerURL = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/timer_a73398.svg';
 
     const renderer = ({ hours, minutes, seconds }) => {
-        return <span className={classes.timer}>{hours} : {minutes} : {seconds}  Left</span>;
+        return <RenderTimer variant="span">{hours} : {minutes} : {seconds}  Left</RenderTimer>;
     };
     
     return (
-        <Box className={classes.component}>
-            <Box className={classes.deal}>
-                <Typography className={classes.dealText}>{title}</Typography>
+        <Component>
+            <Deal>
+                <DealText>{title}</DealText>
                 {
-                    timer && <Box className={classes.timer}>
+                    timer && <Timer>
                                 <img src={timerURL} style={{ width: 24 }} alt='time clock' />
                                 <Countdown date={Date.now() + 5.04e+7} renderer={renderer} />
-                        </Box>
+                        </Timer>
                 }
-                <Button variant="contained" color="primary" className={classes.button}>View All</Button>
-            </Box>
+                <ViewAllButton variant="contained" color="primary">View All</ViewAllButton>
+            </Deal>
             <Divider />
             <Carousel
                 swipeable={false}
@@ -104,17 +108,17 @@ const MultiSlide = ({ data, timer, title }) => {
                 {
                     data.map(temp => (
                         <Link to={`product/${temp.id}`} style={{textDecoration: 'none'}}>
-                            <Box textAlign="center" className={classes.wrapper}>
-                                <img src={temp.url} className={classes.image} />
-                                <Typography className={classes.text} style={{ fontWeight: 600, color: '#212121' }}>{temp.title.shortTitle}</Typography>
-                                <Typography className={classes.text} style={{ color: 'green' }}>{temp.discount}</Typography>
-                                <Typography className={classes.text} style={{ color: '#212121', opacity: '.6' }}>{temp.tagline}</Typography>
+                            <Box textAlign="center" style={{ padding: '25px 15px' }}>
+                                <Image src={temp.url} />
+                                <Text style={{ fontWeight: 600, color: '#212121' }}>{temp.title.shortTitle}</Text>
+                                <Text style={{ color: 'green' }}>{temp.discount}</Text>
+                                <Text style={{ color: '#212121', opacity: '.6' }}>{temp.tagline}</Text>
                             </Box>
                         </Link>
                     ))
                 }
             </Carousel>
-        </Box>
+        </Component>
     )
 }
 
@@ -122,7 +126,7 @@ const Slide = (props) => {
     return (
         <>
             {
-                props.multi === true ? <MultiSlide {...props} /> : ''      
+                props.multi === true && <MultiSlide {...props} />
             }
         </>
     )

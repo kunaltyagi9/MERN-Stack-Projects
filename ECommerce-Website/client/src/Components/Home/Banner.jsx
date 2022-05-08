@@ -1,23 +1,21 @@
+
+
 import Carousel from 'react-material-ui-carousel'
-import { makeStyles } from '@material-ui/core'
+import { styled } from '@mui/material';
+
 import { bannerData } from '../../constant/data';
 
 
-const useStyle = makeStyles(theme => ({
-    container: {
-    },
-    image: {
-        width: '100%',
-        height: 280,
-        [theme.breakpoints.down('sm')]: {
-            objectFit: 'cover',
-            height: 180
-        }
+const Image = styled('img')(({ theme }) => ({
+    width: '100%',
+    height: 280,
+    [theme.breakpoints.down('sm')]: {
+        objectFit: 'cover',
+        height: 180
     }
-}))
+}));
 
 const Banner = () => {
-    const classes = useStyle();
     return (
         <Carousel 
             autoPlay={true} 
@@ -25,7 +23,6 @@ const Banner = () => {
             indicators={false}
             navButtonsAlwaysVisible={true}
             cycleNavigation={true}
-            className={classes.container}
             StylesProvider
             navButtonsProps={{ 
                 style: {
@@ -39,7 +36,7 @@ const Banner = () => {
         >
             {
                 bannerData.map(image => (
-                    <img src={image} className={classes.image} />
+                    <Image src={image} />
                 ))
             }
         </Carousel>
