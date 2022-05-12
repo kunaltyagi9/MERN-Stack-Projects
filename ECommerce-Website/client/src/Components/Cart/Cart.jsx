@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 
 import { Box, Typography, Button, Grid, styled } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
-import CartItem from './CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../../redux/actions/cartActions';
+
 import TotalView from './TotalView';
 import EmptyCart from './EmptyCart';
+import CartItem from './CartItem';
+
 import { post } from '../../utils/paytm';
 import { payUsingPaytm } from '../../service/api';
 
@@ -47,17 +50,18 @@ const StyledButton = styled(Button)`
     height: 51px;
 `;
 
-const Cart = ({ match, history }) => {
+const Cart = () => {
     const cartDetails = useSelector(state => state.cart);
     const { cartItems } = cartDetails;
+    const { id } = useParams();
 
     const dispatch = useDispatch();
     
     useEffect(() => {
-        if(cartItems && match.params.id !== cartItems.id)   
-            dispatch(addToCart(match.params.id));
+        if(cartItems && id !== cartItems.id)   
+            dispatch(addToCart(id));
         console.log(cartItems);
-    }, [dispatch, cartItems, match]);
+    }, [dispatch, cartItems, id]);
 
     const removeItemFromCart = (id) => {
         dispatch(removeFromCart(id));

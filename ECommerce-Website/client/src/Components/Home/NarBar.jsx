@@ -9,8 +9,8 @@ const Component = styled(Box)(({ theme }) => ({
     justifyContent: 'space-between',
     margin: '55px 130px 0 130px !important',
     overflowX: 'overlay',
-    [theme.breakpoints.down('md')]: {
-        margin: 0
+    [theme.breakpoints.down('lg')]: {
+        margin: '0px !important'
     }
 }))
 

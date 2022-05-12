@@ -48,11 +48,11 @@ const data = {
     tagline: '' 
 };
 
-const DetailView = ({ history, match }) => {
+const DetailView = () => {
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png'
     // const [ product, setProduct ] = useState(data);
     // const [ loading, setLoading ] = useState(false);
-    // const { id } = useParams();
+    const { id } = useParams();
 
     // const [ quantity, setQuantity ] = useState(1);
 
@@ -62,9 +62,9 @@ const DetailView = ({ history, match }) => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        if(product && match.params.id !== product.id)   
-            dispatch(getProductDetails(match.params.id));
-    }, [dispatch, product, match, loading]);
+        if(product && id !== product.id)   
+            dispatch(getProductDetails(id));
+    }, [dispatch, product, id, loading]);
 
     // useEffect(() => {
     //     getProductValues();
