@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home, NotFound } from './Components/default';
 import { Box } from '@mui/material'
 
@@ -16,12 +16,11 @@ function App() {
         <BrowserRouter>
           <Header />
           <Box style={{marginTop: 54}}>
-            <Switch>
-              <Route exact path= '/' component={Home} />
-              <Route exact path= '/cart' component={Cart} />
-              <Route exact path= '/product/:id' component={DetailView} />
-              <Route component={NotFound} />
-            </Switch>
+            <Routes>
+              <Route path= '/' element={<Home />} />
+              <Route path= '/cart' element={<Cart />} />
+              <Route path= '/product/:id' element={<DetailView />} />
+            </Routes>
           </Box>
         </BrowserRouter>
       </ContextProvider>

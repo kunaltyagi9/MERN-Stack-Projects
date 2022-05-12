@@ -1,6 +1,6 @@
 
 
-import { styled, Button, Divider, Box, TypographyBox, Typography } from '@mui/material';
+import { Button, Divider, Box, Typography, styled } from '@mui/material';
 
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
@@ -24,7 +24,7 @@ const responsive = {
 };
 
 const Component = styled(Box)`
-    margin-top: 12px;
+    margin-top: 10px;
     background: #FFFFFF;
 `;
 

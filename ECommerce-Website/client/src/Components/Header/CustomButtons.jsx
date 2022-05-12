@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { styled, Box, Typography, Badge, Button } from '@mui/material';
+import { Box, Typography, Badge, Button, styled } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 
 import { Link } from 'react-router-dom';
@@ -18,10 +18,10 @@ const Container = styled(Link)(({ theme }) => ({
 }));
 
 const Wrapper = styled(Box)(({ theme }) => ({
-    margin: '0 5% 0 auto',
+    margin: '0 3% 0 auto',
     display: 'flex',
     '& > *': {
-        marginRight: 50,
+        marginRight: '40px !important',
         textDecoration: 'none',
         color: '#FFFFFF',
         fontSize: 12,
@@ -71,13 +71,12 @@ const CustomButtons = () => {
         <Wrapper>
             {
                 account ? <Profile account={account} setAccount={setAccount} /> :
-                    <Link>
-                        <LoginButton variant="contained" onClick={() => openDialog()}>Login</LoginButton>
-                    </Link>
+                    <LoginButton variant="contained" onClick={() => openDialog()}>Login</LoginButton>
+                
             }
-            <Link>
-                <Typography style={{ marginTop: 2 }}>More</Typography>
-            </Link>
+            <Typography style={{ marginTop: 3, width: 135 }}>Become a Seller</Typography>
+            <Typography style={{ marginTop: 3 }}>More</Typography>
+            
             <Container to='/cart'>
                 <Badge badgeContent={cartItems?.length} color="secondary">
                     <ShoppingCart />

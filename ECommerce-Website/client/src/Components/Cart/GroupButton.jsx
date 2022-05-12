@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { ButtonGroup, Button, makeStyles } from "@material-ui/core";
 
-const useStyle = makeStyles({
-    component: {
-        marginTop: 30
-    },
-    button :{
-        borderRadius: '50%'
-    }
-})
+import { ButtonGroup, Button, styled } from "@mui/material";
+
+const Component = styled(ButtonGroup)`
+    margin-top: 30px;
+`;
+
+const StyledButton = styled(Button)`
+    border-radius: 50%;
+`;
 
 const GroupedButton = () => {
-    const classes = useStyle();
     const [ counter, setCounter ] = useState(1);
 
     const handleIncrement = () => {
@@ -23,11 +22,11 @@ const GroupedButton = () => {
     };
 
     return (
-        <ButtonGroup className={classes.component} >
-            <Button className={classes.button} onClick={() => handleDecrement()} disabled={counter == 0}>-</Button>
+        <Component>
+            <StyledButton onClick={() => handleDecrement()} disabled={counter == 0}>-</StyledButton>
             <Button disabled>{counter}</Button>
-            <Button className={classes.button} onClick={() => handleIncrement()}>+</Button>
-        </ButtonGroup>
+            <StyledButton onClick={() => handleIncrement()}>+</StyledButton>
+        </Component>
     );
 }
 

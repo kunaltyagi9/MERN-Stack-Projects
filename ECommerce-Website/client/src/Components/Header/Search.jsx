@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
-import { styled, InputBase, List, ListItem, Box } from '@mui/material';
+import { InputBase, List, ListItem, Box, styled } from '@mui/material';
 
 import { useSelector, useDispatch } from 'react-redux'; // hooks
 import { getProducts as listProducts } from '../../redux/actions/productActions';

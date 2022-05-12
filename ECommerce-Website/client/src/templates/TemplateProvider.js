@@ -1,35 +1,16 @@
 import React from 'react';
-import { CssBaseline } from "@material-ui/core";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import { StyledEngineProvider, Theme } from '@mui/material/styles'
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const TemplateContext = React.createContext(null);
 
 export const TemplateProvider = ({ children }) => {
-    const theme = createMuiTheme({
-        overrides: {
-            MuiDialog: {
-                paperWidthSm: {
-                    maxWidth: 'unset'
-                }
-            },
-            MuiDialogContent: {
-                root: {
-                    padding: 0,
-                    '&:first-child': {
-                        paddingTop: 0
-                    }
-                }
-            },
-            MuiTableCell: {
-                root: {
-                    borderBottom: 0
-                }
-            }
-        }
-    });
+    const theme = createTheme();
 
     return (
-        <TemplateContext.Provider>
+        <TemplateContext.Provider value={{}}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 {children}

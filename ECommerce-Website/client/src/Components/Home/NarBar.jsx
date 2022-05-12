@@ -1,13 +1,13 @@
 
 
-import { styled, Typography, Box } from '@mui/material'; 
+import { Typography, Box, styled } from '@mui/material'; 
 
 import { navData } from '../../constant/data';
 
 const Component = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '55px 130px 0 130px',
+    margin: '55px 130px 0 130px !important',
     overflowX: 'overlay',
     [theme.breakpoints.down('md')]: {
         margin: 0
@@ -16,7 +16,7 @@ const Component = styled(Box)(({ theme }) => ({
 
 const Container = styled(Box)`
     padding: 12px 8px;
-    textAlign: center
+    text-align: center
 `
 
 const Text = styled(Typography)`

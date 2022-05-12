@@ -1,66 +1,67 @@
-import { Card, makeStyles, Box, Typography, Button } from '@material-ui/core';
+
+import { Card, Box, Typography, Button, styled } from '@mui/material';
+
 import { addEllipsis } from '../../utils/util';
-import clsx from 'clsx';
 import GroupButton from './GroupButton';
 
-const useStyle = makeStyles({
-    component: {
-        borderTop: '1px solid #f0f0f0',
-        borderRadius: 0,
-        display: 'flex'
-    },
-    leftComponent: {
-        margin: 20, 
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    image: {
-        height: 110,
-        width: 110
-    },
-    mid: {
-        margin: 20
-    },
-    greyTextColor: {
-        color: '#878787'
-    },
-    smallText: {
-        fontSize: 14,
-    },
-    price: {
-        fontSize: 18,
-        fontWeight: 600
-    },
-    remove: {
-        marginTop: 20,
-        fontSize: 16
-    }
-});
+const Component = styled(Card)`
+    border-top: 1px solid #f0f0f0;
+    border-radius: 0px;
+    display: flex;
+`;
+
+const LeftComponent = styled(Box)`
+    margin: 20px; 
+    display: flex;
+    flex-direction: column;
+`;
+
+const SmallText = styled(Typography)`
+    color: #878787;
+    font-size: 14px;
+    margin-top: 10px;
+`;
+
+const Cost = styled(Typography)`
+    font-size: 18px;
+    font-weight: 600;
+`;
+
+const MRP = styled(Typography)`
+    color: #878787;
+`;
+
+const Discount = styled(Typography)`
+    color: #388E3C;
+`;
+
+const Remove = styled(Button)`
+    margin-top: 20px;
+    font-size: 16px;
+`;
 
 const CartItem = ({ item, removeItemFromCart }) => {
-    console.log(item)
-    const classes = useStyle();
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png';
 
     return (
-        <Card className={classes.component}>
-            <Box className={classes.leftComponent}>
-                <img src={item.url} className={classes.image} />
+        <Component>
+            <LeftComponent>
+                <img src={item.url} style={{ height: 110, width: 110 }} />
                 <GroupButton />
-            </Box>
-            <Box className={classes.mid}>
+            </LeftComponent>
+            <Box style={{ margin: 20 }}>
                 <Typography>{addEllipsis(item.title.longTitle)}</Typography>
-                <Typography className={clsx(classes.greyTextColor, classes.smallText)} style={{ marginTop: 10 }}>Seller:RetailNet
+                <SmallText>Seller:RetailNet
                     <span><img src={fassured} style={{ width: 50, marginLeft: 10 }} /></span>
-                </Typography>
+                </SmallText>
                 <Typography style={{margin: '20px 0'}}>
-                    <span className={classes.price}>₹{item.price.cost}</span>&nbsp;&nbsp;&nbsp;
-                    <span className={classes.greyTextColor}><strike>₹{item.price.mrp}</strike></span>&nbsp;&nbsp;&nbsp;
-                    <span style={{ color: '#388E3C' }}>{item.price.discount} off</span>
+                    <Cost component="span">₹{item.price.cost}</Cost>&nbsp;&nbsp;&nbsp;
+                    <MRP component="span"><strike>₹{item.price.mrp}</strike></MRP>&nbsp;&nbsp;&nbsp;
+                    <Discount component="span">{item.price.discount} off</Discount>
                 </Typography>
-                <Button className={classes.remove} onClick={() => removeItemFromCart(item.id)}>Remove</Button>
+                <Remove onClick={() => removeItemFromCart(item.id)}>Remove</Remove>
             </Box>
-        </Card>
+        </Component>
     )
 }
 

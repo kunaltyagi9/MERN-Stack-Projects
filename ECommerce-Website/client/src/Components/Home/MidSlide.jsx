@@ -1,5 +1,5 @@
 
-import { styled, Box } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 import Slide from './Slide';
 
@@ -15,11 +15,12 @@ const LeftComponent = styled(Box)(({ theme}) => ({
 }))
 
 const RightComponent = styled(Box)(({ theme}) => ({
-    marginTop: 12,
+    marginTop: 10,
     background: '#FFFFFF',
     width: '17%',
     marginLeft: 10,
     padding: 5,
+    textAlign: 'center',
     [theme.breakpoints.down('md')]: {
         display: 'none'
     }
@@ -39,7 +40,7 @@ const MidSlide = ({ products }) => {
                 />
             </LeftComponent>
             <RightComponent>
-                <img src={adURL} style={{width: 232}}/>
+                <img src={adURL} style={{width: 217}}/>
             </RightComponent>
         </Component>
     )
