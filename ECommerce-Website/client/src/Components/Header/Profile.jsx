@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Typography, Menu, MenuItem, styled } from '@mui/material';
+import { Typography, Menu, MenuItem, Box, styled } from '@mui/material';
 import { PowerSettingsNew } from '@mui/icons-material';
 
 const Component = styled(Menu)`
-    margin-top: 40px;
+    margin-top: 5px;
 `;
 
 const Logout = styled(Typography)`
@@ -30,7 +30,7 @@ const Profile = ({ account, setAccount }) => {
     
     return (
         <>
-            <Link onClick={handleClick}><Typography style={{ marginTop: 2 }}>{account}</Typography></Link>
+            <Box onClick={handleClick}><Typography style={{ marginTop: 2 }}>{account}</Typography></Box>
             <Component
                 anchorEl={open}
                 open={Boolean(open)}
