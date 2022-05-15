@@ -30,34 +30,12 @@ const RightContainer = styled(Grid)`
     }
 `;
 
-const data = { 
-    id: '',
-    url: '', 
-    detailUrl: '',
-    title: {
-        shortTitle: '',
-        longTitle: '',
-    }, 
-    price: {
-        mrp: 0,
-        cost: 0,
-        discount: ''
-    },
-    description: '',
-    discount: '', 
-    tagline: '' 
-};
-
 const DetailView = () => {
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png'
-    // const [ product, setProduct ] = useState(data);
-    // const [ loading, setLoading ] = useState(false);
+    
     const { id } = useParams();
 
-    // const [ quantity, setQuantity ] = useState(1);
-
-    const productDetails = useSelector(state => state.getProductDetails);
-    const { loading, product } = productDetails;
+    const { loading, product } = useSelector(state => state.getProductDetails);
 
     const dispatch = useDispatch();
     
@@ -65,18 +43,6 @@ const DetailView = () => {
         if(product && id !== product.id)   
             dispatch(getProductDetails(id));
     }, [dispatch, product, id, loading]);
-
-    // useEffect(() => {
-    //     getProductValues();
-    // }, []);
-
-    // const getProductValues = async () => {
-    //     setLoading(true);
-    //     const response = await getProductById(id);
-    //     console.log(response.data);
-    //     setProduct(response.data);
-    //     setLoading(false);
-    // }
 
     return (
         <Component>
