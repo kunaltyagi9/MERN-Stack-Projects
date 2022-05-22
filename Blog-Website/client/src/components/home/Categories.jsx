@@ -1,42 +1,42 @@
 
-import { Button, Table, TableHead, TableRow, TableCell, TableBody, makeStyles, Grid } from '@material-ui/core';
+import { Button, Table, TableHead, TableRow, TableCell, TableBody, styled } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 
 import { categories } from '../../constants/data';
 
-const useStyle = makeStyles({
-    table: {
-        border: '1px solid rgba(224, 224, 224, 1)'
-    },
-    write: {
-        margin: 20,
-        width: '85%',
-        background: '#6495ED',
-        color: '#fff',
-        textDecoration: 'none'
-    },
-    link: {
-        textDecoration: 'none',
-        color: 'inherit'
-    }
-})
+const StyledTable = styled(Table)`
+    border: 1px solid rgba(224, 224, 224, 1);
+`;
+    
+const StyledButton = styled(Button)`
+    margin: 20px;
+    width: 85%;
+    background: #6495ED;
+    color: #fff;
+    text-decoration: none;
+`;
+    
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+`;
 
 const Categories = ({ match }) => {
-    const classes = useStyle();
     const location = useLocation();
     let params = new URLSearchParams(location.search);
+    
     return (
         <>
             <Link to={`/create/${location.search}`} style={{ textDecoration: 'none' }}>
-                <Button variant="contained" className={classes.write}>Create Blog</Button>
+                <StyledButton variant="contained">Create Blog</StyledButton>
             </Link>
             
-            <Table className={classes.table}>
+            <StyledTable>
                 <TableHead>
                     <TableCell>
-                        <Link to={"/"} className={classes.link}>
+                        <StyledLink to={"/"}>
                             All Categories
-                        </Link>
+                        </StyledLink>
                     </TableCell>
                 </TableHead>
                 <TableBody>
@@ -44,15 +44,15 @@ const Categories = ({ match }) => {
                         categories.map(category => (
                             <TableRow>
                                 <TableCell>
-                                    <Link to={`/?category=${category}`} className={classes.link}>
+                                    <StyledLink to={`/?category=${category}`}>
                                         {category}
-                                    </Link>
+                                    </StyledLink>
                                 </TableCell>
                             </TableRow>
                         ))
                     }
                 </TableBody>
-            </Table>
+            </StyledTable>
         </>
     )
 }

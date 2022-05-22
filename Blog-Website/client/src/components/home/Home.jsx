@@ -1,5 +1,5 @@
 
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 
 //components
 import Banner from '../banner/Banner';

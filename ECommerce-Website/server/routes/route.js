@@ -13,7 +13,7 @@ router.post('/login', userLogIn);
 router.get('/products', getProducts);
 router.get('/product/:id', getProductById);
 
-router.post('/cart/add', addItemInCart);
+// router.post('/cart/add', addItemInCart);
 
 router.post('/payment', addPaymentGateway);
 router.post('/callback', paymentResponse);

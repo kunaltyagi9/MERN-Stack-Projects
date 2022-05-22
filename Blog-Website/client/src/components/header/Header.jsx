@@ -1,38 +1,37 @@
 
-import { AppBar, Toolbar, Typography, makeStyles, Button } from '@material-ui/core'; 
+import { AppBar, Toolbar, styled, Button } from '@mui/material'; 
 import { Link } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
+// import { useOktaAuth } from '@okta/okta-react';
 
-const useStyle = makeStyles({
-    component: {
-        background: '#FFFFFF',
-        color: 'black'
-    },
-    container: {
-        justifyContent: 'center',
-        '&  >*': {
-            padding: 20,
-            color: 'black',
-            textDecoration: 'none'
-        }
+
+const Component = styled(AppBar)`
+    background: #FFFFFF;
+    color: black;
+`;
+
+const Container = styled(Toolbar)`
+    justify-content: center;
+    &  > a {
+        padding: 20px;
+        color: #000;
+        text-decoration: none;
     }
-})
+`
 
 const Header = () => {
-    const classes = useStyle();
 
     const history = useHistory();
-    const { oktaAuth, authState } = useOktaAuth();
+    // const { oktaAuth, authState } = useOktaAuth();
 
-    if (authState && authState.isPending) return null;
+    // if (authState && authState.isPending) return null;
 
     const login = async () => history.push('/login');
     
-    const logout = async () => oktaAuth.signOut();
+    const logout = async () => console.log('hello') //oktaAuth.signOut();
 
-    const button = authState.isAuthenticated ? 
+    const button = // authState.isAuthenticated ? 
         <Button onClick={logout} style={{
             background: 'unset',
             border: 'none',
@@ -41,18 +40,19 @@ const Header = () => {
             fontFamily: 'Roboto',
             cursor: 'pointer',
             opacity: 0.8
-        }}>Logout</Button> :
-        <Button onClick={login}>Login</Button>;
+        }}>Logout</Button> 
+        // :
+        // <Button onClick={login}>Login</Button>;
 
     return (
-        <AppBar className={classes.component}>
-            <Toolbar className={classes.container}>
+        <Component>
+            <Container>
                 <Link to='/'>HOME</Link>
                 <Link to='/about'>ABOUT</Link>
                 <Link to='/contact'>CONTACT</Link>
                 <Link>{button}</Link>
-            </Toolbar>
-        </AppBar>
+            </Container>
+        </Component>
     )
 }
 
