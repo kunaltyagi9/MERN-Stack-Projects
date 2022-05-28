@@ -1,6 +1,6 @@
 
 import { Box, styled, Typography, Link } from '@mui/material';
-import { GitHub, Instagram, Email } from '@material-ui/icons';
+import { GitHub, Instagram, Email } from '@mui/icons-material';
 
 const Banner = styled(Box)`
     background-image: url(https://www.wallpapertip.com/wmimgs/23-236943_us-wallpaper-for-website.jpg);

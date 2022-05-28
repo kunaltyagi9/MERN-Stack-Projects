@@ -4,9 +4,12 @@ import mongoose from 'mongoose';
 const url = 'http://localhost:8000';
 
 
-let gfs;
+let gfs, gridfsBucket;
 const conn = mongoose.connection;
 conn.once('open', () => {
+    gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: 'fs'
+    });
     gfs = grid(conn.db, mongoose.mongo);
     gfs.collection('fs');
 });
@@ -24,9 +27,13 @@ export const uploadImage = (request, response) => {
 export const getImage = async (request, response) => {
     try {   
         const file = await gfs.files.findOne({ filename: request.params.filename });
-        const readStream = gfs.createReadStream(file.filename);
+        // const readStream = gfs.createReadStream(file.filename);
+        // readStream.pipe(response);
+        console.log(file);
+        const readStream = gridfsBucket.openDownloadStream(file._id);
         readStream.pipe(response);
     } catch (error) {
-        response.status(500).json('Failed to fetch image', error);
+        console.log(error);
+        response.status(500).json({ msg: error.message });
     }
 }

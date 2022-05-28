@@ -1,42 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { Box, makeStyles, TextareaAutosize, Button, FormControl, InputBase } from '@material-ui/core';
-import { AddCircle as Add } from '@material-ui/icons';
-import { useHistory } from 'react-router-dom';
+import { Box, styled, TextareaAutosize, Button, FormControl, InputBase } from '@mui/material';
+import { AddCircle as Add } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
-import { updatePost, uploadFile, getPost } from '../../service/api';
+// import { updatePost, uploadFile, getPost } from '../../service/api';
 
-const useStyle = makeStyles(theme => ({
-    container: {
-        margin: '50px 100px',
-        [theme.breakpoints.down('md')]: {
-            margin: 0
-        },
-    },
-    image: {
-        width: '100%',
-        height: '50vh',
-        objectFit: 'cover'
-    },
-    title: {
-        marginTop: 10,
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    textfield: {
-        flex: 1,
-        margin: '0 30px',
-        fontSize: 25
-    },
-    textarea: {
-        width: '100%',
-        border: 'none',
-        marginTop: 50,
-        fontSize: 18,
-        '&:focus-visible': {
-            outline: 'none'
-        }
+const Container = styled(Box)(({ theme }) => ({
+    margin: '50px 100px',
+    [theme.breakpoints.down('md')]: {
+        margin: 0
     }
 }));
+
+const Image = styled('img')({
+    width: '100%',
+    height: '50vh',
+    objectFit: 'cover'
+});
+
+const StyledFormControl = styled(FormControl)`
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+`;
+
+const InputTextField = styled(InputBase)`
+    flex: 1;
+    margin: 0 30px;
+    font-size: 25px;
+`;
+
+const StyledTextArea = styled(TextareaAutosize)`
+    width: 100%;
+    border: none;
+    margin-top: 50px;
+    font-size: 18px;
+    &:focus-visible {
+        outline: none;
+    }
+`;
 
 const initialPost = {
     title: '',
@@ -48,8 +50,7 @@ const initialPost = {
 }
 
 const Update = ({ match }) => {
-    const classes = useStyle();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [post, setPost] = useState(initialPost);
     const [file, setFile] = useState('');
@@ -59,8 +60,8 @@ const Update = ({ match }) => {
     
     useEffect(() => {
         const fetchData = async () => {
-            let data = await getPost(match.params.id);
-            setPost(data);
+            // let data = await getPost(match.params.id);
+            // setPost(data);
         }
         fetchData();
     }, []);
@@ -72,17 +73,17 @@ const Update = ({ match }) => {
                 data.append("name", file.name);
                 data.append("file", file);
                 
-                const image = await uploadFile(data);
-                post.picture = image.data;
-                setImageURL(image.data);
+                // const image = await uploadFile(data);
+                // post.picture = image.data;
+                // setImageURL(image.data);
             }
         }
         getImage();
     }, [file])
 
     const updateBlogPost = async () => {
-        await updatePost(match.params.id, post);
-        history.push(`/details/${match.params.id}`);
+        // await updatePost(match.params.id, post);
+        // navigate(`/details/${match.params.id}`);
     }
 
     const handleChange = (e) => {
@@ -90,12 +91,12 @@ const Update = ({ match }) => {
     }
 
     return (
-        <Box className={classes.container}>
-            <img src={post.picture || url} alt="post" className={classes.image} />
+        <Container>
+            <Image src={post.picture || url} alt="post" />
 
-            <FormControl className={classes.title}>
+            <StyledFormControl>
                 <label htmlFor="fileInput">
-                    <Add className={classes.addIcon} fontSize="large" color="action" />
+                    <Add fontSize="large" color="action" />
                 </label>
                 <input
                     type="file"
@@ -103,19 +104,18 @@ const Update = ({ match }) => {
                     style={{ display: "none" }}
                     onChange={(e) => setFile(e.target.files[0])}
                 />
-                <InputBase onChange={(e) => handleChange(e)} value={post.title} name='title' placeholder="Title" className={classes.textfield} />
+                <InputTextField onChange={(e) => handleChange(e)} value={post.title} name='title' placeholder="Title" />
                 <Button onClick={() => updateBlogPost()} variant="contained" color="primary">Update</Button>
-            </FormControl>
+            </StyledFormControl>
 
-            <TextareaAutosize
+            <StyledTextArea
                 rowsMin={5}
                 placeholder="Tell your story..."
-                className={classes.textarea}
                 name='description'
                 onChange={(e) => handleChange(e)} 
                 value={post.description}
             />
-        </Box>
+        </Container>
     )
 }
 

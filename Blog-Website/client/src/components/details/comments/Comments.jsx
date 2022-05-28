@@ -1,33 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Box, Typography, TextareaAutosize, Button, makeStyles } from '@material-ui/core';
+import { Box, TextareaAutosize, Button, styled } from '@mui/material';
 
 import { newComment, getComments } from '../../../service/api';
 
 //components
 import Comment from './Comment';
 
-const useStyles = makeStyles({
-    container: {
-        marginTop: 100,
-        display: 'flex',
-        '& > *': {
-            // padding: '10px '
-        }
-    },
-    image: {
-        width: 50,
-        height: 50,
-        borderRadius: '50%'
-    },
-    textarea: {
-        height: 100,
-        width: '100%', 
-        margin: '0 20px'
-    },
-    button: {
-        height: 40
-    }
-})
+const Container = styled(Box)`
+    margin-top: 100px;
+    display: flex;
+`;
+
+const Image = styled('img')({
+    width: 50,
+    height: 50,
+    borderRadius: '50%'
+});
+
+const StyledTextArea = styled(TextareaAutosize)`
+    height: 100px,
+    width: 100%; 
+    margin: 0 20px;
+`;
 
 const initialValue = {
     name: '',
@@ -37,7 +31,6 @@ const initialValue = {
 }
 
 const Comments = ({ post }) => {
-    const classes = useStyles();
     const url = 'https://static.thenounproject.com/png/12017-200.png'
 
     const [comment, setComment] = useState(initialValue);
@@ -47,8 +40,8 @@ const Comments = ({ post }) => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await getComments(post._id);
-            setComments(response);
+            // const response = await getComments(post._id);
+            // setComments(response);
         }
         getData();
     }, [toggle, post]);
@@ -64,7 +57,7 @@ const Comments = ({ post }) => {
     }
 
     const addComment = async() => {
-        await newComment(comment);
+        // await newComment(comment);
         setData('')
         setToggle(prev => !prev);
     }
@@ -73,11 +66,10 @@ const Comments = ({ post }) => {
     console.log(post);
     return (
         <Box>
-            <Box className={classes.container}>
-                <img src={url} className={classes.image} alt="dp" />   
-                <TextareaAutosize 
+            <Container>
+                <Image src={url} alt="dp" />   
+                <StyledTextArea 
                     rowsMin={5} 
-                    className={classes.textarea} 
                     placeholder="what's on your mind?"
                     onChange={(e) => handleChange(e)} 
                     value={data}
@@ -86,10 +78,10 @@ const Comments = ({ post }) => {
                     variant="contained" 
                     color="primary" 
                     size="medium" 
-                    className={classes.button}
+                    style={{ height: 40 }}
                     onClick={(e) => addComment(e)}
                 >Post</Button>             
-            </Box>
+            </Container>
             <Box>
                 {
                     comments && comments.map(comment => (

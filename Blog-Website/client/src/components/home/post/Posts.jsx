@@ -1,24 +1,29 @@
 import { useEffect, useState } from 'react';
 
 import { Grid, Box } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
-import { getAllPosts } from '../../../service/api';
+// import { getAllPosts } from '../../../service/api';
+import { API } from '../../../service/api';
 
 //components
 import Post from './Post';
 
 const Posts = () => {
     const [posts, getPosts] = useState([]);
-    const { search } = useLocation();
+    
+    const [searchParams] = useSearchParams();
+    const category = searchParams.get('category');
 
     useEffect(() => {
         const fetchData = async () => { 
-            let data = await getAllPosts(search); // params in url
-            getPosts(data);
+            let response = await API.getAllPosts({ category : category || '' });
+            if (response.isSuccess) {
+                getPosts(response.data);
+            }
         }
         fetchData();
-    }, [search]);
+    }, [category]);
 
     return (
         <>

@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { makeStyles } from '@material-ui/core';
 import { styled, Box, TextareaAutosize, Button, InputBase, FormControl  } from '@mui/material';
-import { AddCircle as Add, CallEnd } from '@material-ui/icons';
-import { useHistory, useLocation } from 'react-router-dom';
+import { AddCircle as Add } from '@mui/icons-material';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { createPost, uploadFile } from '../../service/api';
-import { LoginContext } from '../../context/ContextProvider';
+import { API } from '../../service/api';
+import { DataContext } from '../../context/DataProvider';
 
 const Container = styled(Box)(({ theme }) => ({
     margin: '50px 100px',
@@ -31,19 +30,17 @@ const InputTextField = styled(InputBase)`
     flex: 1;
     margin: 0 30px;
     font-size: 25px;
-`
+`;
 
-const useStyle = makeStyles(theme => ({
-    textarea: {
-        width: '100%',
-        border: 'none',
-        marginTop: 50,
-        fontSize: 18,
-        '&:focus-visible': {
-            outline: 'none'
-        }
+const Textarea = styled(TextareaAutosize)`
+    width: 100%;
+    border: none;
+    margin-top: 50px;
+    font-size: 18px;
+    &:focus-visible {
+        outline: none;
     }
-}));
+`;
 
 const initialPost = {
     title: '',
@@ -55,14 +52,12 @@ const initialPost = {
 }
 
 const CreatePost = () => {
-    const classes = useStyle();
-    const history = useHistory();
+    const navigate = useNavigate();
     const location = useLocation();
 
     const [post, setPost] = useState(initialPost);
     const [file, setFile] = useState('');
-    const [imageURL, setImageURL] = useState('');
-    const { account, setAccount } = useContext(LoginContext);
+    const { account } = useContext(DataContext);
 
     const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
     
@@ -73,19 +68,18 @@ const CreatePost = () => {
                 data.append("name", file.name);
                 data.append("file", file);
                 
-                const image = await uploadFile(data);
-                post.picture = image.data;
-                setImageURL(image.data);
+                const response = await API.uploadFile(data);
+                post.picture = response.data;
             }
         }
         getImage();
         post.categories = location.search?.split('=')[1] || 'All'
-        post.username = account;
+        post.username = account.username;
     }, [file])
 
     const savePost = async () => {
-        await createPost(post);
-        history.push('/');
+        await API.createPost(post);
+        navigate('/');
     }
 
     const handleChange = (e) => {
@@ -98,7 +92,7 @@ const CreatePost = () => {
 
             <StyledFormControl>
                 <label htmlFor="fileInput">
-                    <Add className={classes.addIcon} fontSize="large" color="action" />
+                    <Add fontSize="large" color="action" />
                 </label>
                 <input
                     type="file"
@@ -110,10 +104,9 @@ const CreatePost = () => {
                 <Button onClick={() => savePost()} variant="contained" color="primary">Publish</Button>
             </StyledFormControl>
 
-            <TextareaAutosize
+            <Textarea
                 rowsMin={5}
                 placeholder="Tell your story..."
-                className={classes.textarea}
                 name='description'
                 onChange={(e) => handleChange(e)} 
             />
