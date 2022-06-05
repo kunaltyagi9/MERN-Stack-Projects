@@ -73,8 +73,8 @@ const DetailView = () => {
         fetchData();
     }, []);
 
-    const deleteBlog = async () => {    
-        // await API.deletePost(post.id);
+    const deleteBlog = async () => {  
+        await API.deletePost(post._id);
         navigate('/')
     }
 
@@ -85,8 +85,8 @@ const DetailView = () => {
                 {   
                     account.username === post.username && 
                     <>  
-                        <Link to={`/update/${post._id}`}><EditIcon color="primary"/></Link>
-                        <Link><DeleteIcon onClick={() => deleteBlog()} color="error" /></Link>
+                        <Link to={`/update/${post._id}`}><EditIcon color="primary" /></Link>
+                        <DeleteIcon onClick={() => deleteBlog()} color="error" />
                     </>
                 }
             </Box>

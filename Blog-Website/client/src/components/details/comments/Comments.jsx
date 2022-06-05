@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Box, TextareaAutosize, Button, styled } from '@mui/material';
 
-import { newComment, getComments } from '../../../service/api';
+import { DataContext } from '../../../context/DataProvider';
+
+import { API } from '../../../service/api';
 
 //components
 import Comment from './Comment';
@@ -18,7 +20,7 @@ const Image = styled('img')({
 });
 
 const StyledTextArea = styled(TextareaAutosize)`
-    height: 100px,
+    height: 100px !important;
     width: 100%; 
     margin: 0 20px;
 `;
@@ -35,13 +37,16 @@ const Comments = ({ post }) => {
 
     const [comment, setComment] = useState(initialValue);
     const [comments, setComments] = useState([]);
-    const [data, setData] = useState();
     const [toggle, setToggle] = useState(false);
+
+    const { account } = useContext(DataContext);
 
     useEffect(() => {
         const getData = async () => {
-            // const response = await getComments(post._id);
-            // setComments(response);
+            const response = await API.getAllComments(post._id);
+            if (response.isSuccess) {
+                setComments(response.data);
+            }
         }
         getData();
     }, [toggle, post]);
@@ -49,21 +54,18 @@ const Comments = ({ post }) => {
     const handleChange = (e) => {
         setComment({
             ...comment,
-            name: post.username,
+            name: account.username,
             postId: post._id,
             comments: e.target.value
         });
-        setData(e.target.value);
     }
 
     const addComment = async() => {
-        // await newComment(comment);
-        setData('')
+        await API.newComment(comment);
+        setComment(initialValue)
         setToggle(prev => !prev);
     }
     
-
-    console.log(post);
     return (
         <Box>
             <Container>
@@ -72,7 +74,7 @@ const Comments = ({ post }) => {
                     rowsMin={5} 
                     placeholder="what's on your mind?"
                     onChange={(e) => handleChange(e)} 
-                    value={data}
+                    value={comment.comments}
                 />
                 <Button 
                     variant="contained" 
@@ -84,7 +86,7 @@ const Comments = ({ post }) => {
             </Container>
             <Box>
                 {
-                    comments && comments.map(comment => (
+                    comments && comments.length > 0 && comments.map(comment => (
                         <Comment comment={comment} setToggle={setToggle} />
                     ))
                 }

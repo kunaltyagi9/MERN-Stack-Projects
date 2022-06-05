@@ -73,7 +73,7 @@ const CreatePost = () => {
             }
         }
         getImage();
-        post.categories = location.search?.split('=')[1] || 'All'
+        post.categories = location.search?.split('=')[1] || 'All';
         post.username = account.username;
     }, [file])
 

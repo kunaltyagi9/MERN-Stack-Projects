@@ -16,6 +16,10 @@ export const createPost = async (request, response) => {
 export const updatePost = async (request, response) => {
     try {
         const post = await Post.findById(request.params.id);
+
+        if (!post) {
+            response.status(404).json({ msg: 'Post not found' })
+        }
         
         await Post.findByIdAndUpdate( request.params.id, { $set: request.body })
 

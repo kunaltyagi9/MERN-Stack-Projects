@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
-import { getAccessToken, getRefreshToken, setAccessToken } from '../utils/common-utils';
+import { getAccessToken, getRefreshToken, setAccessToken, getType } from '../utils/common-utils';
 
 const API_URL = 'http://localhost:8000';
 
@@ -15,14 +15,11 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     function(config) {
-        console.log(config);
-        if (config.TYPE === 'params') {
-            config.params = config.data;
-        } else if (config.TYPE === 'query') {
-            console.log('Ho', config.url, config.data)
-            config.url = config.url + '/' + config.data;
+        if (config.TYPE.params) {
+            config.params = config.TYPE.params
+        } else if (config.TYPE.query) {
+            config.url = config.url + '/' + config.TYPE.query;
         }
-        console.log(config);
         return config;
     },
     function(error) {
@@ -105,7 +102,6 @@ const ProcessError = async (error) => {
         }
     } else { 
         // Something happened in setting up the request that triggered an Error
-        console.log(error)
         console.log("ERROR IN RESPONSE: ", error.toJSON());
         return {
             isError: true,
@@ -122,12 +118,12 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
         axiosInstance({
             method: value.method,
             url: value.url,
-            data: body,
+            data: value.method === 'DELETE' ? '' : body,
             responseType: value.responseType,
             headers: {
                 authorization: getAccessToken(),
             },
-            TYPE: value.params ? 'params' : value.query ? 'query' : '',
+            TYPE: getType(value, body),
             onUploadProgress: function(progressEvent) {
                 if (showUploadProgress) {
                     let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -144,85 +140,3 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
 }
 
 export { API };
-
-// const headers = {
-//     "content-type": "application/json",
-//     "authorization": sessionStorage.getItem("accessToken")
-// }
-
-// export const uploadFile = async (post) => {
-//     try {
-//         return await axios.post(`${url}/file/upload`, post);
-//     } catch (error) {
-//         console.log('Error while calling uploadFile API ', error);
-//     }
-// }
-
-// export const createPost = async (post) => {
-//     try {
-//         return await axios.post(`${url}/create`, post, { headers: headers });
-//     } catch (error) {
-//         console.log('Error while calling createPost API ', error);
-//     }
-// }
-
-// export const getAllPosts = async (param) => {
-//     try {
-//         let response = await axios.get(`${url}/posts${param}`, { headers: headers });
-//         return response.data;
-//     } catch (error) {
-//         console.log('Error while calling getPosts API ', error)
-//     }
-// }
-
-// export const getPost = async (id) => {
-//     try {
-//         let response = await axios.get(`${url}/post/${id}`, { headers: headers });
-//         return response.data;
-//     } catch (error) {
-//         console.log('Error while calling getPost API ', error);
-//     }
-// }
-
-// export const updatePost = async (id, post) => {
-//     try {
-//         return await axios.put(`${url}/update/${id}`, post, { headers: headers });
-        
-//     } catch(error) {
-//         console.log('Error while calling updatePost API ', error)
-//     }
-// }
-
-// export const deletePost = async (id) => {
-//     try {
-//         return await axios.delete(`${url}/delete/${id}`, { headers: headers });
-//     } catch(error) {
-//         console.log('Error while calling deletePost API ', error)
-//     }
-// }
-
-
-// export const newComment = async (comment) => {
-//     try {
-//         return await axios.post(`${url}/comment/new/`, comment, { headers: headers });
-//     } catch(error) {
-//         console.log('Error while calling newComment API ', error)
-//     } 
-// }
-
-// export const getComments = async (id) => {
-//     try {
-//         let response = await axios.get(`${url}/comments/${id}`, { headers: headers });
-//         return response.data;
-//     } catch(error) {
-//         console.log('Error while calling getComments API ', error)
-//     } 
-// }
-
-// export const deleteComment = async (id) => {
-//     try {
-//         return await axios.delete(`${url}/comment/delete/${id}`, { headers: headers });
-//     } catch(error) {
-//         console.log('Error while calling deleteComments API ', error)
-//     } 
-// }

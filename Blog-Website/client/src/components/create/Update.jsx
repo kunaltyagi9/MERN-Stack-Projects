@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
 import { Box, styled, TextareaAutosize, Button, FormControl, InputBase } from '@mui/material';
 import { AddCircle as Add } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-// import { updatePost, uploadFile, getPost } from '../../service/api';
+import { API } from '../../service/api';
 
 const Container = styled(Box)(({ theme }) => ({
     margin: '50px 100px',
@@ -49,19 +50,23 @@ const initialPost = {
     createdDate: new Date()
 }
 
-const Update = ({ match }) => {
+const Update = () => {
     const navigate = useNavigate();
 
     const [post, setPost] = useState(initialPost);
     const [file, setFile] = useState('');
     const [imageURL, setImageURL] = useState('');
 
+    const { id } = useParams();
+
     const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
     
     useEffect(() => {
         const fetchData = async () => {
-            // let data = await getPost(match.params.id);
-            // setPost(data);
+            let response = await API.getPostById(id);
+            if (response.isSuccess) {
+                setPost(response.data);
+            }
         }
         fetchData();
     }, []);
@@ -73,17 +78,19 @@ const Update = ({ match }) => {
                 data.append("name", file.name);
                 data.append("file", file);
                 
-                // const image = await uploadFile(data);
-                // post.picture = image.data;
-                // setImageURL(image.data);
+                const response = await API.uploadFile(data);
+                if (response.isSuccess) {
+                    post.picture = response.data;
+                    setImageURL(response.data);    
+                }
             }
         }
         getImage();
     }, [file])
 
     const updateBlogPost = async () => {
-        // await updatePost(match.params.id, post);
-        // navigate(`/details/${match.params.id}`);
+        await API.updatePost(post);
+        navigate(`/details/${id}`);
     }
 
     const handleChange = (e) => {

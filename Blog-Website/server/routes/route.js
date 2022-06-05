@@ -26,8 +26,8 @@ router.get('/posts', authenticateToken, getAllPosts);
 router.post('/file/upload', upload.single('file'), uploadImage);
 router.get('/file/:filename', getImage);
 
-router.post('/comment/new', newComment);
-router.get('/comments/:id', getComments);
-router.delete('/comment/delete/:id', deleteComment);
+router.post('/comment/new', authenticateToken, newComment);
+router.get('/comments/:id', authenticateToken, getComments);
+router.delete('/comment/delete/:id', authenticateToken, deleteComment);
 
 export default router;
