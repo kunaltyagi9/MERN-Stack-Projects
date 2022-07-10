@@ -40,14 +40,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Footer = ({ sendText, value, setValue }) => {
+const Footer = ({ sendText, value, setValue, setFile }) => {
     const classes = useStyles();
     
+    const onFileChange = (e) => {
+        setValue(e.target.files[0].name);
+        setFile(e.target.files[0]);
+    }
 
     return (
         <Box className={classes.footer}>
             <EmojiEmotions />
-            <AttachFile className={classes.clipIcon} />
+            <label htmlFor="fileInput">
+                <AttachFile className={classes.clipIcon} />
+            </label>
+            <input
+                type='file'
+                id="fileInput"
+                style={{ display: 'none' }}
+                onChange={(e) => onFileChange(e)}
+            />
 
             <Box className={classes.search}>
                 <InputBase

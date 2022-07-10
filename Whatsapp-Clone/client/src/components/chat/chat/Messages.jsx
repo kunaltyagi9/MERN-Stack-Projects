@@ -39,6 +39,7 @@ const Messages = ({ person, conversation }) => {
     const [messages, setMessages] = useState([]);
     const [incomingMessage, setIncomingMessage] = useState(null);
     const [value, setValue] = useState();
+    const [file, setFile] = useState();
 
     const scrollRef = useRef();
 
@@ -48,8 +49,7 @@ const Messages = ({ person, conversation }) => {
         
         socket.current.on('getMessage', data => {
             setIncomingMessage({
-                sender: data.senderId,
-                text: data.text,
+                ...data,
                 createdAt: Date.now()
             })
         })
@@ -68,33 +68,45 @@ const Messages = ({ person, conversation }) => {
     }, [messages]);
 
     useEffect(() => {
-        incomingMessage && conversation?.members?.includes(incomingMessage.sender) && 
+        incomingMessage && conversation?.members?.includes(incomingMessage.senderId) && 
             setMessages((prev) => [...prev, incomingMessage]);
         
     }, [incomingMessage, conversation]);
 
-    const receiverId = conversation?.members?.find(member => member !== account.googleId);
+    const receiverId = conversation?.members?.find(member => member !== account.sub);
     
     const sendText = async (e) => {
         let code = e.keyCode || e.which;
         if(!value) return;
 
         if(code === 13) { 
-            let message = {
-                sender: account.googleId,
-                conversationId: conversation._id,
-                text: value
-            };
+            let message = {};
+            if (!file) {
+                message = {
+                    senderId: account.sub,
+                    receiverId: receiverId,
+                    conversationId: conversation._id,
+                    type: 'text',
+                    text: value
+                };
+            } else {
+                message = {
+                    senderId: account.sub,
+                    conversationId: conversation._id,
+                    receiverId: receiverId,
+                    type: 'file',
+                    body: file,
+                    mimeType: file.type,
+                    fileName: file.name
+                };
+            }
 
-            socket.current.emit('sendMessage', {
-                senderId: account.googleId,
-                receiverId,
-                text: value
-            })
+            socket.current.emit('sendMessage', message);
 
             await newMessages(message);
 
             setValue('');
+            setFile();
             setNewMessageFlag(prev => !prev);
         } 
     }
@@ -110,7 +122,7 @@ const Messages = ({ person, conversation }) => {
                     ))
                 }
             </Box>
-            <Footer sendText={sendText} value={value} setValue={setValue} />
+            <Footer sendText={sendText} value={value} setValue={setValue} setFile={setFile} />
         </Box>
     )
 }

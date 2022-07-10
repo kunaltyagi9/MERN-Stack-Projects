@@ -2,7 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import { Dialog } from '@material-ui/core';
 import { makeStyles, Typography, List, ListItem, Box, withStyles } from '@material-ui/core';
 
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
 
 import { addUser } from '../../service/api';
 import { AccountContext } from '../../context/AccountProvider';
@@ -52,18 +53,21 @@ const style = {
 
 const LoginDialog = ({ classes }) => {
     const classname = useStyle();
-    const clientId = '1051426514050-dv0o9fu9umand32ov9iqcamvuf9gttta.apps.googleusercontent.com';
+    // const clientId = '1051426514050-dv0o9fu9umand32ov9iqcamvuf9gttta.apps.googleusercontent.com';
+    
 
     const [open, setOpen] = useState(false);
 
     const { account, setAccount,showloginButton, setShowloginButton, showlogoutButton, setShowlogoutButton } = useContext(AccountContext);
 
     const onLoginSuccess = async (res) => {
-        console.log('Login Success:', res.profileObj);
-        setAccount(res.profileObj);
+        console.log('Login Success:', res);
+        let decoded = jwt_decode(res.credential);
+        console.log(decoded);
+        setAccount(decoded);
         setShowloginButton(false);
         setShowlogoutButton(true);
-        await addUser(res.profileObj);
+        await addUser(decoded);
     };
 
     const onLoginFailure = (res) => {
@@ -107,22 +111,21 @@ const LoginDialog = ({ classes }) => {
                     <div style={{position: 'absolute', left: '50%', top: '50%', transform: 'translateX(0%) translateY(-25%)'}}>
                         { showloginButton ?
                             <GoogleLogin
-                                clientId={clientId}
                                 buttonText=""
                                 onSuccess={onLoginSuccess}
-                                onFailure={onLoginFailure}
-                                cookiePolicy={'single_host_origin'}
-                                isSignedIn={true}
+                                onError={onLoginFailure}
+                                // cookiePolicy={'single_host_origin'}
+                                // isSignedIn={true}
                             /> : null}
 
-                        { showlogoutButton ?
+                        {/* { showlogoutButton ?
                             <GoogleLogout
                                 clientId={clientId}
                                 buttonText=""
                                 onLogoutSuccess={onSignoutSuccess}
                             >
                             </GoogleLogout> : null
-                        }
+                        } */}
                     </div>
                 </Box>
             </Box>

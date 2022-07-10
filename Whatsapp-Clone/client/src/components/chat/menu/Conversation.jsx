@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 
 const Conversation = ({ user }) => {
     const classes = useStyles();
-    const url = user.imageUrl || 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png';
+    const url = user.picture || 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png';
     
     const { setPerson } = useContext(UserContext);
     const { account, socket, newMessageFlag }  = useContext(AccountContext);
@@ -47,7 +47,7 @@ const Conversation = ({ user }) => {
 
     useEffect(() => {
         const getConversationMessage = async() => {
-            const data = await getConversation({ sender: account.googleId, receiver: user.googleId });
+            const data = await getConversation({ senderId: account.sub, receiverId: user.sub });
             setMessage({ text: data.message, timestamp: data.updatedAt });
         }
         getConversationMessage();
@@ -55,7 +55,7 @@ const Conversation = ({ user }) => {
 
     const getUser = async () => {
         setPerson(user);
-        await setConversation({ senderId: account.googleId, receiverId: user.googleId });
+        await setConversation({ senderId: account.sub, receiverId: user.sub });
     }
 
     const getTime = (time) => {

@@ -4,17 +4,31 @@ const MessageSchema = new mongoose.Schema({
     conversationId: {
         type: String
     },
-    sender: {
+    senderId: {
+        type: String
+    },
+    receiverId: {
         type: String
     },
     text: {
         type: String
-    }
     },
-    { 
+    type: {
+        type: String
+    },
+    body: {
+        type: String
+    },
+    mimeType: {
+        type: String
+    },
+    fileName: {
+        type: String
+    }
+},
+{ 
         timestamps: true
-    }    
-)
+})
 
 const message = mongoose.model('Message', MessageSchema);
 

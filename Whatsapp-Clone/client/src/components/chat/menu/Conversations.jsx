@@ -34,7 +34,7 @@ const Conversations = ({ text }) => {
     }, [text]);
 
     useEffect(() => {
-        socket.current.emit('addUser', account.googleId);
+        socket.current.emit('addUser', account.sub);
         socket.current.on("getUsers", users => {
             setActiveUsers(users);
         })
@@ -44,7 +44,7 @@ const Conversations = ({ text }) => {
         <Box className={classes.component}>
             {
                 users && users.map((user, index) => (
-                    user.googleId !== account.googleId && 
+                    user.sub !== account.sub && 
                         <>
                             <Conversation user={user} />
                             {

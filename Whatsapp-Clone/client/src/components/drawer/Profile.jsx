@@ -44,7 +44,7 @@ const Profile = () => {
     return (
         <>
             <Box className={classes.imageContainer}>
-                <img src={account.imageUrl} alt="displaypicture" className={classes.profilePicture} />
+                <img src={account.picture} alt="displaypicture" className={classes.profilePicture} />
             </Box>
             <Box className={classes.nameContainer}>
                 <Typography>Your Name</Typography>

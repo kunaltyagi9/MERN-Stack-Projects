@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { AccountContext } from '../../../context/AccountProvider';
@@ -44,14 +44,51 @@ const Message = ({ message }) => {
         return date < 10 ? '0' + date : date;
     }
 
+    console.log(account, message);
+
     return (
-        <Box className={account.googleId === message.sender ? classes.own : classes.wrapper}>
+        <Box className={account.sub === message.senderId ? classes.own : classes.wrapper}>
+            {
+                message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
+            }
+        </Box>
+    )
+}
+
+const TextMessage = ({ message }) => {
+
+    const classes = useStyles();
+    
+    const formatDate = (date) => {
+        return date < 10 ? '0' + date : date;
+    }
+
+    return (
+        <>
             <Typography className={classes.text}>{message.text}</Typography>
             <Typography className={classes.time}>
                 {formatDate(new Date(message.createdAt).getHours())}:{formatDate(new Date(message.createdAt).getMinutes())}
             </Typography>
-        </Box>
+        </>
     )
 }
+
+const ImageMessage = ({ message }) => {
+    const blob = new Blob([message.body], { type: message.type });
+
+    const [imageSrc, setImageSrc] = useState('');
+
+    useEffect(() => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function() {
+            setImageSrc(reader.result);
+        }
+    }, [blob]);
+    return (
+        <img style={{ width: 150 }} src={imageSrc} alt={message.fileName} />
+    )
+}
+
 
 export default Message;

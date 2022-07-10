@@ -35,14 +35,15 @@ const useStyle = makeStyles(theme => ({
 
 const EmptyChat = () => {
     const classes = useStyle();
-    const url = 'https://web.whatsapp.com/img/intro-connection-light_c98cc75f2aa905314d74375a975d2cf2.jpg';
+    const url = 'https://whatsapp-clone-web.netlify.app/static/media/intro-connection-light.5690d473.jpg';
 
     return (
         <Box className={classes.component}>
             <Box className={classes.container}>
                 <img src={url} alt="dp" className={classes.image} />
                 <Typography className={classes.title}>Keep your phone connected</Typography>
-                <Typography className={classes.subTitle}>Whatsapp connects you to your phone to sync messages. To reduce data usage, connect
+                <Typography className={classes.subTitle}>Whatsapp connects you to your phone to sync messages. 
+                    To reduce data usage, connect
                     your phone to Wi-Fi.
                 </Typography>
                 <Divider className={classes.divider} />

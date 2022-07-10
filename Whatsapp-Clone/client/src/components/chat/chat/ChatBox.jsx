@@ -17,11 +17,11 @@ const ChatBox = () => {
     
     useEffect(() => {
         const getConversationDetails = async () => {
-            let data = await getConversation({ sender: account.googleId, receiver: person.googleId });
+            let data = await getConversation({ sender: account.sub, receiver: person.sub });
             setConversation(data);
         }
         getConversationDetails();
-    }, [person.googleId]);
+    }, [person.sub]);
 
     return (
         <Box style={{height: '75%'}}>

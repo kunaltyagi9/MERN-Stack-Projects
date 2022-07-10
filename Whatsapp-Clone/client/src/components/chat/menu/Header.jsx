@@ -50,7 +50,7 @@ const Header = () => {
     return (
         <>
             <Box className={classes.header}>
-                <img src={account.imageUrl} className={classes.avatar} onClick={() => toggleDrawer()} />
+                <img src={account.picture} className={classes.avatar} onClick={() => toggleDrawer()} />
                 <Box className={classes.chatIcons}>
                     <MessageIcon />
                     <HeaderMenu/>

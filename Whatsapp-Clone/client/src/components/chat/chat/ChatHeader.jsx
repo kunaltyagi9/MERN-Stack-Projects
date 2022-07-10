@@ -40,11 +40,13 @@ const useStyles = makeStyles({
 const ChatHeader = ({ person }) => {
     const classes = useStyles();    
 
-    const url = person.imageUrl || 'https://static.straitstimes.com.sg/s3fs-public/articles/2020/12/01/af_moneyheist_011220.jpg';
+    const url = person.picture || 'https://static.straitstimes.com.sg/s3fs-public/articles/2020/12/01/af_moneyheist_011220.jpg';
     
     const { activeUsers } = useContext(AccountContext);
 
     console.log(activeUsers);
+
+    console.log(activeUsers?.find(user => user.sub === person.sub));
 
     return (
         <Box className={classes.header}>
@@ -52,7 +54,7 @@ const ChatHeader = ({ person }) => {
             <Box>
                 <Typography className={classes.name}>{person.name}</Typography>   
                 <Typography className={classes.status}>
-                    {activeUsers?.find(user => user.userId === person.googleId) ? 'Online' : 'Offline'}
+                    {activeUsers?.find(user => user.sub === person.sub) ? 'Online' : 'Offline'}
                 </Typography>    
             </Box>   
             <Box className={classes.rightContainer}>
