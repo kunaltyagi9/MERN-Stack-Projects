@@ -40,13 +40,13 @@ const Messages = ({ person, conversation }) => {
     const [incomingMessage, setIncomingMessage] = useState(null);
     const [value, setValue] = useState();
     const [file, setFile] = useState();
+    const [image, setImage] = useState();
 
     const scrollRef = useRef();
 
     const { account, socket, newMessageFlag, setNewMessageFlag } = useContext(AccountContext);
 
     useEffect(() => {
-        
         socket.current.on('getMessage', data => {
             setIncomingMessage({
                 ...data,
@@ -95,9 +95,7 @@ const Messages = ({ person, conversation }) => {
                     conversationId: conversation._id,
                     receiverId: receiverId,
                     type: 'file',
-                    body: file,
-                    mimeType: file.type,
-                    fileName: file.name
+                    text: image
                 };
             }
 
@@ -107,6 +105,7 @@ const Messages = ({ person, conversation }) => {
 
             setValue('');
             setFile();
+            setImage('');
             setNewMessageFlag(prev => !prev);
         } 
     }
@@ -122,7 +121,14 @@ const Messages = ({ person, conversation }) => {
                     ))
                 }
             </Box>
-            <Footer sendText={sendText} value={value} setValue={setValue} setFile={setFile} />
+            <Footer 
+                sendText={sendText} 
+                value={value} 
+                setValue={setValue} 
+                setFile={setFile} 
+                file={file} 
+                setImage={setImage}
+            />
         </Box>
     )
 }

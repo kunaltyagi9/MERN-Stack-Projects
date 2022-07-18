@@ -15,15 +15,6 @@ const MessageSchema = new mongoose.Schema({
     },
     type: {
         type: String
-    },
-    body: {
-        type: String
-    },
-    mimeType: {
-        type: String
-    },
-    fileName: {
-        type: String
     }
 },
 { 

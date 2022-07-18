@@ -40,12 +40,6 @@ const Message = ({ message }) => {
     const classes = useStyles();
     const { account } = useContext(AccountContext);
 
-    const formatDate = (date) => {
-        return date < 10 ? '0' + date : date;
-    }
-
-    console.log(account, message);
-
     return (
         <Box className={account.sub === message.senderId ? classes.own : classes.wrapper}>
             {
@@ -74,19 +68,9 @@ const TextMessage = ({ message }) => {
 }
 
 const ImageMessage = ({ message }) => {
-    const blob = new Blob([message.body], { type: message.type });
-
-    const [imageSrc, setImageSrc] = useState('');
-
-    useEffect(() => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function() {
-            setImageSrc(reader.result);
-        }
-    }, [blob]);
+    
     return (
-        <img style={{ width: 150 }} src={imageSrc} alt={message.fileName} />
+        <img style={{ width: 150 }} src={message.text} alt={message.text} />
     )
 }
 

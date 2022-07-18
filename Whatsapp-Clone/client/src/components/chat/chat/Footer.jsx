@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+
 import { EmojiEmotions, AttachFile, Mic } from '@material-ui/icons';
 import { Box, makeStyles, InputBase } from '@material-ui/core';
+
+import { uploadFile } from '../../../service/api';
 
 //components
 
@@ -40,13 +43,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Footer = ({ sendText, value, setValue, setFile }) => {
+const Footer = ({ sendText, value, setValue, setFile, file, setImage }) => {
     const classes = useStyles();
+
+    useEffect(() => {
+        const getImage = async () => { 
+            if(file) {
+                const data = new FormData();
+                data.append("name", file.name);
+                data.append("file", file);
+                
+                const response = await uploadFile(data);
+                setImage(response.data);
+            }
+        }
+        getImage();
+    }, [file])
+
     
     const onFileChange = (e) => {
         setValue(e.target.files[0].name);
         setFile(e.target.files[0]);
     }
+
 
     return (
         <Box className={classes.footer}>
