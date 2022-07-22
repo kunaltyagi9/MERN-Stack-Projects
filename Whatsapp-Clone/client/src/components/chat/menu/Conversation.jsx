@@ -45,6 +45,8 @@ const Conversation = ({ user }) => {
 
     const [message, setMessage] = useState({});
 
+    console.log(user);
+
     useEffect(() => {
         const getConversationMessage = async() => {
             const data = await getConversation({ senderId: account.sub, receiverId: user.sub });
@@ -54,6 +56,7 @@ const Conversation = ({ user }) => {
     }, [newMessageFlag]);
 
     const getUser = async () => {
+        console.log('Hello ', user);
         setPerson(user);
         await setConversation({ senderId: account.sub, receiverId: user.sub });
     }

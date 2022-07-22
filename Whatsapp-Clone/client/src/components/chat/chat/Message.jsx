@@ -69,8 +69,19 @@ const TextMessage = ({ message }) => {
 
 const ImageMessage = ({ message }) => {
     
+    const classes = useStyles();
+
+    const formatDate = (date) => {
+        return date < 10 ? '0' + date : date;
+    }
+
     return (
-        <img style={{ width: 150 }} src={message.text} alt={message.text} />
+        <div style={{ position: 'relative' }}>
+            <img style={{ width: 300, height: '100%', objectFit: 'cover' }} src={message.text} alt={message.text} />
+            <Typography className={classes.time} style={{ position: 'absolute', bottom: 0, right: 0, color: '#fff' }}>
+                {formatDate(new Date(message.createdAt).getHours())}:{formatDate(new Date(message.createdAt).getMinutes())}
+            </Typography>
+        </div>
     )
 }
 

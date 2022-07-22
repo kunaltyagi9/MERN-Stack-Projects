@@ -44,7 +44,7 @@ const ChatHeader = ({ person }) => {
     
     const { activeUsers } = useContext(AccountContext);
 
-    console.log(activeUsers);
+    console.log('Hi', activeUsers, person);
 
     console.log(activeUsers?.find(user => user.sub === person.sub));
 

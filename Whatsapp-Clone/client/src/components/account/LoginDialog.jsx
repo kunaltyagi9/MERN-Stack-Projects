@@ -63,7 +63,7 @@ const LoginDialog = ({ classes }) => {
     const onLoginSuccess = async (res) => {
         console.log('Login Success:', res);
         let decoded = jwt_decode(res.credential);
-        console.log(decoded);
+        console.log('decoded', decoded);
         setAccount(decoded);
         setShowloginButton(false);
         setShowlogoutButton(true);
@@ -108,7 +108,7 @@ const LoginDialog = ({ classes }) => {
                 </Box>
                 <Box style={{position:'relative'}}>
                     <img src={url} alt="QR" className={classname.qr} />
-                    <div style={{position: 'absolute', left: '50%', top: '50%', transform: 'translateX(0%) translateY(-25%)'}}>
+                    <div style={{position: 'absolute', top: '50%', transform: 'translateX(25%) translateY(-25%)'}}>
                         { showloginButton ?
                             <GoogleLogin
                                 buttonText=""
