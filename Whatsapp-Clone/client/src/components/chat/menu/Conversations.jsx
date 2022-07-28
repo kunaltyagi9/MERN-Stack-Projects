@@ -34,7 +34,7 @@ const Conversations = ({ text }) => {
     }, [text]);
 
     useEffect(() => {
-        socket.current.emit('addUser', account.sub);
+        socket.current.emit('addUser', account);
         socket.current.on("getUsers", users => {
             setActiveUsers(users);
         })

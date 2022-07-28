@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 
 import { addUser } from '../../service/api';
 import { AccountContext } from '../../context/AccountProvider';
+import { qrCodeImage } from '../../constants/data';
 
 const useStyle = makeStyles({
     component: {
@@ -53,17 +54,13 @@ const style = {
 
 const LoginDialog = ({ classes }) => {
     const classname = useStyle();
-    // const clientId = '1051426514050-dv0o9fu9umand32ov9iqcamvuf9gttta.apps.googleusercontent.com';
     
-
     const [open, setOpen] = useState(false);
 
     const { account, setAccount,showloginButton, setShowloginButton, showlogoutButton, setShowlogoutButton } = useContext(AccountContext);
 
     const onLoginSuccess = async (res) => {
-        console.log('Login Success:', res);
         let decoded = jwt_decode(res.credential);
-        console.log('decoded', decoded);
         setAccount(decoded);
         setShowloginButton(false);
         setShowlogoutButton(true);
@@ -85,8 +82,6 @@ const LoginDialog = ({ classes }) => {
         setOpen(true);
     }, [])
 
-    const url = 'https://www.ginifab.com/feeds/qr_code/img/qrcode.jpg';
-
     const handleClose = () => {
         setOpen(false)
     }
@@ -107,7 +102,7 @@ const LoginDialog = ({ classes }) => {
                     </List>
                 </Box>
                 <Box style={{position:'relative'}}>
-                    <img src={url} alt="QR" className={classname.qr} />
+                    <img src={qrCodeImage} alt="QR" className={classname.qr} />
                     <div style={{position: 'absolute', top: '50%', transform: 'translateX(25%) translateY(-25%)'}}>
                         { showloginButton ?
                             <GoogleLogin

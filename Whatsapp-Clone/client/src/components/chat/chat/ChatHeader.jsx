@@ -3,6 +3,7 @@ import { Box, Typography, makeStyles } from '@material-ui/core';
 import { Search, MoreVert } from '@material-ui/icons';
 
 import { AccountContext } from '../../../context/AccountProvider';
+import { defaultProfilePicture } from '../../../constants/data';
 
 const useStyles = makeStyles({
     header: {
@@ -40,13 +41,9 @@ const useStyles = makeStyles({
 const ChatHeader = ({ person }) => {
     const classes = useStyles();    
 
-    const url = person.picture || 'https://static.straitstimes.com.sg/s3fs-public/articles/2020/12/01/af_moneyheist_011220.jpg';
+    const url = person.picture || defaultProfilePicture;
     
     const { activeUsers } = useContext(AccountContext);
-
-    console.log('Hi', activeUsers, person);
-
-    console.log(activeUsers?.find(user => user.sub === person.sub));
 
     return (
         <Box className={classes.header}>

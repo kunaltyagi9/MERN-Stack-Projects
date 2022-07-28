@@ -5,8 +5,6 @@ import { Box, makeStyles, InputBase } from '@material-ui/core';
 
 import { uploadFile } from '../../../service/api';
 
-//components
-
 const useStyles = makeStyles((theme) => ({
     footer: {
         height: '55px',
@@ -60,12 +58,10 @@ const Footer = ({ sendText, value, setValue, setFile, file, setImage }) => {
         getImage();
     }, [file])
 
-    
     const onFileChange = (e) => {
         setValue(e.target.files[0].name);
         setFile(e.target.files[0]);
     }
-
 
     return (
         <Box className={classes.footer}>
@@ -93,7 +89,6 @@ const Footer = ({ sendText, value, setValue, setFile, file, setImage }) => {
                     value={value}
                 />
             </Box>
-
             <Mic />
         </Box>
     )

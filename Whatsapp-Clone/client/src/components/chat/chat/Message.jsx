@@ -1,7 +1,12 @@
 import { useContext, useState, useEffect } from 'react';
 
 import { Box, makeStyles, Typography } from '@material-ui/core';
+import GetAppIcon from '@material-ui/icons/GetApp';
+
 import { AccountContext } from '../../../context/AccountProvider';
+
+import { downloadMedia, formatDate } from '../../../utils/common-utils';
+import { iconPDF } from '../../../constants/data';
 
 const useStyles = makeStyles({
     wrapper: {
@@ -53,15 +58,11 @@ const TextMessage = ({ message }) => {
 
     const classes = useStyles();
     
-    const formatDate = (date) => {
-        return date < 10 ? '0' + date : date;
-    }
-
     return (
         <>
             <Typography className={classes.text}>{message.text}</Typography>
             <Typography className={classes.time}>
-                {formatDate(new Date(message.createdAt).getHours())}:{formatDate(new Date(message.createdAt).getMinutes())}
+                {formatDate(message.createdAt)}
             </Typography>
         </>
     )
@@ -71,15 +72,24 @@ const ImageMessage = ({ message }) => {
     
     const classes = useStyles();
 
-    const formatDate = (date) => {
-        return date < 10 ? '0' + date : date;
-    }
-
     return (
         <div style={{ position: 'relative' }}>
-            <img style={{ width: 300, height: '100%', objectFit: 'cover' }} src={message.text} alt={message.text} />
-            <Typography className={classes.time} style={{ position: 'absolute', bottom: 0, right: 0, color: '#fff' }}>
-                {formatDate(new Date(message.createdAt).getHours())}:{formatDate(new Date(message.createdAt).getMinutes())}
+            {
+                message?.text?.includes('.pdf') ?
+                    <div style={{ display: 'flex' }}>
+                        <img src={iconPDF} alt="pdf-icon" style={{ width: 80 }} />
+                        <Typography style={{ fontSize: 14 }} >{message.text.split("/").pop()}</Typography>
+                    </div>
+                : 
+                    <img style={{ width: 300, height: '100%', objectFit: 'cover' }} src={message.text} alt={message.text} />
+            }
+            <Typography className={classes.time} style={{ position: 'absolute', bottom: 0, right: 0 }}>
+                <GetAppIcon 
+                    onClick={(e) => downloadMedia(e, message.text)} 
+                    fontSize='small' 
+                    style={{ marginRight: 10, border: '1px solid grey', borderRadius: '50%' }} 
+                />
+                {formatDate(message.createdAt)}
             </Typography>
         </div>
     )

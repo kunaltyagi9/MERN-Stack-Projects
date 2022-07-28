@@ -1,6 +1,8 @@
 
 import { Box, makeStyles, Typography, Divider } from '@material-ui/core';
 
+import { emptyChatImage } from '../../../constants/data';
+
 const useStyle = makeStyles(theme => ({
     component: {
         background: '#f8f9fa',
@@ -35,12 +37,11 @@ const useStyle = makeStyles(theme => ({
 
 const EmptyChat = () => {
     const classes = useStyle();
-    const url = 'https://whatsapp-clone-web.netlify.app/static/media/intro-connection-light.5690d473.jpg';
-
+    
     return (
         <Box className={classes.component}>
             <Box className={classes.container}>
-                <img src={url} alt="dp" className={classes.image} />
+                <img src={emptyChatImage} alt="empty" className={classes.image} />
                 <Typography className={classes.title}>Keep your phone connected</Typography>
                 <Typography className={classes.subTitle}>Whatsapp connects you to your phone to sync messages. 
                     To reduce data usage, connect
