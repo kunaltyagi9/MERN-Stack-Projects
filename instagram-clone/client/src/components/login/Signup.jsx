@@ -1,6 +1,10 @@
+import React, { useState } from 'react';
 
-import { Box, styled, InputBase, Button, Typography } from '@mui/material';
+import { Box, styled, Input, Button, Typography, InputAdornment, IconButton  } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
+import { signupUser } from '../../services/api';
+import { instagramlLogo, applestore, googlestore } from '../../constants/data';
 
 const Component = styled(Box)`
     height: 100vh;
@@ -34,7 +38,7 @@ const DisplayText = styled(Typography)`
     line-height: 20px;
 `
 
-const InputTextField = styled(InputBase)`
+const InputTextField = styled(Input)`
     height: 38px;
     font-size: 14px;
     background: #FAFAFA;
@@ -42,6 +46,10 @@ const InputTextField = styled(InputBase)`
     width: 80%;
     margin-bottom: 6px;
     border: 1px solid #dbdbdb;
+    outline: none;
+    &:before, &:hover, &:after {
+        border-bottom: none !important;
+    }
 `;
 
 const TncText = styled(Typography)`
@@ -55,7 +63,6 @@ const TncText = styled(Typography)`
 const LoginButton = styled(Button)`
     width: 80%;
     background-color: #0095f6;
-    opacity: .3;
     box-shadow: none;
     text-transform: none;
     font-size: 14px;
@@ -83,29 +90,74 @@ const ExtraBox = styled(Box)`
         height: 40px;
         margin: 5px;
     }
+`;
+
+const Error = styled(Typography)`
+    color: red;
+    font-size: 12px;
 `
+
+const signupInitialValues = {
+    email: '',
+    name: '',
+    username: '',
+    password: ''
+};
 
 const Signup = () => {
 
-    const logo = 'https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png';
-    const applestore = 'https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/180ae7a0bcf7.png';
-    const googlestore = 'https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/e9cd846dc748.png';
+    const [signup, setSignup] = useState(signupInitialValues);
+    const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState('');
 
+    const navigate = useNavigate();
+
+    const onInputChange = (e) => {
+        setError('');
+        setSignup({ ...signup, [e.target.name]: e.target.value });
+    }
+
+    const userSignup = async () => {
+        let response = await signupUser(signup);
+        if (response.status === 200) {
+            setSignup(signupInitialValues);
+            navigate('/login');
+            return;
+        }
+        setError(response.data.msg);
+    }
+
+    const handleShowPassword = () => {
+        setShowPassword(prevState => !prevState);
+    }
 
     return (
         <Component>
             <Container>
                 <LoginBox>
-                    <img src={logo} alt="logo" style={{ width: 175, margin: '40px 0 10px 0' }} />
+                    <img src={instagramlLogo} alt="logo" style={{ width: 175, margin: '40px 0 10px 0' }} />
 
                     <DisplayText>Sign up to see photos and videos from your friends.</DisplayText>
 
-                    <InputTextField placeholder="Mobile Number or Email" />
-                    <InputTextField placeholder="Full Name" />
-                    <InputTextField placeholder="Username" />
-                    <InputTextField placeholder="Password" />
+                    <InputTextField onChange={(e) => onInputChange(e)} name='email' placeholder="Mobile Number or Email" />
+                    <InputTextField onChange={(e) => onInputChange(e)} name='name' placeholder="Full Name" />
+                    <InputTextField onChange={(e) => onInputChange(e)} name='username' placeholder="Username" />
+                    <InputTextField onChange={(e) => onInputChange(e)} 
+                        name='password' placeholder="Password" type={showPassword ? 'text' : 'password'} 
+                        endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                onClick={() => handleShowPassword()}
+                              >
+                                <Typography style={{ fontSize: 14, fontWeight: 600 }}>{showPassword ? 'Hide' : 'Show'}</Typography>
+                              </IconButton>
+                            </InputAdornment>
+                        }
+                    />
 
-                    <LoginButton variant="contained">Signup</LoginButton>
+                    { error && <Error>{error}</Error> }
+
+                    <LoginButton variant="contained" onClick={() => userSignup()}>Signup</LoginButton>
 
                     <TncText>
                         By signing up, you agree to our Terms , Data Policy and Cookies Policy .
@@ -114,7 +166,8 @@ const Signup = () => {
                 <LoginBox>
                     <Box style={{ padding: '20px 40px' }}>
                         <LoginText>
-                            Have an account? <Box component="span" style={{ color: '#0095f6' }}>Log in</Box>
+                            Have an account? <Box component="span" style={{ color: '#0095f6', cursor: 'pointer' }}
+                            onClick={() => navigate('/login')}>Log in</Box>
                         </LoginText>
                     </Box>
                 </LoginBox>

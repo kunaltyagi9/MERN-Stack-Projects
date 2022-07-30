@@ -16,7 +16,6 @@ const Container = styled(Box)`
 const Home = () => {
     return (
         <>
-            <Header />
             <Container>
                 <Posts />
                 <Suggestions />

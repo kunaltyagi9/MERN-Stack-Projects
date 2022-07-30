@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { Box, styled, InputBase, Button, Typography } from '@mui/material';
 import { loginImages, instagramLogo } from '../../constants/data';
+
+import { useNavigate } from 'react-router-dom';
+import { DataContext } from '../../context/DataProvider';
+import { loginUser } from '../../services/api';
 
 const Component = styled(Box)`
     height: 100vh;
@@ -69,18 +73,56 @@ const ExtraBox = styled(Box)`
     }
 `
 
-const Login = () => {
+const Error = styled(Typography)`
+    font-size: 10px;
+    color: #ff6161;
+    line-height: 0;
+    margin-top: 10px;
+    font-weight: 600;
+`
+
+const loginInitialValues = {
+    username: '',
+    password: ''
+};
+
+const Login = ({ isUserAuthenticated }) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
+    const [login, setLogin] = useState(loginInitialValues);
+    const [error, showError] = useState('');
 
     const phone = 'https://www.instagram.com/static/images/homepage/phones/home-phones.png/1dc085cdb87d.png'
     const applestore = 'https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/180ae7a0bcf7.png';
     const googlestore = 'https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/e9cd846dc748.png';
 
+    const navigate = useNavigate();
+    const { setAccount } = useContext(DataContext);
 
     useEffect(() => {
         slideShow();
     }, [])
+
+    const onValueChange = (e) => {
+        setLogin({ ...login, [e.target.name]: e.target.value });
+    }
+
+    const userLogin = async () => {
+        let response = await loginUser(login);
+        if (response.isSuccess) {
+            showError('');
+
+            // sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
+            // sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
+            // setAccount({ name: response.data.name, username: response.data.username });
+            
+            isUserAuthenticated(true)
+            setLogin(loginInitialValues);
+            navigate('/');
+        } else {
+            showError('Something went wrong! please try again later');
+        }
+    }
 
     function slideShow() {
         setTimeout(() => {
@@ -111,10 +153,21 @@ const Login = () => {
                     <LoginBox>
                         <img src={instagramLogo} alt="logo" style={{ width: 175, margin: '40px 0 40px 0' }} />
                         
-                        <InputTextField placeholder="Phone number, username or email" />
-                        <InputTextField placeholder="Password" />
+                        <InputTextField 
+                            placeholder="Phone number, username or email"
+                            value={login.username} 
+                            onChange={(e) => onValueChange(e)} 
+                            name='username'
+                         />
+                        <InputTextField placeholder="Password"
+                            value={login.password} 
+                            onChange={(e) => onValueChange(e)} 
+                            name='password' 
+                        />
                         
-                        <LoginButton variant="contained">Log In</LoginButton>
+                        {error && <Error>{error}</Error>}
+
+                        <LoginButton variant="contained" onClick={() => userLogin()}>Log In</LoginButton>
                         
                         <Typography style={{ fontSize: 13, color: '#8e8e8e' }}>OR</Typography>
                         <Typography style={{ color: '#385185', fontSize: 14, margin: 20, fontWeight: 600 }}>Log in with Facebook</Typography>
@@ -123,7 +176,8 @@ const Login = () => {
                     <LoginBox>
                         <Box  style={{ padding: '20px 40px' }}>
                             <SignupText>
-                                Don't have an account? <Box component="span" style={{ color: '#0095f6' }}>Sign up</Box>
+                                Don't have an account? <Box component="span" style={{ color: '#0095f6', cursor: 'pointer' }}
+                                onClick={() => navigate('/signup')}>Sign up</Box>
                             </SignupText>
                         </Box>
                     </LoginBox>
