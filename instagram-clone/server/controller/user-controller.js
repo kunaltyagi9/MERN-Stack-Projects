@@ -33,31 +33,17 @@ export const singupUser = async (request, response) => {
 export const loginUser = async (request, response) => {
     let user = await User.findOne({ username: request.body.username });
     if (!user) {
-        return response.status(400).json({ msg: 'Username does not match' });
+        return response.status(404).json({ msg: 'Username does not exist' });
     }
 
     try {
         let match = await bcrypt.compare(request.body.password, user.password);
         if (match) {
-            // const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_SECRET_KEY, { expiresIn: '15m'});
-            // const refreshToken = jwt.sign(user.toJSON(), process.env.REFRESH_SECRET_KEY);
-            
-            // const newToken = new Token({ token: refreshToken });
-            // await newToken.save();
-        
-            response.status(200).json({ username: user.username });
-        
-        } else {
-            response.status(400).json({ msg: 'Password does not match' })
-        }
+            return response.status(200).json(user);
+        } 
+        response.status(400).json({ msg: 'Incorrect password' })
+    
     } catch (error) {
         response.status(500).json({ msg: 'error while login the user' })
     }
-}
-
-export const logoutUser = async (request, response) => {
-    const token = request.body.token;
-    await Token.deleteOne({ token: token });
-
-    response.status(204).json({ msg: 'logout successfull' });
 }

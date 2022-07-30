@@ -1,5 +1,6 @@
-import { useState } from 'react';
 
+
+// components
 import Login from './components/login/Login';
 import Signup from './components/login/Signup';
 import Home from './components/home/Home';
@@ -10,8 +11,8 @@ import DataProvider from './context/DataProvider';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
-  const token = sessionStorage.getItem('accessToken');
-  return isAuthenticated && token ? 
+  const user = sessionStorage.getItem('user');
+  return user ? 
     <>
       <Header />
       <Outlet />
@@ -20,23 +21,21 @@ const PrivateRoute = ({ isAuthenticated, ...props }) => {
 
 function App() {
 
-  const [isAuthenticated, isUserAuthenticated] = useState(false);
-
   return (
     <DataProvider>
       <BrowserRouter>
         <Routes>
 
           <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login  isUserAuthenticated={isUserAuthenticated} />} />
+          <Route path='/login' element={<Login />} />
 
-          {/* <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />} > */}
+          <Route path='/' element={<PrivateRoute />} >
             <Route path='/' element={<Home />} />
-          {/* </Route> */}
+          </Route>
 
-          {/* <Route path='/profile' element={<PrivateRoute isAuthenticated={isAuthenticated} />} > */}
+          <Route path='/profile' element={<PrivateRoute />} >
             <Route path='/profile' element={<Profile />} />
-          {/* </Route> */}
+          </Route>
           
         </Routes>
       </BrowserRouter>
