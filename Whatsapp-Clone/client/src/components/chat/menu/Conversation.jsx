@@ -5,6 +5,8 @@ import { UserContext } from '../../../context/UserProvider';
 import { AccountContext } from '../../../context/AccountProvider';
 
 import { setConversation, getConversation } from '../../../service/api';
+import { emptyProfilePicture } from '../../../constants/data';
+import { formatDate } from '../../../utils/common-utils';
 
 const useStyles = makeStyles({
     component: {
@@ -38,7 +40,7 @@ const useStyles = makeStyles({
 
 const Conversation = ({ user }) => {
     const classes = useStyles();
-    const url = user.picture || 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png';
+    const url = user.picture || emptyProfilePicture;
     
     const { setPerson } = useContext(UserContext);
     const { account, socket, newMessageFlag }  = useContext(AccountContext);
@@ -47,7 +49,9 @@ const Conversation = ({ user }) => {
 
     useEffect(() => {
         const getConversationMessage = async() => {
+            console.log(account, user);
             const data = await getConversation({ senderId: account.sub, receiverId: user.sub });
+            console.log(data);
             setMessage({ text: data.message, timestamp: data.updatedAt });
         }
         getConversationMessage();
@@ -55,12 +59,9 @@ const Conversation = ({ user }) => {
 
     const getUser = async () => {
         setPerson(user);
+        console.log(account, user);
         await setConversation({ senderId: account.sub, receiverId: user.sub });
     }
-
-    const getTime = (time) => {
-        return time < 10 ? '0' + time : time; 
-    } 
 
     return (
         <Box className={classes.component} onClick={() => getUser()}>
@@ -73,7 +74,7 @@ const Conversation = ({ user }) => {
                     { 
                         message.text && 
                         <Typography className={classes.timestamp}>
-                            {getTime(new Date(message.timestamp).getHours())}:{getTime(new Date(message.timestamp).getMinutes())}
+                            {formatDate(message.timestamp)}
                         </Typography>        
                     }
                 </Box>

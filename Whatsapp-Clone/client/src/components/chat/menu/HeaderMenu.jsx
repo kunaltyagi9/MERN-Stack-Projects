@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { MoreVert } from '@material-ui/icons';
 import { Menu, MenuItem, makeStyles } from '@material-ui/core';
 
-import { GoogleLogout } from 'react-google-login';
+// import { GoogleLogout } from 'react-google-login';
 import { AccountContext } from '../../../context/AccountProvider';
 import { UserContext } from '../../../context/UserProvider';
 
@@ -79,7 +79,7 @@ const HeaderMenu = () => {
             >
                 <MenuItem className={classes.menuItem} onClick={() => { handleClose(); toggleDrawer()}}>Profile</MenuItem>
                 <MenuItem className={classes.menuItem} onClick={() => { handleClose(); }}>
-                { showlogoutButton ?
+                {/* { showlogoutButton ?
                     <GoogleLogout
                         clientId={clientId}
                         buttonText="Logout"
@@ -87,7 +87,8 @@ const HeaderMenu = () => {
                         className={classes.logout}
                     >
                     </GoogleLogout> : null
-                }
+                } */}
+                Logout
                 </MenuItem>
             </Menu>
             <InfoDrawer open={openDrawer} setOpen={setOpenDrawer} profile={true} />

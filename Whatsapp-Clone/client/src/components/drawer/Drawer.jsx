@@ -1,44 +1,53 @@
-import React, { useState } from 'react';
-import { makeStyles, Drawer, Box, Typography } from '@material-ui/core';
-import { ArrowBack } from '@material-ui/icons';
+import { styled, Drawer, Box, Typography } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 
 //components
 import Profile from './Profile';
 
-const useStyles = makeStyles({
-  header: {
-    background: '#00bfa5',
-    height: 97,
-    color: '#FFFFFF',
-    display: 'flex',
-    '& > *': {
-      marginTop: 'auto',
-      padding: 15,
-      fontWeight: 600
-    }
-  },
-  component: {
-    background: '#ededed',
-    height: '85%'
-  } 
-});
+const Header = styled(Box)`
+  background: #00bfa5;
+  height: 97px;
+  color: #FFFFFF;
+  display: flex;
+  & > svg, & > p {
+    margin-top: auto;
+    padding: 15px;
+    font-weight: 600;
+`;
+
+const Component = styled(Box) `
+  background: #ededed;
+  height: 85%;
+`;
+
+const drawerStyle = {
+  left: 62,
+  top: 17,
+  height: '95%',
+  width: '25%',
+  boxShadow: 'none'
+}
 
 const InfoDrawer = ({ open, setOpen, profile }) => {
-  const classes = useStyles();
   
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
-    <Drawer open={open} onClose={handleClose}>
-      <Box className={classes.header}>
+    <Drawer 
+      open={open} 
+      onClose={handleClose}
+      PaperProps={{ sx: drawerStyle }}
+      style={{ zIndex: 1500 }}
+    >
+      <Header>
         <ArrowBack onClick={() => setOpen(false)}/>
         <Typography>Profile</Typography>
-      </Box>
-      <Box className={classes.component}>
+      </Header>
+      <Component>
         { profile && <Profile /> }
-      </Box>
+      </Component>
     </Drawer>
   );
 }

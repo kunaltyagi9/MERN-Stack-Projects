@@ -4,3 +4,4 @@ export const iconPDF = 'https://cdn4.iconfinder.com/data/icons/logos-and-brands/
 export const defaultProfilePicture = 'https://static.straitstimes.com.sg/s3fs-public/articles/2020/12/01/af_moneyheist_011220.jpg';
 export const emptyChatImage = 'https://whatsapp-clone-web.netlify.app/static/media/intro-connection-light.5690d473.jpg';
 export const qrCodeImage = 'https://www.ginifab.com/feeds/qr_code/img/qrcode.jpg';
+export const emptyProfilePicture = 'https://www.kindpng.com/picc/m/78-785827_user-profile-avatar-login-account-male-user-icon.png';

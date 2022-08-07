@@ -6,7 +6,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import UserProvider from './context/UserProvider';
 import AccountProvider from './context/AccountProvider';
 
-import TemplateProvider from './templates/TemplateProvider';
 import Loader from './components/loader/Loader';
 
 const Messenger = lazy(() => import('./components/Messenger'));
@@ -17,15 +16,13 @@ function App() {
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <TemplateProvider>
-        <UserProvider>
-          <AccountProvider>
-            <Suspense fallback={<Loader />}>
-              <Messenger/>
-            </Suspense>
-          </AccountProvider>
-        </UserProvider>
-      </TemplateProvider>
+      <UserProvider>
+        <AccountProvider>
+          <Suspense fallback={<Loader />}>
+            <Messenger/>
+          </Suspense>
+        </AccountProvider>
+      </UserProvider>
     </GoogleOAuthProvider>
   );
 }

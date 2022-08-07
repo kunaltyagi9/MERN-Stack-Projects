@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Dialog, makeStyles, withStyles, Box } from '@material-ui/core';
+import { Dialog, styled, Box } from '@mui/material';
 
 import { UserContext } from '../../context/UserProvider';
 
@@ -8,56 +8,54 @@ import Menu from './menu/Menu';
 import ChatBox from './chat/ChatBox';
 import EmptyChat from './chat/EmptyChat';
 
-const useStyles = makeStyles({
-    component: {
-        display: 'flex'
-    },
-    leftComponent: {
-        minWidth: 380
-    },
-    rightComponent: {
-        width: '73%',
-        minWidth: 300,
-        height: '100%',
-        borderLeft: '1px solid rgba(0, 0, 0, 0.14)'
-    }
-})
+const Component = styled(Box)`
+    display: flex;
+`;
+    
+const LeftComponent = styled(Box)`
+    min-width: 380px;
+`;
+    
+const RightComponent = styled(Box)`
+    width: 73%;
+    min-width: 300px;
+    height: 100%;
+    border-left: 1px solid rgba(0, 0, 0, 0.14);
+`;
 
-const style = {
-    dialogPaper: {
-        height: '95%',
-        width: '91%',
-        maxWidth: '100%',
-        maxHeight: '100%',
-        borderRadius: 0,
-        boxShadow: 'none',
-        overflow: 'hidden'
-    }
+const dialogStyle = {
+    height: '95%',
+    width: '91%',
+    maxWidth: '100%',
+    maxHeight: '100%',
+    borderRadius: 0,
+    boxShadow: 'none',
+    overflow: 'hidden'
 };
 
-const ChatDialog = ({ classes }) => {
-    const classname = useStyles();
+const ChatDialog = () => {
 
     const { person } = useContext(UserContext);
     
     return (
         <Dialog 
             open={true} 
-            classes={{paper: classes.dialogPaper}} 
             BackdropProps={{style: {backgroundColor: 'unset'}}}
+            PaperProps={{ sx: dialogStyle }}
+            maxWidth={'md'}
         >
-            <Box className={classname.component}>
-                <Box className={classname.leftComponent}>
+            <Component>
+                <LeftComponent>
                     <Menu/>
-                </Box>
-                <Box className={classname.rightComponent}>
+                </LeftComponent>
+                <RightComponent>
                     {
                         Object.keys(person).length  ? <ChatBox/> : <EmptyChat />
                     }
-                </Box>
-            </Box>
+                </RightComponent>
+            </Component>
         </Dialog>
     )
 }
 
-export default withStyles(style)(ChatDialog);
+export default ChatDialog;
