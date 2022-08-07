@@ -1,49 +1,35 @@
-import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
 
 import User from '../model/user.js';
 
-dotenv.config();
-
-export const singupUser = async (request, response) => {
+export const getAllUsers = async (request, response) => {
     try {
 
-        const exist = await User.findOne({ username: request.body.username });
-        console.log(exist);
-        if (exist) {
-            return response.status(409).json({ msg: 'Username already exists' });
+        const users = await User.find({});
+        if (!users) {
+            return response.status(404).json({ msg: 'No data found' });
         }
 
-        // const salt = await bcrypt.genSalt();
-        // const hashedPassword = await bcrypt.hash(request.body.password, salt);
-        const hashedPassword = await bcrypt.hash(request.body.password, 10);
-
-        const user = { email: request.body.email, name: request.body.name, username: request.body.username, password: hashedPassword }
-
-        const newUser = new User(user);
-        await newUser.save();
-
-        return response.status(200).json({ msg: user });
+        return response.status(200).json({ data: users });
     } catch (error) {
         return response.status(500).json({ msg: 'Error while signing up user' });
     }
 }
 
+export const getUser = async (request, response) => {
 
-export const loginUser = async (request, response) => {
-    let user = await User.findOne({ username: request.body.username });
-    if (!user) {
-        return response.status(404).json({ msg: 'Username does not exist' });
-    }
+}
 
+export const followUser = async (request, response) => {
     try {
-        let match = await bcrypt.compare(request.body.password, user.password);
-        if (match) {
-            return response.status(200).json(user);
-        } 
-        response.status(400).json({ msg: 'Incorrect password' })
-    
+        const self = await User.findOne({ username: request.body.account });
+        const user = await User.findOne({ username: request.body.user });
+        
+        await User.findByIdAndUpdate(self._id, { $set: { 'following': [...self.following, user] } })
+        await User.findByIdAndUpdate(user._id, { $set: { 'followers': [...user.followers, self] } })
+
+        return response.status(200).json({ msg: `you are now following ${request.body.user}` });
     } catch (error) {
-        response.status(500).json({ msg: 'error while login the user' })
+        console.log(error.message);
+        return response.status(500).json({ msg: 'Something went wrong' });
     }
 }

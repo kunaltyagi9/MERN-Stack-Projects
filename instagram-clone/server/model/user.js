@@ -17,6 +17,18 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    followers: {
+        type: [],
+        required: true
+    },
+    following: {
+        type: [],
+        required: true
+    },
+    profileUrl: {
+        type: String,
+        required: true
     }
 });
 

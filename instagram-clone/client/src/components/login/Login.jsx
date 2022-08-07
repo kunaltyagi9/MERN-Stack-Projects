@@ -5,12 +5,14 @@ import useInterval from '../../hooks/useInterval';
 
 import { Box, Typography, InputAdornment, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // css components
 import { Component, Container, AccountBox, InputTextField, StyledButton, Error, ExtraBox, StyledText } from './AccountStyles';
 
 import { loginImages, instagramLogo, displayPhone, applestore, googlestore } from '../../constants/data';
 import { loginUser } from '../../services/api';
+import { userLogin } from '../../redux/features/userSlice';
 
 
 const loginInitialValues = {
@@ -26,6 +28,7 @@ const Login = () => {
     const [error, showError] = useState('');
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useInterval(() => {
         if (activeIndex === loginImages.length - 1) {
@@ -40,16 +43,19 @@ const Login = () => {
         setLogin({ ...login, [e.target.name]: e.target.value });
     }
 
-    const userLogin = async () => {
-        let response = await loginUser(login);
+    const onLoginButtonClick = async () => {
+        const response = await loginUser(login);
+        
         if (response.status === 200) {
-            console.log(response);
             sessionStorage.setItem('user', JSON.stringify(response.data));
             
             setLogin(loginInitialValues);
+            dispatch(userLogin(response.data));
+            
             navigate('/');
             return;
-        } 
+        }   
+        
         showError(response.data.msg);
     }
 
@@ -96,7 +102,7 @@ const Login = () => {
                         
                         {error && <Error>{error}</Error>}
 
-                        <StyledButton variant="contained" onClick={() => userLogin()}>Log In</StyledButton>
+                        <StyledButton variant="contained" onClick={() => onLoginButtonClick()}>Log In</StyledButton>
                         
                         <Typography style={{ fontSize: 13, color: '#8e8e8e' }}>OR</Typography>
                         <Typography style={{ color: '#385185', fontSize: 14, margin: 20, fontWeight: 600 }}>Log in with Facebook</Typography>

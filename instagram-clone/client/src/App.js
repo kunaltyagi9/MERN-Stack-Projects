@@ -8,10 +8,22 @@ import Profile from './components/profile/Profile';
 import Header from './components/header/Header';
 import DataProvider from './context/DataProvider';
 
+import { getUser, userLogin } from './redux/features/userSlice';
+
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
+  const reduxUser = useSelector(getUser);
+
+  const dispatch = useDispatch();
+
   const user = sessionStorage.getItem('user');
+
+  // if (!reduxUser.username && user) {
+  //   dispatch(userLogin(JSON.parse(user)));
+  // }
+
   return user ? 
     <>
       <Header />

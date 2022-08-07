@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 
 import { Box, Typography, InputAdornment, IconButton  } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // css components
 import { Component, Container, AccountBox, DisplayText, InputTextField, TncText, StyledButton, Error, ExtraBox, StyledText } from './AccountStyles';
 
 import { signupUser } from '../../services/api';
-import { instagramlLogo, applestore, googlestore } from '../../constants/data';
+import { instagramlLogo, applestore, googlestore, emptyprofilePicture } from '../../constants/data';
+import { userSignup } from '../../redux/features/userSlice';
 
 
 const signupInitialValues = {
     email: '',
     name: '',
     username: '',
-    password: ''
+    password: '',
+    followers: [],
+    following: [],
+    profileUrl: emptyprofilePicture
 };
 
 const Signup = () => {
@@ -24,17 +29,22 @@ const Signup = () => {
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onInputChange = (e) => {
         setError('');
         setSignup({ ...signup, [e.target.name]: e.target.value });
     }
 
-    const userSignup = async () => {
+    const onSignupButtonClick = async () => {
         let response = await signupUser(signup);
         if (response.status === 200) {
+            sessionStorage.setItem('user', JSON.stringify(response.data));
             setSignup(signupInitialValues);
-            navigate('/login');
+            
+            dispatch(userSignup(response.data));
+            
+            navigate('/');
             return;
         }
         setError(response.data.msg);
@@ -70,7 +80,7 @@ const Signup = () => {
 
                     { error && <Error>{error}</Error> }
 
-                    <StyledButton variant="contained" onClick={() => userSignup()}>Signup</StyledButton>
+                    <StyledButton variant="contained" onClick={() => onSignupButtonClick()}>Signup</StyledButton>
 
                     <TncText>
                         By signing up, you agree to our Terms , Data Policy and Cookies Policy .
