@@ -1,5 +1,6 @@
-import { useState, useEffect, useContext, useRef } from 'react';
-import { Box, makeStyles, Divider } from '@material-ui/core';
+import { useState, useEffect, useContext } from 'react';
+
+import { Box, styled, Divider } from '@mui/material';
 
 import { AccountContext } from '../../../context/AccountProvider';
 
@@ -7,19 +8,17 @@ import { AccountContext } from '../../../context/AccountProvider';
 import Conversation from './Conversation';
 import { getUsers } from '../../../service/api';
 
-const useStyles = makeStyles({
-    component: {
-        overflow: 'overlay',
-        height: '81vh'
-    },
-    divider: {
-        margin: '0 0 0 67px',
-        backgroundColor: '#F2F2F2'
-    }
-})
+const Component = styled(Box)`
+    overflow: overlay;
+    height: 81vh;
+`;
+
+const StyledDivider = styled(Divider)`
+    margin: 0 0 0 67px;
+    background-color: #F2F2F2;
+`;
 
 const Conversations = ({ text }) => {
-    const classes = useStyles();
     const [users, setUsers] = useState([]);
     
     const { account, socket, setActiveUsers } = useContext(AccountContext);
@@ -41,19 +40,19 @@ const Conversations = ({ text }) => {
     }, [account])
 
     return (
-        <Box className={classes.component}>
+        <Component>
             {
                 users && users.map((user, index) => (
                     user.sub !== account.sub && 
                         <>
                             <Conversation user={user} />
                             {
-                                users.length !== (index + 1)  && <Divider className={classes.divider} />
+                                users.length !== (index + 1)  && <StyledDivider />
                             }
                         </>
                 ))
             }
-        </Box>
+        </Component>
     )
 }
 

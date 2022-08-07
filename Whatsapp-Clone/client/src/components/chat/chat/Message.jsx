@@ -1,76 +1,82 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 
-import { Box, makeStyles, Typography } from '@material-ui/core';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import { Box, styled, Typography } from '@mui/material';
+import { GetApp as GetAppIcon } from '@mui/icons-material';
 
 import { AccountContext } from '../../../context/AccountProvider';
 
 import { downloadMedia, formatDate } from '../../../utils/common-utils';
 import { iconPDF } from '../../../constants/data';
 
-const useStyles = makeStyles({
-    wrapper: {
-        background: '#FFFFFF',
-        padding: 5,
-        maxWidth: '60%',
-        width: 'fit-content',
-        display: 'flex',
-        borderRadius: 10,
-        wordBreak: 'break-word'
-    },
-    own: {
-        background: '#dcf8c6',
-        padding: 5,
-        maxWidth: '60%',
-        width: 'fit-content',
-        marginLeft: 'auto',
-        display: 'flex',
-        borderRadius: 10,
-        wordBreak: 'break-word'
-    },
-    text: {
-        fontSize: 14,
-        padding: '0 25px 0 5px'
-    },
-    time: {
-        fontSize: 10,
-        color: '#919191',
-        marginTop: 6,
-        wordBreak: 'keep-all',
-        marginTop: 'auto'
-    }
-})
+const Wrapper = styled(Box)`
+    background: #FFFFFF;
+    padding: 5px;
+    max-width: 60%;
+    width: fit-content;
+    display: flex;
+    border-radius: 10px;
+    word-break: break-word;
+`;
+    
+const Own = styled(Box)`
+    background: #dcf8c6;
+    padding: 5px;
+    max-width: 60%;
+    width: fit-content;
+    margin-left: auto;
+    display: flex;
+    border-radius: 10px;
+    word-break: break-word;
+`;
+
+const Text = styled(Typography)`
+    font-size: 14px;
+    padding: 0 25px 0 5px;
+`;
+
+const Time = styled(Typography)`
+    font-size: 10px;
+    color: #919191;
+    margin-top: 6px;
+    word-break: keep-all;
+    margin-top: auto;
+`;
 
 const Message = ({ message }) => {
-    const classes = useStyles();
     const { account } = useContext(AccountContext);
 
     return (
-        <Box className={account.sub === message.senderId ? classes.own : classes.wrapper}>
-            {
-                message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
-            }
-        </Box>
+        <>
+        {
+            account.sub === message.senderId ? 
+                <Own>
+                    {
+                        message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
+                    }
+                </Own>
+            : 
+                <Wrapper>
+                    {
+                        message.type === 'file' ? <ImageMessage message={message} /> : <TextMessage message={message} />
+                    }
+                </Wrapper>
+        }
+        
+        </>
     )
 }
 
 const TextMessage = ({ message }) => {
-
-    const classes = useStyles();
     
     return (
         <>
-            <Typography className={classes.text}>{message.text}</Typography>
-            <Typography className={classes.time}>
-                {formatDate(message.createdAt)}
-            </Typography>
+            <Text>{message.text}</Text>
+            <Time>{formatDate(message.createdAt)}</Time>
         </>
     )
 }
 
 const ImageMessage = ({ message }) => {
-    
-    const classes = useStyles();
 
     return (
         <div style={{ position: 'relative' }}>
@@ -83,14 +89,14 @@ const ImageMessage = ({ message }) => {
                 : 
                     <img style={{ width: 300, height: '100%', objectFit: 'cover' }} src={message.text} alt={message.text} />
             }
-            <Typography className={classes.time} style={{ position: 'absolute', bottom: 0, right: 0 }}>
+            <Time style={{ position: 'absolute', bottom: 0, right: 0 }}>
                 <GetAppIcon 
                     onClick={(e) => downloadMedia(e, message.text)} 
                     fontSize='small' 
                     style={{ marginRight: 10, border: '1px solid grey', borderRadius: '50%' }} 
                 />
                 {formatDate(message.createdAt)}
-            </Typography>
+            </Time>
         </div>
     )
 }

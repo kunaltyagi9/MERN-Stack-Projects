@@ -1,64 +1,64 @@
 import { useContext } from 'react';
-import { Box, Typography, makeStyles } from '@material-ui/core';
-import { Search, MoreVert } from '@material-ui/icons';
+
+import { Box, Typography, styled } from '@mui/material';
+import { Search, MoreVert } from '@mui/icons-material';
 
 import { AccountContext } from '../../../context/AccountProvider';
 import { defaultProfilePicture } from '../../../constants/data';
 
-const useStyles = makeStyles({
-    header: {
-        height: 35,
-        background: '#ededed',
-        display: 'flex',
-        padding: '10px 16px',
-        alignItems: 'center'
-    },
-    displayPicture: {
-        width: 37,
-        height: 37,
-        objectFit: 'cover',
-        borderRadius: '50%',
-        padding: '0 2px'
-    },
-    name: {
-        marginLeft: 10
-    },
-    rightContainer: {
-        marginLeft: 'auto',
-        '& > *': {
-            padding: 8,
-            fontSize: 22,
-            color: '#919191'
-        }
-    },
-    status: {
-        fontSize: 12,
-        color: 'rgb(0, 0, 0, 0.6)',
-        marginLeft: 10
-    }
-});
+const Header = styled(Box)`
+    height: 35px;
+    background: #ededed;
+    display: flex;
+    padding: 10px 16px;
+    align-items: center;
+`;
+    
+const Image = styled('img')({
+    width: 37,
+    height: 37,
+    objectFit: 'cover',
+    borderRadius: '50%',
+    padding: '0 2px'
+})
 
-const ChatHeader = ({ person }) => {
-    const classes = useStyles();    
+const Name = styled(Typography)`
+    margin-left: 10px !important;
+`;
+
+const RightContainer = styled(Box)`
+    margin-left: auto;
+    & > svg {
+        padding: 8px;
+        font-size: 22px;
+        color: #919191;
+    }
+`;
+
+const Status = styled(Typography)`
+    font-size: 12px !important;
+    color: rgb(0, 0, 0, 0.6);
+    margin-left: 10px !important;
+`;
+
+const ChatHeader = ({ person }) => {  
 
     const url = person.picture || defaultProfilePicture;
     
     const { activeUsers } = useContext(AccountContext);
 
     return (
-        <Box className={classes.header}>
-            <img src={url} alt="display picture"  className={classes.displayPicture} />     
+        <Header>
+            <Image src={url} alt="display picture" />     
             <Box>
-                <Typography className={classes.name}>{person.name}</Typography>   
-                <Typography className={classes.status}>
-                    {activeUsers?.find(user => user.sub === person.sub) ? 'Online' : 'Offline'}
-                </Typography>    
+                <Name>{person.name}</Name>
+                <Status>{activeUsers?.find(user => user.sub === person.sub) ? 'Online' : 'Offline'}</Status>    
             </Box>   
-            <Box className={classes.rightContainer}>
+            <RightContainer>
                 <Search />
                 <MoreVert />    
-            </Box> 
-        </Box>
+            </RightContainer> 
+        </Header>
     )
 }
 

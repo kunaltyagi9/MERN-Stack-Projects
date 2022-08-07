@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, styled } from '@mui/material';
 
 import { io } from 'socket.io-client';
 
@@ -10,31 +10,31 @@ import { AccountContext } from '../../../context/AccountProvider';
 import Message from './Message';
 import Footer from './Footer';
 
-const useStyles = makeStyles({
-    wrapper: {
-        backgroundImage: `url(${'https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'})`,
-        // height: 'calc(100% - 114px)',
-        backgroundSize: '50%'
-    },
-    footer: {
-        height: '55px',
-        background: '#ededed',
-        // position: 'absolute',
-        width: '100%',
-        // bottom: 0
-    },
-    component: {
-        height: '79vh',
-        overflowY: 'scroll'
-    },
-    container: {
-        padding: '1px 80px'
-    }
-})
+const Wrapper = styled(Box)`
+    background-image: url(${'https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'});
+    background-size: 50%;
+`;
+
+const StyledFooter = styled(Box)`
+    height: 55px;
+    background: #ededed;
+    // position: absolute;
+    width: 100%;
+    // bottom: 0
+`;
+    
+const Component = styled(Box)`
+    height: 80vh;
+    overflow-y: scroll;
+`;
+
+const Container = styled(Box)`
+    padding: 1px 80px;
+`;
+
 
 
 const Messages = ({ person, conversation }) => {
-    const classes = useStyles();
 
     const [messages, setMessages] = useState([]);
     const [incomingMessage, setIncomingMessage] = useState(null);
@@ -111,16 +111,16 @@ const Messages = ({ person, conversation }) => {
     }
 
     return (
-        <Box className={classes.wrapper}>
-            <Box className={classes.component}>
+        <Wrapper>
+            <Component>
                 {
                     messages && messages.map(message => (
-                        <Box className={classes.container} ref={scrollRef}>
+                        <Container ref={scrollRef}>
                             <Message message={message} />
-                        </Box>
+                        </Container>
                     ))
                 }
-            </Box>
+            </Component>
             <Footer 
                 sendText={sendText} 
                 value={value} 
@@ -129,7 +129,7 @@ const Messages = ({ person, conversation }) => {
                 file={file} 
                 setImage={setImage}
             />
-        </Box>
+        </Wrapper>
     )
 }
 

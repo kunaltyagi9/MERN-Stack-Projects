@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
-import { MoreVert } from '@material-ui/icons';
-import { Menu, MenuItem, makeStyles } from '@material-ui/core';
 
-// import { GoogleLogout } from 'react-google-login';
+import { MoreVert } from '@mui/icons-material';
+import { Menu, MenuItem, styled } from '@mui/material';
+
+import { googleLogout } from '@react-oauth/google';
 import { AccountContext } from '../../../context/AccountProvider';
 import { UserContext } from '../../../context/UserProvider';
 
@@ -11,23 +12,18 @@ import { clientId } from '../../../constants/data';
 //components
 import InfoDrawer from '../../drawer/Drawer';
 
-const useStyle = makeStyles({
-    menuItem: {
-        fontSize: 14,
-        padding: '15px 60px 5px 24px',
-        color: '#4A4A4A'
-    },
-    logout: {
-        border:'none!important', 
-        boxShadow: 'none!important',
-        '& > *': {
-            padding: '0px!important'
-        }
-    }
-})
+const MenuOption = styled(MenuItem)`
+    font-size: 14px
+    padding: 15px 60px 5px 24px;
+    color: #4A4A4A;
+`;
+
+const Logout = styled(googleLogout)`
+    border: none;
+    box-shadow: none;
+`;
 
 const HeaderMenu = () => {
-    const classes = useStyle();
     
     const [open, setOpen] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -77,19 +73,17 @@ const HeaderMenu = () => {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem className={classes.menuItem} onClick={() => { handleClose(); toggleDrawer()}}>Profile</MenuItem>
-                <MenuItem className={classes.menuItem} onClick={() => { handleClose(); }}>
+                <MenuOption onClick={() => { handleClose(); toggleDrawer()}}>Profile</MenuOption>
+                <MenuOption onClick={() => { handleClose(); }}>
                 {/* { showlogoutButton ?
-                    <GoogleLogout
+                    <Logout
                         clientId={clientId}
                         buttonText="Logout"
                         onLogoutSuccess={onSignoutSuccess}
-                        className={classes.logout}
                     >
-                    </GoogleLogout> : null
+                    </Logout> : null
                 } */}
-                Logout
-                </MenuItem>
+                </MenuOption>
             </Menu>
             <InfoDrawer open={openDrawer} setOpen={setOpenDrawer} profile={true} />
         </>

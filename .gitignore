@@ -2,7 +2,7 @@
 /Blog-Website/client/node_modules
 /Blog-Website/server/node_modules
 /ECommerce-Website/server/node_modules
-/ECommerce-Website/server/config.env
+/ECommerce-Website/server/.env
 /Whatsapp-Clone/client/node_modules
 /Whatsapp-Clone/server/node_modules
 /Whatsapp-Clone/socket/node_modules
@@ -23,3 +23,6 @@
 /CRUD-application/crud-service/package-lock.json
 /instagram-clone/client/node_modules
 /instagram-clone/client/package-lock.json
+/instagram-clone/server/node_modules
+/instagram-clone/server/package-lock.json
+/google-docs-clone/client/package-lock.json

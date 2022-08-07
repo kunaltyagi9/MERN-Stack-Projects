@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
-import { makeStyles, Box, Typography } from "@material-ui/core";
+import { useContext, useEffect, useState } from 'react';
+
+import { styled, Box, Typography } from "@mui/material";
 
 import { UserContext } from '../../../context/UserProvider';
 import { AccountContext } from '../../../context/AccountProvider';
@@ -8,42 +9,43 @@ import { setConversation, getConversation } from '../../../service/api';
 import { emptyProfilePicture } from '../../../constants/data';
 import { formatDate } from '../../../utils/common-utils';
 
-const useStyles = makeStyles({
-    component: {
-        height: 40,
-        display: 'flex',
-        padding: '13px 0',
-        cursor: 'pointer'
-    },
-    displayPicture: {
-        width: 50,
-        height: 50,
-        objectFit: 'cover',
-        borderRadius: '50%',
-        padding: '0 14px'
-    },
-    container: {
-        display: 'flex'
-    },
-    timestamp: {
-        fontSize: 12,
-        marginLeft: 'auto',
-        color: '#00000099',
-        marginRight: 20
-    },
-    text: {
+const Component = styled(Box)`
+    height: 40px;
+    display: flex;
+    padding: 13px 0;
+    cursor: pointer;
+`;
+    
+const Image = styled('img') ({
+    width: 50,
+    height: 50,
+    objectFit: 'cover',
+    borderRadius: '50%',
+    padding: '0 14px'
+});
+
+const Container = styled(Box)`
+    display: flex;
+`;
+
+const Timestamp = styled(Typography)`
+    font-size: 12px;
+    margin-left: auto;
+    color: #00000099;
+    margin-right: 20px;
+`;
+
+const Text = styled(Typography)`
         display: 'block',
         color: 'rgba(0, 0, 0, 0.6)',
         fontSize: 14
-    }
-})
+`;
 
 const Conversation = ({ user }) => {
-    const classes = useStyles();
     const url = user.picture || emptyProfilePicture;
     
     const { setPerson } = useContext(UserContext);
-    const { account, socket, newMessageFlag }  = useContext(AccountContext);
+    const { account, newMessageFlag }  = useContext(AccountContext);
 
     const [message, setMessage] = useState({});
 
@@ -64,25 +66,23 @@ const Conversation = ({ user }) => {
     }
 
     return (
-        <Box className={classes.component} onClick={() => getUser()}>
+        <Component onClick={() => getUser()}>
             <Box>
-                <img src={url} alt="display picture" className={classes.displayPicture} />
+                <Image src={url} alt="display picture" />
             </Box>
             <Box style={{width: '100%'}}>
-                <Box className={classes.container}>
+                <Container>
                     <Typography>{user.name}</Typography>
                     { 
                         message.text && 
-                        <Typography className={classes.timestamp}>
-                            {formatDate(message.timestamp)}
-                        </Typography>        
+                        <Timestamp>{formatDate(message.timestamp)}</Timestamp>        
                     }
-                </Box>
+                </Container>
                 <Box>
-                    <Typography className={classes.text}>{message.text}</Typography>
+                    <Text>{message.text}</Text>
                 </Box>
             </Box>
-        </Box>
+        </Component>
     )
 }
 

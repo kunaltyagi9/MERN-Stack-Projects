@@ -15,41 +15,41 @@ const Header = styled(Box)`
     font-weight: 600;
 `;
 
-const Component = styled(Box) `
+const Component = styled(Box)`
   background: #ededed;
   height: 85%;
 `;
 
 const drawerStyle = {
-  left: 62,
-  top: 17,
-  height: '95%',
-  width: '25%',
-  boxShadow: 'none'
+    left: 62,
+    top: 17,
+    height: '95%',
+    width: '25%',
+    boxShadow: 'none'
 }
 
 const InfoDrawer = ({ open, setOpen, profile }) => {
-  
-  const handleClose = () => {
-    setOpen(false);
-  };
 
-  return (
-    <Drawer 
-      open={open} 
-      onClose={handleClose}
-      PaperProps={{ sx: drawerStyle }}
-      style={{ zIndex: 1500 }}
-    >
-      <Header>
-        <ArrowBack onClick={() => setOpen(false)}/>
-        <Typography>Profile</Typography>
-      </Header>
-      <Component>
-        { profile && <Profile /> }
-      </Component>
-    </Drawer>
-  );
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <Drawer
+            open={open}
+            onClose={handleClose}
+            PaperProps={{ sx: drawerStyle }}
+            style={{ zIndex: 1500 }}
+        >
+            <Header>
+                <ArrowBack onClick={() => setOpen(false)} />
+                <Typography>Profile</Typography>
+            </Header>
+            <Component>
+                {profile && <Profile />}
+            </Component>
+        </Drawer>
+    );
 }
 
 export default InfoDrawer;
