@@ -5,8 +5,8 @@ import { ArrowBack } from '@mui/icons-material';
 import Profile from './Profile';
 
 const Header = styled(Box)`
-  background: #00bfa5;
-  height: 97px;
+  background: #008069;
+  height: 107px;
   color: #FFFFFF;
   display: flex;
   & > svg, & > p {
@@ -20,11 +20,15 @@ const Component = styled(Box)`
   height: 85%;
 `;
 
+const Text = styled(Typography)`
+    font-size: 18px;
+`
+
 const drawerStyle = {
-    left: 62,
+    left: 20,
     top: 17,
     height: '95%',
-    width: '25%',
+    width: '30%',
     boxShadow: 'none'
 }
 
@@ -43,7 +47,7 @@ const InfoDrawer = ({ open, setOpen, profile }) => {
         >
             <Header>
                 <ArrowBack onClick={() => setOpen(false)} />
-                <Typography>Profile</Typography>
+                <Text>Profile</Text>
             </Header>
             <Component>
                 {profile && <Profile />}

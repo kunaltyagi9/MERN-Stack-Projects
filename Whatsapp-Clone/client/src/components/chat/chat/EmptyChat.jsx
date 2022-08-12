@@ -5,7 +5,7 @@ import { emptyChatImage } from '../../../constants/data';
 
 const Component = styled(Box)`
     background: #f8f9fa;
-    padding: 50px 0;
+    padding: 30px 0;
     text-align: center;
     height: 100%;
 `;
@@ -15,24 +15,28 @@ const Container = styled(Box)`
 `;
     
 const Image = styled('img')({
-    width: 320
+    marginTop: 100,
+    width: 400
 })
    
 const Title = styled(Typography)`
-    font-size: 36px;
+    font-size: 32px;
+    font-family: inherit;
     font-weight: 300;
-    color: #525252;
-    margin-top: 25px;
+    color: #41525d;
+    margin-top: 25px 0 10px 0;
 `;
 
 const SubTitle = styled(Typography)`
-    margin-top: 10px;
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.45);
+    color: #667781;
+    font-weight: 400;
+    font-family: inherit;
 `;
 
 const StyledDivider = styled(Divider)`
-    margin: 30px 0;
+    margin: 40px 0;
+    opacity: 0.4;
 `;
 
 const EmptyChat = () => {
@@ -41,11 +45,9 @@ const EmptyChat = () => {
         <Component>
             <Container>
                 <Image src={emptyChatImage} alt="empty" />
-                <Title>Keep your phone connected</Title>
-                <SubTitle>Whatsapp connects you to your phone to sync messages. 
-                    To reduce data usage, connect
-                    your phone to Wi-Fi.
-                </SubTitle>
+                <Title>WhatsApp Web</Title>
+                <SubTitle>Now send and receive messages without keeping your phone online.</SubTitle>
+                <SubTitle>Use WhatsApp on up to 4 linked devices and 1 phone at the same time. </SubTitle>
                 <StyledDivider />
             </Container>
         </Component>

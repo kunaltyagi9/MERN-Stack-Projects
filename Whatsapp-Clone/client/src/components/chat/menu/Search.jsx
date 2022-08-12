@@ -3,16 +3,17 @@ import { Box, InputBase, styled } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 
 const Component = styled(Box)`
-    background: #F6F6F6;
-    height: 43px;
+    background: #fff;
+    height: 45px;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #F2F2F2;
 `;
 
 const Wrapper = styled(Box)`
     position: relative;
-    border-radius: 18px;
-    background-color: #FFFFFF;
+    border-radius: 10px;
+    background-color: #f0f2f5;
     margin: 0 13px;
     width: 100%;
 `;

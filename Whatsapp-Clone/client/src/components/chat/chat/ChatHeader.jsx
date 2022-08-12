@@ -7,23 +7,22 @@ import { AccountContext } from '../../../context/AccountProvider';
 import { defaultProfilePicture } from '../../../constants/data';
 
 const Header = styled(Box)`
-    height: 35px;
+    height: 44px;
     background: #ededed;
     display: flex;
-    padding: 10px 16px;
+    padding: 8px 16px;
     align-items: center;
 `;
     
 const Image = styled('img')({
-    width: 37,
-    height: 37,
+    width: 40,
+    height: 40,
     objectFit: 'cover',
-    borderRadius: '50%',
-    padding: '0 2px'
+    borderRadius: '50%'
 })
 
 const Name = styled(Typography)`
-    margin-left: 10px !important;
+    margin-left: 12px !important;
 `;
 
 const RightContainer = styled(Box)`
@@ -31,14 +30,14 @@ const RightContainer = styled(Box)`
     & > svg {
         padding: 8px;
         font-size: 22px;
-        color: #919191;
+        color: #000;
     }
 `;
 
 const Status = styled(Typography)`
     font-size: 12px !important;
     color: rgb(0, 0, 0, 0.6);
-    margin-left: 10px !important;
+    margin-left: 12px !important;
 `;
 
 const ChatHeader = ({ person }) => {  

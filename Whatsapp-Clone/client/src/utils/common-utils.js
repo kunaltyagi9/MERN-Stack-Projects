@@ -9,7 +9,7 @@ export const downloadMedia = async (e, originalImage) => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.style.display = 'none';
-            a.href = originalImage
+            a.href = url;
 
             const nameSplit = originalImage.split("/");
             const duplicateName = nameSplit.pop();

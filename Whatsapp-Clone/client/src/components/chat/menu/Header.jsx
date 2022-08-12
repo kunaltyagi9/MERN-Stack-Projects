@@ -10,10 +10,10 @@ import HeaderMenu from './HeaderMenu';
 import InfoDrawer from '../../drawer/Drawer';
 
 const Component = styled(Box)`
-    height: 35px;
+    height: 44px;
     background: #ededed;
     display: flex;
-    padding: 10px 16px;
+    padding: 8px 16px;
     align-items: center;
 `;
 
@@ -22,7 +22,7 @@ const Wrapper = styled(Box) `
     & > * {
         margin-left: 2px;
         padding: 8px;
-        color: #919191;
+        color: #000;
     };
     & :first-child {
         font-size: 22px;
@@ -32,8 +32,8 @@ const Wrapper = styled(Box) `
 `;
     
 const Image = styled('img') ({
-    height: 37,
-    width: 37,
+    height: 40,
+    width: 40,
     borderRadius: '50%'
 })
 

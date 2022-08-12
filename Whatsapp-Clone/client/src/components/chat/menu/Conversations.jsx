@@ -14,8 +14,9 @@ const Component = styled(Box)`
 `;
 
 const StyledDivider = styled(Divider)`
-    margin: 0 0 0 67px;
-    background-color: #F2F2F2;
+    margin: 0 0 0 70px;
+    background-color: #e9edef;
+    opacity: .6;
 `;
 
 const Conversations = ({ text }) => {

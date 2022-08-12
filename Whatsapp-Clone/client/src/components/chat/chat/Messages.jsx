@@ -57,7 +57,7 @@ const Messages = ({ person, conversation }) => {
     
     useEffect(() => {
         const getMessageDetails = async () => {
-            let data = await getMessages(conversation._id);
+            let data = await getMessages(conversation?._id);
             setMessages(data);
         }
         getMessageDetails();

@@ -10,7 +10,7 @@ import { emptyProfilePicture } from '../../../constants/data';
 import { formatDate } from '../../../utils/common-utils';
 
 const Component = styled(Box)`
-    height: 40px;
+    height: 45px;
     display: flex;
     padding: 13px 0;
     cursor: pointer;
@@ -36,9 +36,9 @@ const Timestamp = styled(Typography)`
 `;
 
 const Text = styled(Typography)`
-        display: 'block',
-        color: 'rgba(0, 0, 0, 0.6)',
-        fontSize: 14
+    display: block;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
 `;
 
 const Conversation = ({ user }) => {
@@ -51,9 +51,7 @@ const Conversation = ({ user }) => {
 
     useEffect(() => {
         const getConversationMessage = async() => {
-            console.log(account, user);
             const data = await getConversation({ senderId: account.sub, receiverId: user.sub });
-            console.log(data);
             setMessage({ text: data.message, timestamp: data.updatedAt });
         }
         getConversationMessage();
@@ -61,7 +59,6 @@ const Conversation = ({ user }) => {
 
     const getUser = async () => {
         setPerson(user);
-        console.log(account, user);
         await setConversation({ senderId: account.sub, receiverId: user.sub });
     }
 
@@ -74,12 +71,12 @@ const Conversation = ({ user }) => {
                 <Container>
                     <Typography>{user.name}</Typography>
                     { 
-                        message.text && 
-                        <Timestamp>{formatDate(message.timestamp)}</Timestamp>        
+                        message?.text && 
+                        <Timestamp>{formatDate(message?.timestamp)}</Timestamp>        
                     }
                 </Container>
                 <Box>
-                    <Text>{message.text}</Text>
+                    <Text>{message?.text?.includes('localhost') ? 'media' : message.text}</Text>
                 </Box>
             </Box>
         </Component>
