@@ -52,7 +52,7 @@ const Conversation = ({ user }) => {
     useEffect(() => {
         const getConversationMessage = async() => {
             const data = await getConversation({ senderId: account.sub, receiverId: user.sub });
-            setMessage({ text: data.message, timestamp: data.updatedAt });
+            setMessage({ text: data?.message, timestamp: data?.updatedAt });
         }
         getConversationMessage();
     }, [newMessageFlag]);
