@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const storage = new GridFsStorage({
-    url: `mongodb://${process.env.username}:${process.env.password}@insta-clone-shard-00-00.tk3ep.mongodb.net:27017,insta-clone-shard-00-01.tk3ep.mongodb.net:27017,insta-clone-shard-00-02.tk3ep.mongodb.net:27017/?ssl=true&replicaSet=atlas-545t1k-shard-0&authSource=admin&retryWrites=true&w=majority`,
+    url: `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@insta-clone-shard-00-00.tk3ep.mongodb.net:27017,insta-clone-shard-00-01.tk3ep.mongodb.net:27017,insta-clone-shard-00-02.tk3ep.mongodb.net:27017/?ssl=true&replicaSet=atlas-545t1k-shard-0&authSource=admin&retryWrites=true&w=majority`,
     options: { useNewUrlParser: true },
     file: (request, file) => {
         const match = ["image/png", "image/jpg"];

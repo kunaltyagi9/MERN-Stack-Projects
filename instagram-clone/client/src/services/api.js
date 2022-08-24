@@ -38,3 +38,19 @@ export const followUser = async (data) => {
         return error.response;
     }
 }
+
+export const uploadFile = async (data) => {
+    try {
+        return await axios.post(`${API_URL}/file/upload`, data);
+    } catch (error) {
+        console.log('Error while calling uploadFile API ', error);
+    }
+}
+
+export const savePost = async (data) => {
+    try {
+        return await axios.post(`${API_URL}/post/save`, data);
+    } catch (error) {
+        console.log('Error while calling savePost API ', error);
+    }
+}

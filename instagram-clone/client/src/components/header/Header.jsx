@@ -1,8 +1,16 @@
+import { useState } from 'react';
 
-import { AppBar, Toolbar, styled, InputBase, Box } from '@mui/material';
-import { Home, AddBoxOutlined, ExploreOutlined, FavoriteBorderOutlined, ChatBubbleOutlineOutlined, Search as SearchIcon } from '@mui/icons-material';
+import { AppBar, Toolbar, styled, Box } from '@mui/material';
+import { Home, AddBoxOutlined, ExploreOutlined, FavoriteBorderOutlined, ChatBubbleOutlineOutlined } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { instagramLogo, emptyprofilePicture } from '../../constants/data';
+import { getUser } from '../../redux/features/userSlice';
+
+// components
+import Search from './Search';
+import CreatePost from '../post/CreatePost';
 
 const StyledHeader = styled(AppBar)`
     background: #FFFFFF;
@@ -32,41 +40,37 @@ const Wrapper = styled(Box)`
     }
 `;
 
-const SearchIconWrapper = styled(Box)`
-    padding: 5px;
-    display: flex;
-    color: rgb(142, 142, 142);
-    background: #efefef;
-    font-size: 16px;
-    padding: 2px 16px;
-    width: 230px;
-    border-radius: 8px;
-    align-items: center;
-`;
-
 const Header = () => {
 
+    const [open, setOpen] = useState(false);
+
+    const user = useSelector(getUser);
+
+    const navigate = useNavigate();
     
     return (
-        <StyledHeader>
-            <Toolbar style={{ minHeight: 60 }}>
-                <Component>
-                    <img src={instagramLogo} alt="logo" style={{ height: 30, marginRight: 180 }} />
-                    <SearchIconWrapper>   
-                        <SearchIcon />
-                        <InputBase placeholder="Search" />
-                    </SearchIconWrapper>                    
-                    <Wrapper>
-                        <Home />
-                        <ChatBubbleOutlineOutlined />
-                        <AddBoxOutlined />
-                        <ExploreOutlined />
-                        <FavoriteBorderOutlined />
-                        <img src={emptyprofilePicture} alt="display picture" />
-                    </Wrapper>
-                </Component>
-            </Toolbar>
-        </StyledHeader>
+        <>
+            <StyledHeader>
+                <Toolbar style={{ minHeight: 60 }}>
+                    <Component>
+                        <img src={instagramLogo} alt="logo" style={{ height: 30, marginRight: 180 }} />
+                        <Search />         
+                        <Wrapper>
+                            <Home onClick={() => navigate('/')} />
+                            <ChatBubbleOutlineOutlined />
+                            <AddBoxOutlined onClick={() => setOpen(true)} />
+                            <ExploreOutlined />
+                            <FavoriteBorderOutlined />
+                            <img src={emptyprofilePicture} alt="display picture" onClick={() => navigate(`/profile/${user.username}`)} />
+                        </Wrapper>
+                    </Component>
+                </Toolbar>
+            </StyledHeader>
+            <CreatePost 
+                open={open}
+                setOpen={setOpen}
+            />
+        </>
     )
 }
 
