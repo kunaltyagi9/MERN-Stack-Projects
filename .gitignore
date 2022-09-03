@@ -26,3 +26,7 @@
 /instagram-clone/server/node_modules
 /instagram-clone/server/package-lock.json
 /google-docs-clone/client/package-lock.json
+/todo-list/client/node_modules
+/todo-list/client/package-lock.json
+/todo-list/server/node_modules
+/todo-list/server/package-lock.json
