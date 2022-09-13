@@ -1,19 +1,17 @@
-import React from 'react';
-
-// components
-import TodoList from './components/TodoList';
-import Header from './components/Header';
-import TodoForm from './components/TodoForm';
 
 import './App.css';
 
-const App = () => {
-  
+// components
+import Header from './components/Header';
+import TodoForm from './components/TodoForm';
+import Todos from './components/Todos';
+
+function App() {
   return (
     <div>
       <Header />
       <TodoForm />
-      <TodoList />
+      <Todos />
     </div>
   );
 }

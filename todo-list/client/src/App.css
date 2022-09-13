@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
+
 
 body {
-  font-family: 'Roboto', sans-serif;
   width: 50%;
   margin: 0 auto;
 }
@@ -16,47 +15,18 @@ header h1 {
   font-weight: 200;
 }
 
-.input {
+input {
   font-size: 20px;
   color: #2c3e50;
   width: 100%;
   border: none;
   outline: none;
-  padding: 5px;
   border-bottom: 1px solid #2c3e50;
-}
-
-.message {
-  margin: 15px 0;
-  font-size: 16px;
-}
-
-.button {
-  margin: 0 10px;
-  padding: 10px;
-  font-size: 14px;
-  color: #6c6777;
-  background: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100px;
-}
-
-.button.selected {
-  color: #fff;
-  background: #6c6777;
-}
-
-.button.clear {
-  float: right;
-  color: #fff;
-  background: #ee1630;
-  width: 170px;
+  padding: 5px;
 }
 
 .task {
-  background: #34495e;
+  background-color: #34495e;
   padding: 15px;
   margin: 5px;
   overflow-x: hidden;
@@ -68,50 +38,45 @@ header h1 {
   color: #FFFFFF;
 }
 
-.done {
-  text-decoration: line-through;
-}
-
 .icon {
   float: right;
   margin-right: 20px;
 }
 
+article {
+  display: grid;
+}
+
 .edit-todo {
   width: 85%;
   font-size: 16px;
-  color: #fff;
-  border: none;
-  border-bottom: 1px solid #ccc;
+  color: #FFFFFF;
   background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #FFFFFF;
 }
 
-.edit-todo:focus {
-  outline: none;
+.button {
+  margin: 0 10px;
+  padding: 10px;
+  font-size: 14px;
+  color: #6c6777;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 100px;
+  border-radius: 5px;
+  margin-top: 15px;
 }
 
-article {
-  display: grid;
-  grid-template-columns: 1fr 0.5in [start] 1.25in 5in 1.25in [end] 0.5in 1fr;
+.button.selected {
+  color: #FFF;
+  background-color: #6c6777;
 }
 
-article * {
-  grid-column: start / end;
-}
-
-@media (max-width: 8.5in) {
-  article {
-    grid-template-columns: 1fr 5% [start] 15% 60% 15% [end] 5% 1fr;
-  }
-}
-
-a,
-a:visited,
-a:active {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  position: relative;
-  transition: 0.5s color ease;
-  text-decoration: none;
-  color: #81b3d2;
+.button.clear {
+  float: right;
+  color: #FFF;
+  background-color: #ee1630;
+  width: 170px;
 }

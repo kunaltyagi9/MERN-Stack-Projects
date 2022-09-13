@@ -1,76 +1,68 @@
-import Todo from "../models/todo.js";
-
-
-export const getAllTodos = async (request, response) => {
-    try {
-        const todos = await Todo.find({}).sort([['createdAt', -1]]);
-
-        response.status(200).json(todos);
-    } catch (error) {
-        response.status(500).json(error.message);
-    }
-}
+import Todo from '../model/Todo.js';
 
 export const addTodo = async (request, response) => {
     try {
-        const todo = await Todo.create({
-            name: request.body.name,
+        const newTodo = await Todo.create({
+            data: request.body.data,
             createdAt: Date.now()
-        });
-        await todo.save();
+        })
 
-        response.status(200).json(todo);
+        await newTodo.save();
+
+        return response.status(200).json(newTodo);
     } catch (error) {
-        response.status(500).json(error.message);
+        return response.status(500).json(error.message);
     }
 }
 
-export const getTodoById = async (request, response) => {
+export const getAllTodos = async (request, response) => {
     try {
-        const todo = await Todo.findById(request.params.id);
+        const todos = await Todo.find({}).sort({ 'createdAt': -1 })
 
-        response.status(200).json(todo);
+        return response.status(200).json(todos);
     } catch (error) {
-        response.status(500).json(error.message);
+        return response.status(500).json(error.message);
     }
 }
 
-export const markTodoDone = async (request, response) => {
+export const toggleTodoDone = async (request, response) => {
     try {
         const todoRef = await Todo.findById(request.params.id);
+
         const todo = await Todo.findOneAndUpdate(
             { _id: request.params.id },
             { done: !todoRef.done }
-        );
+        )
 
         await todo.save();
 
-        response.status(200).json(todo);
+        return response.status(200).json(todo);
     } catch (error) {
-        response.status(500).json(error.message);
+        return response.status(500).json(error.message);
     }
 }
 
 export const updateTodo = async (request, response) => {
     try {
-        const todo = await Todo.findOneAndUpdate(
+        await Todo.findOneAndUpdate(
             { _id: request.params.id },
-            { name: request.body.name }
-        );
-        await todo.save();
+            { data: request.body.data }
+        )
 
-        response.status(200).json(todo);
+        const todo = await Todo.findById(request.params.id);
+
+        return response.status(200).json(todo);
     } catch (error) {
-        response.status(500).json(error.message);
+        return response.status(500).json(error.message);
     }
 }
 
 export const deleteTodo = async (request, response) => {
     try {
-        const todo = await Todo.findByIdAndDelete(request.params.id);
+        const todo = await Todo.findByIdAndDelete(request.params.id)
 
-        response.status(200).json(todo);
+        return response.status(200).json(todo);
     } catch (error) {
-        response.status(500).json(error.message);
+        return response.status(500).json(error.message);
     }
 }
