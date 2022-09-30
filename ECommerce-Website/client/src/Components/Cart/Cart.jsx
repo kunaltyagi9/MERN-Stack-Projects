@@ -60,7 +60,6 @@ const Cart = () => {
     useEffect(() => {
         if(cartItems && id !== cartItems.id)   
             dispatch(addToCart(id));
-        console.log(cartItems);
     }, [dispatch, cartItems, id]);
 
     const removeItemFromCart = (id) => {
@@ -68,7 +67,7 @@ const Cart = () => {
     }
 
     const buyNow = async () => {
-        let response = await payUsingPaytm({ amount: 500, email: 'codeforinterview01@gmail.com'});
+        let response = await payUsingPaytm({ amount: 500, email: 'kunaltyagi@gmail.com'});
         var information = {
             action: 'https://securegw-stage.paytm.in/order/process',
             params: response    

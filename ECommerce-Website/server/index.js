@@ -37,5 +37,5 @@ paytmParams['ORDER_ID'] = uuid(),
 paytmParams['CUST_ID'] = process.env.PAYTM_CUST_ID,
 paytmParams['TXN_AMOUNT'] = '100',
 paytmParams['CALLBACK_URL'] = 'http://localhost:8000/callback'
-paytmParams['EMAIL'] = 'codeforinterview01@gmail.com'
+paytmParams['EMAIL'] = 'kunaltyagi@gmail.com'
 paytmParams['MOBILE_NO'] = '1234567852'
