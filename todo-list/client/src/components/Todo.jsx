@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 const Todo = ({ todo }) => {
 
     const [editing, setEditing] = useState(false);
-    const [text, setText] = useState(todo.data);
+    const [text, setText] = useState(todo?.data);
 
     const dispatch = useDispatch();
 
@@ -25,11 +25,12 @@ const Todo = ({ todo }) => {
             className="task"
             onClick={() => dispatch(toggleTodo(todo._id))}
             style={{
-                textDecoration: todo.done ? 'line-through' : '',
-                color: todo.done ? '#bdc3c7' : '#34495e'
+                textDecoration: todo?.done ? 'line-through' : '',
+                color: todo?.done ? '#bdc3c7' : '#34495e'
             }}
+            data-testid="todo-test"
         >
-            <span style={{ display: editing ? 'none' : '' }}>{todo.data}</span>
+            <span style={{ display: editing ? 'none' : '' }}>{todo?.data}</span>
 
             <form
                 style={{ display: editing ? 'inline' : 'none' }}

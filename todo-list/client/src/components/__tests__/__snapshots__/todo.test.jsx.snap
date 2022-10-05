@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<li
+  className="task"
+  data-testid="todo-test"
+  onClick={[Function]}
+  style={
+    Object {
+      "color": "#bdc3c7",
+      "textDecoration": "line-through",
+    }
+  }
+>
+  <span
+    style={
+      Object {
+        "display": "",
+      }
+    }
+  >
+    This is a task
+  </span>
+  <form
+    onSubmit={[Function]}
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    <input
+      className="edit-todo"
+      onChange={[Function]}
+      type="text"
+      value="This is a task"
+    />
+  </form>
+  <span
+    className="icon"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-trash"
+    />
+  </span>
+  <span
+    className="icon"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-pen"
+    />
+  </span>
+</li>
+`;
