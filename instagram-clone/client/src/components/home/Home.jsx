@@ -2,7 +2,6 @@
 import { Box, styled } from '@mui/material';
 
 // components
-import Header from "../header/Header";
 import Posts from "./Posts";
 import Suggestions from './Suggestions';
 

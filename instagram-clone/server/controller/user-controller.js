@@ -11,12 +11,22 @@ export const getAllUsers = async (request, response) => {
 
         return response.status(200).json({ data: users });
     } catch (error) {
-        return response.status(500).json({ msg: 'Error while signing up user' });
+        return response.status(500).json({ msg: 'Error while getting all users' });
     }
 }
 
 export const getUser = async (request, response) => {
+    try {
+        const user = await User.findOne({ username: request.body.username });
 
+        if (!user) {
+            return response.status(404).json({ msg: 'User not found' });
+        }
+
+        return response.status(200).json({ data: user });
+    } catch (error) {
+        return response.status(500).json({ msg: 'Error while getting user information' });
+    }
 }
 
 export const followUser = async (request, response) => {

@@ -122,7 +122,7 @@ const CreatePost = ({ open, setOpen }) => {
                 </Wrapper>
             </Dialog>
         :
-        <SharePost open={share} setOpen={setShare} image={image} />
+        <SharePost open={share} setOpen={setShare} image={image} closeDialog={closeDialog} />
     )
 }
 

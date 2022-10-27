@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { getUsers } from "../../redux/features/userSlice";
 import { emptyprofilePicture } from "../../constants/data";
+import { routePath } from "../../constants/route";
 
 
 const SearchIconWrapper = styled(Box)`
@@ -81,7 +82,7 @@ export const Search = () => {
                         users.filter(user => user.name.toLowerCase().includes(text.toLowerCase())).map(user => (
                             <ListItem>
                                 <Link
-                                    to={`/profile/${user.username}`}
+                                    to={`${routePath.profile}/${user.username}`}
                                     style={{ textDecoration: 'none', color: 'inherit' }}
                                     onClick={() => setHidden(true)}
                                 >

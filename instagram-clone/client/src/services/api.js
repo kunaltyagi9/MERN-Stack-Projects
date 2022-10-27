@@ -25,7 +25,17 @@ export const getAllUsers = async () => {
     try {
         return await axios.get(`${API_URL}/users`);
     } catch (error) {
-        console.log('Error while calling login User API ', error);
+        console.log('Error while calling getAllUsers API ', error);
+        return error.response;
+    }
+}
+
+export const getUserByUsername = async (data) => {
+    try {
+        let user = await axios.post(`${API_URL}/user`, data);
+        return user.data;
+    } catch (error) {
+        console.log('Error while calling  getUser API ', error);
         return error.response;
     }
 }

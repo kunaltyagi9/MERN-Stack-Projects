@@ -1,10 +1,9 @@
-
+import { useState, useEffect } from 'react';
 
 import { Box, styled, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
 
 import { emptyprofilePicture } from '../../constants/data';
-import { getUser } from '../../redux/features/userSlice';
+import { uploadFile } from '../../services/api';
 
 const Component = styled(Box)`
     display: flex;
@@ -17,6 +16,7 @@ const ImageWrapper = styled(Box)`
 const Image = styled('img')({
     borderRadius: '50%',
     width: 150,
+    height: 150,
     border: '1px solid #dbdbdb'
 })
 
@@ -46,30 +46,47 @@ const NameText = styled(Typography)`
     font-weight: 600;
 `
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ user }) => {
 
-    const user = useSelector(getUser);
+    const [file, setFile] = useState('');
+    const [imageURL, setImageURL] = useState(emptyprofilePicture);
+
+    useEffect(() => {
+        const getImage = async () => { 
+            if(file) {
+                const data = new FormData();
+                data.append("name", file.name);
+                data.append("file", file);
+                
+                const response = await uploadFile(data);
+                setImageURL(response.data);
+                console.log(response);
+            }
+        }
+        getImage();
+    }, [file])
 
     return (
         <Component>
             <label htmlFor="imageInput">
                 <ImageWrapper>
-                    <Image src={emptyprofilePicture} alt="profile picture" />
+                    <Image src={imageURL} alt="profile picture" />
                 </ImageWrapper>
             </label>
             <input 
                 type="file"
                 id="imageInput"
                 style={{ display: 'none' }}
+                onChange={(e) => setFile(e.target.files[0])}
             />
             <ProfileWrapper>
-                <UsernameText>{user.username}</UsernameText>
+                <UsernameText>{user?.username}</UsernameText>
                 <Wrapper>
                     <Typography>0 posts</Typography>
-                    <Typography>{user.followers.length} followers</Typography>
-                    <Typography>{user.following.length} following</Typography>
+                    <Typography>{user?.followers?.length} followers</Typography>
+                    <Typography>{user?.following?.length} following</Typography>
                 </Wrapper>
-                <NameText>{user.name}</NameText>
+                <NameText>{user?.name}</NameText>
             </ProfileWrapper>
         </Component>
     )

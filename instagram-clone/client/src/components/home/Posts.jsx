@@ -1,4 +1,4 @@
-
+import { useState, useEffect } from 'react';
 
 //component
 import Post from './Post';
@@ -7,6 +7,13 @@ import { Box } from '@mui/material';
 
 
 const Posts = () => {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <Box>
             {

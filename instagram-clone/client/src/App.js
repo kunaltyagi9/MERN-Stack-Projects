@@ -20,9 +20,9 @@ const PrivateRoute = ({ isAuthenticated, ...props }) => {
 
   const user = sessionStorage.getItem('user');
 
-  // if (!reduxUser.username && user) {
-  //   dispatch(userLogin(JSON.parse(user)));
-  // }
+  if (!reduxUser.username && user) {
+    dispatch(userLogin(JSON.parse(user)));
+  }
 
   return user ? 
     <>

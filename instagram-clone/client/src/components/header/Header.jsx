@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { instagramLogo, emptyprofilePicture } from '../../constants/data';
+import { routePath } from '../../constants/route';
 import { getUser } from '../../redux/features/userSlice';
 
 // components
@@ -53,15 +54,24 @@ const Header = () => {
             <StyledHeader>
                 <Toolbar style={{ minHeight: 60 }}>
                     <Component>
-                        <img src={instagramLogo} alt="logo" style={{ height: 30, marginRight: 180 }} />
+                        <img 
+                            src={instagramLogo} 
+                            alt="logo" 
+                            style={{ height: 30, marginRight: 180 }} 
+                            onClick={() => navigate(routePath.home)}
+                        />
                         <Search />         
                         <Wrapper>
-                            <Home onClick={() => navigate('/')} />
+                            <Home onClick={() => navigate(routePath.home)} />
                             <ChatBubbleOutlineOutlined />
                             <AddBoxOutlined onClick={() => setOpen(true)} />
                             <ExploreOutlined />
                             <FavoriteBorderOutlined />
-                            <img src={emptyprofilePicture} alt="display picture" onClick={() => navigate(`/profile/${user.username}`)} />
+                            <img 
+                                src={emptyprofilePicture} 
+                                alt="display picture" 
+                                onClick={() => navigate(`${routePath.profile}/${user.username}`)} 
+                            />
                         </Wrapper>
                     </Component>
                 </Toolbar>
