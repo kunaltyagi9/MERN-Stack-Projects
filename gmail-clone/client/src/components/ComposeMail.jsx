@@ -1,3 +1,4 @@
+import { useState } from 'react';
 
 import { Dialog, styled, Typography, Box, InputBase, TextField, Button } from '@mui/material'; 
 import { Close, DeleteOutline } from '@mui/icons-material';
@@ -50,6 +51,34 @@ const SendButton = styled(Button)`
 `
 
 const ComposeMail = ({ open }) => {
+    const [data, setData] = useState({});
+
+    const config = {
+        Username: 'codeforinterview@yopmail.com',
+        Password: 'A53656D41C06F613E936B1993824C5B9AB71',
+        Host: 'smtp.elasticemail.com',
+        Port: 2525,
+    }
+
+    const onValueChange = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value })
+    }
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        if (window.Email) {
+            window.Email.send({
+                ...config,
+                To : data.to,
+                From : "codeforinterview03@gmail.com",
+                Subject : data.subject,
+                Body : data.body
+            }).then(
+                message => alert(message)
+            );
+        }
+    }
 
     return (
         <Dialog
@@ -61,15 +90,19 @@ const ComposeMail = ({ open }) => {
                 <Close fontSize="small" />
             </Header>
             <RecipientWrapper>
-                <InputBase placeholder='Recipients' />
-                <InputBase placeholder='Subject' />
+                <InputBase placeholder='Recipients' name="to" onChange={(e) => onValueChange(e)} value={data.to} />
+                <InputBase placeholder='Subject' name="subject" onChange={(e) => onValueChange(e)} value={data.subject} />
             </RecipientWrapper>
             <TextField 
                 multiline
                 rows={20}
+                sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }}
+                name="body"
+                onChange={(e) => onValueChange(e)}
+                value={data.body}
             />
             <Footer>
-                <SendButton>Send</SendButton>
+                <SendButton onClick={(e) => sendEmail(e)}>Send</SendButton>
                 <DeleteOutline />
             </Footer>
         </Dialog>
