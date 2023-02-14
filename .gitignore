@@ -30,3 +30,7 @@
 /todo-list/client/package-lock.json
 /todo-list/server/node_modules
 /todo-list/server/package-lock.json
+/gmail-clone/client/node_modules
+/gmail-clone/client/package-lock.json
+/gmail-clone/server/node_modules
+/gmail-clone/server/package-lock.json
