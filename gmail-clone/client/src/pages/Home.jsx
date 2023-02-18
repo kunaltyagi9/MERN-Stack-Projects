@@ -1,30 +1,14 @@
-import { useState } from 'react';
 
-import { Header, Main, SideBar } from '../components';
 
-import { Box, styled } from '@mui/material';
-
-const Wrapper = styled(Box)`
-    display: flex;
-`
+import { useOutletContext } from "react-router-dom";
+import { Box } from '@mui/material';
 
 const Home = () => {
-
-    const [openDrawer, setOpenDrawer] = useState(true);
-
-    const toggleDrawer = () => {
-        setOpenDrawer(prevState => !prevState);
-    }
+    const { openDrawer } = useOutletContext();
 
     return (
-        <>
-            <Header toggleDrawer={toggleDrawer} />
-            <Wrapper>
-                <SideBar toggleDrawer={toggleDrawer} openDrawer={openDrawer} />
-                <Main openDrawer={openDrawer} />
-            </Wrapper>
-        </>
+        <Box style={openDrawer ? { marginLeft: 250 } : null }>Hello from Home</Box>
     )
 }
-
+ 
 export default Home;

@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import { Dialog, styled, Typography, Box, InputBase, TextField, Button } from '@mui/material'; 
 import { Close, DeleteOutline } from '@mui/icons-material';
+import useApi from '../hooks/useApi';
+import { API_URLS } from '../services/api.urls';
 
 const dialogStyle = {
     height: '90%',
@@ -52,10 +54,11 @@ const SendButton = styled(Button)`
 
 const ComposeMail = ({ open }) => {
     const [data, setData] = useState({});
+    const sentEmailService = useApi(API_URLS.saveSentEmails);
 
     const config = {
-        Username: 'codeforinterview@yopmail.com',
-        Password: 'A53656D41C06F613E936B1993824C5B9AB71',
+        Username: process.env.REACT_APP_USERNAME,
+        Password: process.env.REACT_APP_PASSWORD,
         Host: 'smtp.elasticemail.com',
         Port: 2525,
     }
@@ -64,7 +67,7 @@ const ComposeMail = ({ open }) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    const sendEmail = (e) => {
+    const sendEmail = async (e) => {
         e.preventDefault();
 
         if (window.Email) {
@@ -77,6 +80,25 @@ const ComposeMail = ({ open }) => {
             }).then(
                 message => alert(message)
             );
+        }
+
+        const payload = {
+            to : data.to,
+            from : "codeforinterview03@gmail.com",
+            subject : data.subject,
+            body : data.body,
+            date: new Date(),
+            image: '',
+            name: 'Code for Interview',
+            starred: false
+        }
+
+        sentEmailService.call(payload);
+
+        if (!sentEmailService.error) {
+    
+        } else {
+
         }
     }
 
