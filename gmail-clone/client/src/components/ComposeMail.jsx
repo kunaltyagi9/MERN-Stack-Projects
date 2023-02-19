@@ -52,9 +52,10 @@ const SendButton = styled(Button)`
     width: 100px;
 `
 
-const ComposeMail = ({ open }) => {
+const ComposeMail = ({ open, setOpenDrawer }) => {
     const [data, setData] = useState({});
     const sentEmailService = useApi(API_URLS.saveSentEmails);
+    const saveDraftService = useApi(API_URLS.saveDraftEmails);
 
     const config = {
         Username: process.env.REACT_APP_USERNAME,
@@ -90,13 +91,40 @@ const ComposeMail = ({ open }) => {
             date: new Date(),
             image: '',
             name: 'Code for Interview',
-            starred: false
+            starred: false,
+            type: 'sent'
         }
 
         sentEmailService.call(payload);
 
         if (!sentEmailService.error) {
-    
+            setOpenDrawer(false);
+            setData({});
+        } else {
+
+        }
+    }
+
+    const closeComposeMail = (e) => {
+        e.preventDefault();
+
+        const payload = {
+            to : data.to,
+            from : "codeforinterview03@gmail.com",
+            subject : data.subject,
+            body : data.body,
+            date: new Date(),
+            image: '',
+            name: 'Code for Interview',
+            starred: false,
+            type: 'draft'
+        }
+
+        saveDraftService.call(payload);
+
+        if (!saveDraftService.error) {
+            setOpenDrawer(false);
+            setData({});
         } else {
 
         }
@@ -109,7 +137,7 @@ const ComposeMail = ({ open }) => {
         >
             <Header>
                 <Typography>New Message</Typography>
-                <Close fontSize="small" />
+                <Close fontSize="small" onClick={(e) => closeComposeMail(e)} />
             </Header>
             <RecipientWrapper>
                 <InputBase placeholder='Recipients' name="to" onChange={(e) => onValueChange(e)} value={data.to} />
@@ -125,7 +153,7 @@ const ComposeMail = ({ open }) => {
             />
             <Footer>
                 <SendButton onClick={(e) => sendEmail(e)}>Send</SendButton>
-                <DeleteOutline />
+                <DeleteOutline onClick={() => setOpenDrawer(false)} />
             </Footer>
         </Dialog>
     )

@@ -13,7 +13,11 @@ const Container = styled(Box)`
         font-size: 14px;
         font-weight: 500;
         cursor: pointer;
-        & > li > svg {
+        & > a {
+            text-decoration: none;
+            color: inherit;
+        }
+        & > a > li > svg {
             margin-right: 20px;
         }
     }
@@ -56,7 +60,7 @@ const SideBarContent = () => {
                     ))
                 }
             </List>
-            <ComposeMail open={openDrawer} />
+            <ComposeMail open={openDrawer} setOpenDrawer={setOpenDrawer} />
         </Container>
     )
 }
