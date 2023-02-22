@@ -27,7 +27,7 @@ const Date = styled(Typography)({
     marginRight: 15
 })
 
-const Email = ({ email, type, setStarredEmail }) => {
+const Email = ({ email, type, setStarredEmail, deleteEmails, setDeleteEmails }) => {
     const toggleStarredEmailService = useApi(API_URLS.toggleStarredMails);
 
     const toggleStarredEmail = () => {
@@ -35,15 +35,27 @@ const Email = ({ email, type, setStarredEmail }) => {
         setStarredEmail(prevState => !prevState);
     }
 
+    const handleChange = () => {
+        if (deleteEmails.includes(email._id)) {
+            setDeleteEmails(prevState => prevState.filter(id => id !== email._id));
+        } else {
+            setDeleteEmails(prevState => [...prevState, email._id]);
+        }
+    }
+
     return (
         <Wrapper>
-            <Checkbox size="small" />
+            <Checkbox 
+                size="small" 
+                checked={deleteEmails.includes(email._id)}
+                onChange={() => handleChange()} 
+            />
             { 
                 email.starred ? 
                     <Star fontSize="small" style={{ marginRight: 10 }} onClick={() => toggleStarredEmail()} />
                 : 
                     <StarBorder fontSize="small" style={{ marginRight: 10 }} onClick={() => toggleStarredEmail()} /> 
-                }
+            }
             <Typography style={{ width: 200 }}>To:{email.to.split('@')[0]}</Typography>
             <Indicator>{type === 'sent' && 'Inbox'}</Indicator>
             <Typography>{email.subject} {email.body && '-'} {email.body}</Typography>

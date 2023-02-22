@@ -8,7 +8,7 @@ const ErrorComponent = () => {
     console.log(error);
 
     return (
-        <Box>
+        <Box style={{ marginLeft: 250 }}>
             <Typography variant="h4">There was error loading this page</Typography>
         </Box>
     )

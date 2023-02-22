@@ -1,25 +1,19 @@
 
 
 import { useOutletContext } from "react-router-dom";
-import { Box, Typography, styled } from '@mui/material';
-
-const Component = styled(Box)({
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    alignItems: 'center',
-    marginTop: 100,
-    opacity: .8
-})
+import { Box } from '@mui/material';
+import { EMPTY_TABS } from "../constants/constant";
+import NoMails from "../components/common/NoMails";
 
 const Home = () => {
     const { openDrawer } = useOutletContext();
 
     return (
-        <Component style={openDrawer ? { marginLeft: 250 } : null }>
-            <Typography>Your inbox is empty</Typography>
-            <Typography>Mails that don't appear in other tabs will be shown here.</Typography>
-        </Component>
+        <Box style={{ width: '100%' }}>
+            <Box style={openDrawer ? { marginLeft: 250 } : null }>
+                <NoMails message={EMPTY_TABS.inbox} />
+            </Box>
+        </Box>
     )
 }
  
