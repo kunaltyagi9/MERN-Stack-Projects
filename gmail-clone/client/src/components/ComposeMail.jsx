@@ -117,7 +117,7 @@ const ComposeMail = ({ open, setOpenDrawer }) => {
             image: '',
             name: 'Code for Interview',
             starred: false,
-            type: 'draft'
+            type: 'drafts'
         }
 
         saveDraftService.call(payload);

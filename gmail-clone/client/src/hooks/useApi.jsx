@@ -6,13 +6,13 @@ const useApi = (urlObject) => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const call = async (payload) => {
+    const call = async (payload, type = '') => {
         setResponse(null);
         setIsLoading(true);
         setError("");
         
         try {
-            let res = await API(urlObject, payload);
+            let res = await API(urlObject, payload, type);
             setResponse(res.data);
         } catch (error) {
             setError(error.message);

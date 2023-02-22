@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Button, List, ListItem, Box, styled } from '@mui/material';
 import ComposeMail from './ComposeMail';
 import { SIDEBAR_DATA } from '../config/sidebar.config';
 import { CreateOutlined } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
-import { DataContext } from '../context/DataProvider';
+import { routes } from '../routes/routes';
 
 const Container = styled(Box)`
     padding: 8px;
@@ -36,14 +36,8 @@ const SideBarContent = () => {
 
     const [openDrawer, setOpenDrawer] = useState(false);
 
-    const { setView } = useContext(DataContext);
-
     const onComposeClick = () => {
         setOpenDrawer(true);
-    }
-
-    const onOptionClick = (value) => {
-        setView(value);
     }
 
     return (
@@ -54,7 +48,7 @@ const SideBarContent = () => {
             <List>
                 {
                     SIDEBAR_DATA.map(data => (
-                        <NavLink key={data.title} to={data.path} onClick={onOptionClick(data.name)}>
+                        <NavLink key={data.title} to={`${routes.emails.path}/${data.name}`}>
                             <ListItem><data.icon fontSize="small" />{data.title}</ListItem>
                         </NavLink>
                     ))

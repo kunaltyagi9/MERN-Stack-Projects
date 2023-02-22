@@ -1,8 +1,8 @@
 import { lazy } from 'react';
-import SentMails from '../pages/SentMails';
 
 const Main = lazy(() => import('../pages/Main'));
 const Home = lazy(() => import('../pages/Home'));
+const Emails = lazy(() => import('../components/Emails'));
 
 const routes = {
     main: {
@@ -10,13 +10,17 @@ const routes = {
         element: Main
     },
     home: {
-        path: '/inbox',
+        path: '/emails/inbox',
         element: Home,
+    },
+    emails: {
+        path: '/emails',
+        element: Emails
     },
     invalid: {
         path: '/*',
         element: Home
-    }
+    },
 }
 
 export { routes };

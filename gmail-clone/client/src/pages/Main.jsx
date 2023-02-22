@@ -7,7 +7,7 @@ import SuspenseLoader from '../components/common/SuspenseLoader';
 
 const Wrapper = styled(Box)`
     display: flex;
-`
+`;
 
 const Home = () => {
 

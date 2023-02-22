@@ -7,4 +7,12 @@ export const API_URLS = {
         endpoint: 'save-draft',
         method: 'POST'
     },
+    getEmailFromType: {
+        endpoint: 'emails',
+        method: 'GET'
+    },
+    toggleStarredMails: {
+        endpoint: 'starred',
+        method: 'POST'
+    }
 }
