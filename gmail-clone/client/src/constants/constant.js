@@ -24,5 +24,9 @@ export const EMPTY_TABS = {
     sent: {
         heading: 'No sent messages!',
         subHeading: 'Send one now!'
+    },
+    bin: {
+        heading: 'No conversations in Bin.',
+        subHeading: ''
     }
 }

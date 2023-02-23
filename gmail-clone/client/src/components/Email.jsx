@@ -27,7 +27,7 @@ const Date = styled(Typography)({
     marginRight: 15
 })
 
-const Email = ({ email, type, setStarredEmail, deleteEmails, setDeleteEmails }) => {
+const Email = ({ email, type, setStarredEmail, selectedEmails, setSelectedEmails }) => {
     const toggleStarredEmailService = useApi(API_URLS.toggleStarredMails);
 
     const toggleStarredEmail = () => {
@@ -36,10 +36,10 @@ const Email = ({ email, type, setStarredEmail, deleteEmails, setDeleteEmails }) 
     }
 
     const handleChange = () => {
-        if (deleteEmails.includes(email._id)) {
-            setDeleteEmails(prevState => prevState.filter(id => id !== email._id));
+        if (selectedEmails.includes(email._id)) {
+            setSelectedEmails(prevState => prevState.filter(id => id !== email._id));
         } else {
-            setDeleteEmails(prevState => [...prevState, email._id]);
+            setSelectedEmails(prevState => [...prevState, email._id]);
         }
     }
 
@@ -47,7 +47,7 @@ const Email = ({ email, type, setStarredEmail, deleteEmails, setDeleteEmails }) 
         <Wrapper>
             <Checkbox 
                 size="small" 
-                checked={deleteEmails.includes(email._id)}
+                checked={selectedEmails.includes(email._id)}
                 onChange={() => handleChange()} 
             />
             { 

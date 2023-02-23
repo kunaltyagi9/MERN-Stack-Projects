@@ -1,7 +1,7 @@
 
 
 import { routes } from "../routes/routes"
-import { Photo, StarOutline, SendOutlined, InsertDriveFileOutlined } from '@mui/icons-material';
+import { Photo, StarOutline, SendOutlined, InsertDriveFileOutlined, DeleteOutlined } from '@mui/icons-material';
 
 export const SIDEBAR_DATA = [
     {
@@ -26,6 +26,12 @@ export const SIDEBAR_DATA = [
         name: 'drafts',
         title: 'Drafts',
         icon: InsertDriveFileOutlined,
+        path: routes.home.path
+    },
+    {
+        name: 'bin',
+        title: 'Bin',
+        icon: DeleteOutlined,
         path: routes.home.path
     }
 ];

@@ -18,5 +18,9 @@ export const API_URLS = {
     deleteEmails: {
         endpoint: 'delete',
         method: 'DELETE'
+    },
+    moveEmailsToBin: {
+        endpoint: 'bin',
+        method: 'POST'
     }
 }

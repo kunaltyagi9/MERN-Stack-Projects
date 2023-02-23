@@ -10,13 +10,14 @@ import { EMPTY_TABS } from '../constants/constant';
 
 const Emails = () => {
     const [starredEmail, setStarredEmail] = useState(false);
-    const [deleteEmails, setDeleteEmails] = useState([]);
+    const [selectedEmails, setSelectedEmails] = useState([]);
 
     const { openDrawer } = useOutletContext();
     const { type } = useParams();
 
     const getEmailsService = useApi(API_URLS.getEmailFromType);
     const deleteEmailsService = useApi(API_URLS.deleteEmails);
+    const moveEmailsToBin = useApi(API_URLS.moveEmailsToBin);
 
     useEffect(() => {
         getEmailsService.call({}, type);
@@ -25,14 +26,18 @@ const Emails = () => {
     const selectAllEmails = (e) => {
         if (e.target.checked) {
             const emails = getEmailsService?.response?.map(email => email._id);
-            setDeleteEmails(emails);
+            setSelectedEmails(emails);
         } else {
-            setDeleteEmails([]);
+            setSelectedEmails([]);
         }
     }
 
     const deleteSelectedEmails = () => {
-        deleteEmailsService.call(deleteEmails);
+        if (type === 'bin') {
+            deleteEmailsService.call(selectedEmails);
+        } else {
+            moveEmailsToBin.call(selectedEmails);
+        }
         setStarredEmail(prevState => !prevState);
     }
 
@@ -50,8 +55,8 @@ const Emails = () => {
                             type={type} 
                             key={email.id}
                             setStarredEmail={setStarredEmail} 
-                            deleteEmails={deleteEmails}
-                            setDeleteEmails={setDeleteEmails}
+                            selectedEmails={selectedEmails}
+                            setSelectedEmails={setSelectedEmails}
                         />
                     ))
                 }
@@ -61,7 +66,8 @@ const Emails = () => {
                     <NoMails message={
                         type === 'sent' ? EMPTY_TABS.sent :
                         type === 'drafts' ? EMPTY_TABS.drafts : 
-                        EMPTY_TABS.starred
+                        type === 'starred' ? EMPTY_TABS.starred :
+                        type === 'bin' ? EMPTY_TABS.bin : null
                     } />
             }
         </Box>
