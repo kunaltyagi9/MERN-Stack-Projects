@@ -9,7 +9,7 @@ const Wrapper = styled(Box)`
     display: flex;
 `;
 
-const Home = () => {
+const Main = () => {
 
     const [openDrawer, setOpenDrawer] = useState(true);
 
@@ -30,4 +30,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Main;

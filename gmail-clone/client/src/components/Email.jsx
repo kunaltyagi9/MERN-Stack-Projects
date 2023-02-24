@@ -36,7 +36,7 @@ const Date = styled(Typography)({
     color: '#5F6368'
 })
 
-const Email = ({ email, type, setStarredEmail, selectedEmails, setSelectedEmails }) => {
+const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails }) => {
     const toggleStarredEmailService = useApi(API_URLS.toggleStarredMails);
     
     const navigate = useNavigate();

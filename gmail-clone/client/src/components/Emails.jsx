@@ -52,7 +52,6 @@ const Emails = () => {
                     getEmailsService?.response?.map(email => (
                         <Email 
                             email={email} 
-                            type={type} 
                             key={email.id}
                             setStarredEmail={setStarredEmail} 
                             selectedEmails={selectedEmails}
@@ -63,12 +62,7 @@ const Emails = () => {
             </List> 
             {
                 getEmailsService?.response?.length === 0 &&
-                    <NoMails message={
-                        type === 'sent' ? EMPTY_TABS.sent :
-                        type === 'drafts' ? EMPTY_TABS.drafts : 
-                        type === 'starred' ? EMPTY_TABS.starred :
-                        type === 'bin' ? EMPTY_TABS.bin : null
-                    } />
+                    <NoMails message={EMPTY_TABS[type]} />
             }
         </Box>
     )
