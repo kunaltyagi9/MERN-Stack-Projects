@@ -3,6 +3,7 @@ import { lazy } from 'react';
 const Main = lazy(() => import('../pages/Main'));
 const Home = lazy(() => import('../pages/Home'));
 const Emails = lazy(() => import('../components/Emails'));
+const ViewEmail = lazy(() => import('../components/ViewEmail'));
 
 const routes = {
     main: {
@@ -21,6 +22,10 @@ const routes = {
         path: '/*',
         element: Home
     },
+    view: {
+        path: '/view',
+        element: ViewEmail
+    }
 }
 
 export { routes };

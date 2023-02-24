@@ -1,14 +1,21 @@
 
 
-import { ListItem, Checkbox, Typography, styled } from "@mui/material";
+import { ListItem, Checkbox, Typography, Box, styled } from "@mui/material";
 import { StarBorder, Star } from '@mui/icons-material';
 import useApi from '../hooks/useApi';
 import { API_URLS } from "../services/api.urls";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../routes/routes";
 
 const Wrapper = styled(ListItem)`
     padding: 0 0 0 10px;
     background: #f2f6fc;
-    & > p {
+    cursor: pointer;
+    & > div {
+        display: flex;
+        width: 100%
+    }
+    & > div > p {
         font-size: 14px;
     }
 `;
@@ -24,11 +31,15 @@ const Indicator = styled(Typography)`
 
 const Date = styled(Typography)({
     marginLeft: 'auto',
-    marginRight: 15
+    marginRight: 20,
+    fontSize: 12,
+    color: '#5F6368'
 })
 
 const Email = ({ email, type, setStarredEmail, selectedEmails, setSelectedEmails }) => {
     const toggleStarredEmailService = useApi(API_URLS.toggleStarredMails);
+    
+    const navigate = useNavigate();
 
     const toggleStarredEmail = () => {
         toggleStarredEmailService.call({ id: email._id, value: !email.starred });
@@ -56,10 +67,15 @@ const Email = ({ email, type, setStarredEmail, selectedEmails, setSelectedEmails
                 : 
                     <StarBorder fontSize="small" style={{ marginRight: 10 }} onClick={() => toggleStarredEmail()} /> 
             }
-            <Typography style={{ width: 200 }}>To:{email.to.split('@')[0]}</Typography>
-            <Indicator>{type === 'sent' && 'Inbox'}</Indicator>
-            <Typography>{email.subject} {email.body && '-'} {email.body}</Typography>
-            <Date>{(new window.Date(email.date)).getDate()} {(new window.Date(email.date)).toLocaleString('default', { month: 'long' })}</Date>
+            <Box onClick={() => navigate(routes.view.path, { state: { email: email }})}>
+                <Typography style={{ width: 200 }}>To:{email.to.split('@')[0]}</Typography>
+                <Indicator>Inbox</Indicator>
+                <Typography>{email.subject} {email.body && '-'} {email.body}</Typography>
+                <Date>
+                    {(new window.Date(email.date)).getDate()}&nbsp;
+                    {(new window.Date(email.date)).toLocaleString('default', { month: 'long' })}
+                </Date>
+            </Box>
         </Wrapper>
     )
 }
