@@ -1,44 +1,43 @@
 
-import { Typography, Box } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Typography, Box, styled } from '@mui/material';
 
-const useStyles = makeStyles({
-    container: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        paddingTop: 47,
-        width: '100%',
-        height: 550,
-        objectFit: 'cover',
-        backgroundRepeat: 'no-repeat'
-    },
-    heading: {
-        fontWeight: [600, "!important"],
-        fontSize: [56, "!important"]
-    },
-    subHeading: {
-        padding: '0 0 5px 0',
-        fontSize: [28, "!important"]
-    },
-    link: {
-        fontSize: [21, "!important"],
-        padding: '0 30px'
-    }
+const Container = styled(Box)({
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    paddingTop: 47,
+    width: '100%',
+    height: 550,
+    objectFit: 'cover',
+    backgroundRepeat: 'no-repeat'
+})
+
+const Heading = styled(Typography)({
+    fontWeight: [600, "!important"],
+    fontSize: [56, "!important"]
+})
+
+const SubHeading = styled(Typography)({
+    padding: '0 0 5px 0',
+    fontSize: [28, "!important"]
+})
+
+const Link = styled(Typography)({
+    fontSize: [21, "!important"],
+    padding: '0 30px'
 })
 
 const Section = ({ data }) => {
-    const classes = useStyles();
     return (
         <Box>
-            <Box className={classes.container} style={{background: `url(${data.imageURL}) 50% 165% no-repeat`}}>
-                <Typography className={classes.heading} style={{color: data.headColor}} variant="h3">{data.heading}</Typography>
-                <Typography className={classes.subHeading} style={{color: data.subHeadColor}}variant="h5">{data.subHeading}</Typography>
+            <Container style={{background: `url(${data.imageURL}) 50% 165% no-repeat`}}>
+                <Heading style={{color: data.headColor}} variant="h3">{data.heading}</Heading>
+                <SubHeading style={{color: data.subHeadColor}}variant="h5">{data.subHeading}</SubHeading>
                 <Typography style={{marginTop: '5px'}}>
-                    <Typography className={classes.link} component="span" variant="h5">Learn more</Typography>
-                    <Typography className={classes.link} component="span" variant="h5">Buy</Typography>
+                    <Link component="span" variant="h5">Learn more</Link>
+                    <Link component="span" variant="h5">Buy</Link>
                 </Typography>
-            </Box>
+            </Container>
         </Box>
     )
 }
