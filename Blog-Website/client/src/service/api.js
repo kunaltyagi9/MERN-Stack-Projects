@@ -118,7 +118,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
         axiosInstance({
             method: value.method,
             url: value.url,
-            data: value.method === 'DELETE' ? '' : body,
+            data: value.method === 'DELETE' ? {} : body,
             responseType: value.responseType,
             headers: {
                 authorization: getAccessToken(),
