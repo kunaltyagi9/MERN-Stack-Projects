@@ -14,7 +14,12 @@ export const singupUser = async (request, response) => {
         const hashedPassword = await bcrypt.hash(request.body.password, 10);
 
         const user = { username: request.body.username, name: request.body.name, password: hashedPassword }
-
+         //we need to first check if user already present or not if present then we have to throw an error otherwise we have
+        //to save it's details
+        const check = await User.findOne({username: request.body.username});
+        if(check){
+            return response.status(500).json({message:"Username already Used"});
+        }
         const newUser = new User(user);
         await newUser.save();
 
