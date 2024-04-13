@@ -75,7 +75,7 @@ const Login = ({ isUserAuthenticated }) => {
     const [login, setLogin] = useState(loginInitialValues);
     const [signup, setSignup] = useState(signupInitialValues);
     const [error, showError] = useState('');
-    const [account, toggleAccount] = useState('login');
+    const [account, toggleAccount] = useState(true);
 
     const navigate = useNavigate();
     const { setAccount } = useContext(DataContext);
@@ -122,16 +122,14 @@ const Login = ({ isUserAuthenticated }) => {
         }
     }
 
-    const toggleSignup = () => {
-        account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
-    }
+   
 
     return (
         <Component>
             <Box>
                 <Image src={imageURL} alt="blog" />
                 {
-                    account === 'login' ?
+                    account?
                         <Wrapper>
                             <TextField variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
                             <TextField variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
@@ -140,7 +138,7 @@ const Login = ({ isUserAuthenticated }) => {
 
                             <LoginButton variant="contained" onClick={() => loginUser()} >Login</LoginButton>
                             <Text style={{ textAlign: 'center' }}>OR</Text>
-                            <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
+                            <SignupButton onClick={() => toggleSignup(false)} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :
                         <Wrapper>
                             <TextField variant="standard" onChange={(e) => onInputChange(e)} name='name' label='Enter Name' />
@@ -149,7 +147,7 @@ const Login = ({ isUserAuthenticated }) => {
 
                             <SignupButton onClick={() => signupUser()} >Signup</SignupButton>
                             <Text style={{ textAlign: 'center' }}>OR</Text>
-                            <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>
+                            <LoginButton variant="contained" onClick={() => toggleSignup(true)}>Already have an account</LoginButton>
                         </Wrapper>
                 }
             </Box>
